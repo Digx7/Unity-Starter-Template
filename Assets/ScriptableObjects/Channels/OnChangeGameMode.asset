@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee8c4fa009d6c084594b0e0329e8357b, type: 3}
-  m_Name: LoadSave
+  m_Script: {fileID: 11500000, guid: 726af7d85ce55a045951093ec225ec69, type: 3}
+  m_Name: OnChangeGameMode
   m_EditorClassIdentifier: 

@@ -2,15 +2,47 @@ using UnityEngine;
 
 public class GameMode : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject playerCharacter;
+    public GameObject playerController;
+    public GameObject cameraManager;
+    
+    [SerializeField] Channel gameModeTearDownChannel;
+    [SerializeField] Channel onGameModeTearDownFinsishedChannel;
+    [SerializeField] Channel onGameModeSetupFinishedChannel;
+
+    // CHANNELS =================================
+
+    private void OnEnable()
     {
-        
+        SetupChannels();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        TearDownChannels();
+    }
+
+    protected void SetupChannels()
+    {
+        gameModeTearDownChannel.channelEvent.AddListener(Teardown);
+    }
+
+    protected void TearDownChannels()
+    {
+        gameModeTearDownChannel.channelEvent.RemoveListener(Teardown);
+    }
+
+    // MAIN FUNCTIONS =================================
+
+    public virtual void Setup()
+    {
+        DontDestroyOnLoad(this);
+        onGameModeSetupFinishedChannel.Raise();
+    }
+
+    public virtual void Teardown()
+    {
+        onGameModeTearDownFinsishedChannel.Raise();
+        Destroy(this.gameObject);
     }
 }

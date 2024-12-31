@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IChannelListener 
 {
-    void OnEventRaised();
+    public void OnEventRaised();
 }

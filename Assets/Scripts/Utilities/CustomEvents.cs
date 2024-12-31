@@ -1,16 +1,17 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CustomEvents : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
+
+public class IntEvent : UnityEvent<int> {}
+
+public class BooleanEvent : UnityEvent<bool> {}
+
+public class FloatEvent : UnityEvent<float> {}
+public class StringEvent : UnityEvent<string> {}
+public class Vector2Event : UnityEvent<Vector2> {}
+public class Vector3Event : UnityEvent<Vector3> {}
+public class SFXEvent : UnityEvent<string, Vector3> {}
