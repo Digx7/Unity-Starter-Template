@@ -5,6 +5,10 @@ public class TestingInput : MonoBehaviour
     [SerializeField] string gameModeToLoadOnStart;
     [SerializeField] StringChannel onChangeGameModeChannel;
     [SerializeField] StringChannel changeSceneChannel;
+    [SerializeField] Channel requestPauseOrResumeSongChannel;
+    [SerializeField] Channel requestSkipSongChannel;
+    [SerializeField] SongChannel requestQueueSongChannel;
+    [SerializeField] SongData songToQueue;
     
     public void Update()
     {
@@ -31,6 +35,21 @@ public class TestingInput : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Alpha2))
         {
             changeSceneChannel.Raise("GamePlay");
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            requestPauseOrResumeSongChannel.Raise();
+        }
+
+        if(Input.GetKeyDown(KeyCode.O))
+        {
+            requestSkipSongChannel.Raise();
+        }
+
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            requestQueueSongChannel.Raise(songToQueue);
         }
     }
 }

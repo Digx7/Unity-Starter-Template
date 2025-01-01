@@ -9,6 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 726af7d85ce55a045951093ec225ec69, type: 3}
-  m_Name: AddSceneChannel
+  m_Script: {fileID: 11500000, guid: 04277cc3edb16204496c87b335e62f26, type: 3}
+  m_Name: OnAddSongLayer
   m_EditorClassIdentifier: 
+  channelEvent:
+    m_PersistentCalls:
+      m_Calls: []

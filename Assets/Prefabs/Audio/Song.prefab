@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7055470157397402694
+--- !u!1 &2956900965804647756
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6027563644734891476}
-  - component: {fileID: 2352506840822014023}
+  - component: {fileID: 7125161099349186289}
+  - component: {fileID: 569125821320516766}
   m_Layer: 0
-  m_Name: SceneSetupManager
+  m_Name: Song
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6027563644734891476
+--- !u!4 &7125161099349186289
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7055470157397402694}
+  m_GameObject: {fileID: 2956900965804647756}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -32,22 +32,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2352506840822014023
+--- !u!114 &569125821320516766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7055470157397402694}
+  m_GameObject: {fileID: 2956900965804647756}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f90e4fa706cc3624b9f261df86729f13, type: 3}
+  m_Script: {fileID: 11500000, guid: cb30808ea32bf094aab23a1fa299cbf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeGameModeOnSceneStart: 1
-  onChangeGameModeChannel: {fileID: 11400000, guid: 98c5b39363b3b43418389630f708f5fe, type: 2}
-  gameModeToChangeToOnSetup: MainMenu
-  changeSongOnSceneStart: 1
-  requestJumpToSongChannel: {fileID: 11400000, guid: c0ab9c0a3239601448462bd578abfeb8, type: 2}
-  songToJumpTo: {fileID: 11400000, guid: 659cc30cb8ee8e44cbd39a264b9ae0ba, type: 2}
-  triggerOnStart: 1
+  songData: {fileID: 0}
+  layerPrefab: {fileID: 302888690766114057, guid: 5ffff7283ff4c844c92a2076bf645057, type: 3}
