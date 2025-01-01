@@ -1,16 +1,11 @@
 using UnityEngine;
+using System;
+using System.Collections.Generic;
 
-public class SongData : MonoBehaviour
+[CreateAssetMenu(fileName = "NewSong", menuName = "ScriptableObjects/Audio/Song", order = 1)]
+public class SongData : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string Name;
+    public string Artist;
+    public List<AudioClip> layers;
 }
