@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public class GameManager : Singleton
+public class GameManager : Singleton<GameManager>
 {
     [SerializeField] List<StringAndGameObject> allGameModes;
     [SerializeField] StringAndGameObject nextGameModeToLoad;

@@ -2,15 +2,20 @@ using UnityEngine;
 
 public class SceneSetupManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] StringChannel onChangeGameModeChannel;
+    [SerializeField] string gameModeToChangeToOnSetup;
+    
+    [SerializeField] bool triggerOnStart = true;
+
+    public void Start()
     {
-        
+        if(triggerOnStart) Setup();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Setup()
     {
-        
+        onChangeGameModeChannel.Raise(gameModeToChangeToOnSetup);
+
+        // Add code here
     }
 }
