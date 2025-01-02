@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
 
 
     // POSSESSION ===========================================================
-    public bool PossessCharacter(Character newCharacter)
+    public virtual bool PossessCharacter(Character newCharacter)
     {
         if(!IsCharacterValid(newCharacter)) return false;
         
@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
         return false;
     }
 
-    public void ForcePossessCharacter(Character newCharacter)
+    public virtual void ForcePossessCharacter(Character newCharacter)
     {
         if(!IsCharacterValid(newCharacter)) return;
         if(newCharacter == possessedCharacter) return;
@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
         if(IsCharacterValid(possessedCharacter)) possessedCharacter.SetID(ID);
     }
 
-    private bool IsCharacterValid(Character newCharacter)
+    protected virtual bool IsCharacterValid(Character newCharacter)
     {
         if(newCharacter != null) return true;
         else return false;

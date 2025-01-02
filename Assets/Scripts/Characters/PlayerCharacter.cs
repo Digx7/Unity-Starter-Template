@@ -5,6 +5,10 @@ public class PlayerCharacter : Character
     [SerializeField] private IntChannel OnPlayerCharacterFinishedSetup;
     [SerializeField] private CameraManager cameraManager;
 
+    private Vector2 desiredMoveDirection;
+
+    // CAMERA FUNCTIONS ===========================================
+
     public bool ConnectCameraManager(CameraManager newCameraManager)
     {
         if(!IsCameraManagerValid(newCameraManager)) return false;
@@ -35,6 +39,8 @@ public class PlayerCharacter : Character
         else return true;
     }
 
+    // SETUP FUNCTIONS =============================================
+
     protected override void OnEnable(){}
     
     public override void Setup(int newID = 0)
@@ -43,4 +49,32 @@ public class PlayerCharacter : Character
 
         OnPlayerCharacterFinishedSetup.Raise(ID);
     }
+
+    protected override void Start()
+    {
+        desiredMoveDirection = new Vector2();
+    }
+
+    // PLAYER ACTIONS ===============================================
+
+    public void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
+    {
+        desiredMoveDirection = newDesiredDirection;
+    }
+
+    public void Jump()
+    {
+
+    }
+
+    public void Fire1()
+    {
+
+    }
+
+    public void Fire2()
+    {
+
+    }
+
 }

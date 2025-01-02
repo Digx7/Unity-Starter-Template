@@ -5,6 +5,12 @@ public class Character : MonoBehaviour
     [SerializeField] protected int ID = 0;
     [SerializeField] protected GameController controller;
 
+    protected virtual void Awake() {}
+
+    protected virtual void Start() {}
+
+    protected virtual void Update() {}
+    
     // POSSESSION ===========================================================
 
     public bool Possess(GameController newController)
