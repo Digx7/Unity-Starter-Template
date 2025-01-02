@@ -113,7 +113,7 @@ public class SongHolder : MonoBehaviour
             runtime += Time.deltaTime;
             if(runtime >= songLength)
             {
-                musicManager.playNextSongInQueue();
+                musicManager.PlayNextSongInQueue();
             }
         }
     }

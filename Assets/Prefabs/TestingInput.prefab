@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecb314cb1760d3d4a8fc3a87bcd4a4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   gameModeToLoadOnStart: MainMenu
   onChangeGameModeChannel: {fileID: 11400000, guid: 98c5b39363b3b43418389630f708f5fe, type: 2}
   changeSceneChannel: {fileID: 11400000, guid: c2b143e2c53059e41863bec9247a6d46, type: 2}
+  requestPauseOrResumeSongChannel: {fileID: 11400000, guid: e0b6cf23e585c8b48aa7d3e6d30a22b5, type: 2}
+  requestSkipSongChannel: {fileID: 11400000, guid: 67ae23d6d6a680145af2fb3fd5bf6927, type: 2}
+  requestQueueSongChannel: {fileID: 11400000, guid: 46ea38b380e2ef34ba97fed1f2aa2e6f, type: 2}
+  songToQueue: {fileID: 11400000, guid: d2098f1401741a042b78b160ff0aa7e2, type: 2}

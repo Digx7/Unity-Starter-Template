@@ -59,7 +59,7 @@ public class MusicManager : Singleton<MusicManager>
 
     private void JumpToSong(SongData song)
     {
-        playNewSong(song);
+        PlayNewSong(song);
         onJumpToSongChannel.Raise();
     }
 
@@ -67,11 +67,13 @@ public class MusicManager : Singleton<MusicManager>
     {
         songQueue.Add(song);
         onQueueSongChannel.Raise();
+
+        if(!IsThereAnActiveSong()) PlayNextSongInQueue();
     } 
 
     private void SkipSong()
     {
-        playNextSongInQueue();
+        PlayNextSongInQueue();
         onSkipSongChannel.Raise();
     }
 
@@ -101,7 +103,7 @@ public class MusicManager : Singleton<MusicManager>
 
     // MAIN FUNCTIONS =================================
 
-    public void playNextSongInQueue()
+    public void PlayNextSongInQueue()
     {
         if(songQueue.Count == 0)
         {
@@ -111,13 +113,13 @@ public class MusicManager : Singleton<MusicManager>
             return;
         }
 
-        playNewSong(songQueue[0]);
+        PlayNewSong(songQueue[0]);
         songQueue.RemoveAt(0);
     }
 
-    private void playNewSong(SongData song)
+    private void PlayNewSong(SongData song)
     {
-        if(activeSong != null)
+        if(IsThereAnActiveSong())
         {
             // check is this song is already playing
             if(activeSong.GetSongData() == song)
@@ -135,5 +137,11 @@ public class MusicManager : Singleton<MusicManager>
         activeSong.Setup(song, this);
         // Start this song
         activeSong.StartSong();
+    }
+
+    private bool IsThereAnActiveSong()
+    {
+        if(activeSong != null) return true;
+        else return false;
     }
 }
