@@ -2,47 +2,126 @@ using UnityEngine;
 
 public class GameMode : MonoBehaviour
 {
-    public GameObject playerCharacter;
-    public GameObject playerController;
-    public GameObject cameraManager;
+    public bool spawnPlayerOnSetup = true;
+    public GameObject playerCharacterPreFab;
+    public GameObject playerControllerPreFab;
+    public GameObject cameraManagerPreFab;
     
-    [SerializeField] Channel gameModeTearDownChannel;
-    [SerializeField] Channel onGameModeTearDownFinsishedChannel;
-    [SerializeField] Channel onGameModeSetupFinishedChannel;
+    [SerializeField] private Channel requestGameModeTearDownChannel;
+    [SerializeField] private Channel onGameModeTearDownFinsishedChannel;
+    [SerializeField] private Channel onGameModeSetupFinishedChannel;
+    [SerializeField] private PlayerSpawnInfoChannel requestSpawnPlayerChannel;
+    [SerializeField] private IntChannel onPlayerCharacterFinishedSetupChannel;
+    [SerializeField] private IntChannel onPlayerControllerFinishedSetupChannel;
+
+    private PlayerSpawnInfo playerSpawnInfo;
+    private PlayerCharacter playerCharacterBeingSetup;
+    private PlayerController playerControllerBeingSetup;
+    private CameraManager cameraManagerBeingSetup;
 
     // CHANNELS =================================
 
-    private void OnEnable()
+    // protected virtual void OnEnable()
+    // {
+    //     SetupChannels();
+    // }
+
+    // protected virtual void OnDisable()
+    // {
+    //     TearDownChannels();
+    // }
+
+    protected virtual void SetupChannels()
     {
-        SetupChannels();
+        requestGameModeTearDownChannel.channelEvent.AddListener(Teardown);
+        requestSpawnPlayerChannel.channelEvent.AddListener(SpawnPlayerCharacter);
+        onPlayerCharacterFinishedSetupChannel.channelEvent.AddListener(OnPlayerCharacterFinishedSetup);
+        onPlayerControllerFinishedSetupChannel.channelEvent.AddListener(OnPlayerControllerFinishedSetup);
     }
 
-    private void OnDisable()
+    protected virtual void TearDownChannels()
     {
-        TearDownChannels();
-    }
-
-    protected void SetupChannels()
-    {
-        gameModeTearDownChannel.channelEvent.AddListener(Teardown);
-    }
-
-    protected void TearDownChannels()
-    {
-        gameModeTearDownChannel.channelEvent.RemoveListener(Teardown);
+        requestGameModeTearDownChannel.channelEvent.RemoveListener(Teardown);
+        requestSpawnPlayerChannel.channelEvent.RemoveListener(SpawnPlayerCharacter);
+        onPlayerCharacterFinishedSetupChannel.channelEvent.RemoveListener(OnPlayerCharacterFinishedSetup);
+        onPlayerControllerFinishedSetupChannel.channelEvent.RemoveListener(OnPlayerControllerFinishedSetup);
     }
 
     // MAIN FUNCTIONS =================================
 
     public virtual void Setup()
     {
+        SetupChannels();
+        if(spawnPlayerOnSetup) TryToFindPlayerSpawnHelper();
+        
         DontDestroyOnLoad(this);
         onGameModeSetupFinishedChannel.Raise();
     }
 
     public virtual void Teardown()
     {
+        TearDownChannels();
         onGameModeTearDownFinsishedChannel.Raise();
         Destroy(this.gameObject);
     }
+
+    // SPAWN PLAYER ================================================
+
+    protected virtual void TryToFindPlayerSpawnHelper()
+    {
+        PlayerSpawnHelper playerSpawnHelper = FindFirstObjectByType<PlayerSpawnHelper>();
+        if(playerSpawnHelper != null) playerSpawnHelper.SpawnPlayer();
+    }
+
+    protected virtual void SpawnPlayerCharacter(PlayerSpawnInfo newPlayerSpawnInfo)
+    {
+        Debug.Log("GameMode: SpawnPlayerCharacter()");
+
+        playerSpawnInfo = newPlayerSpawnInfo;
+        
+        GameObject characterObj = Instantiate(playerCharacterPreFab, playerSpawnInfo.location, playerSpawnInfo.rotation);
+        playerCharacterBeingSetup = characterObj.GetComponent<PlayerCharacter>();
+        if(playerCharacterBeingSetup == null) return;
+
+        playerCharacterBeingSetup.Setup(playerSpawnInfo.ID);
+    }
+
+    protected virtual void SpawnPlayerController()
+    {
+        Debug.Log("GameMode: SpawnPlayerController()");
+        
+        GameObject controllerObj = Instantiate(playerControllerPreFab, playerSpawnInfo.location, playerSpawnInfo.rotation);
+        playerControllerBeingSetup = controllerObj.GetComponent<PlayerController>();
+        if(playerControllerBeingSetup == null) return;
+
+        playerControllerBeingSetup.Setup(playerSpawnInfo.ID, playerCharacterBeingSetup);
+    }
+
+    protected virtual void SpawnCameraManager()
+    {
+        Debug.Log("GameMode: SpawnCameraManager()");
+        
+        GameObject cameraObj = Instantiate(cameraManagerPreFab, playerSpawnInfo.location, playerSpawnInfo.rotation);
+        cameraManagerBeingSetup = cameraObj.GetComponent<CameraManager>();
+        if(cameraManagerBeingSetup == null) return;
+
+        cameraManagerBeingSetup.Setup(playerSpawnInfo.ID, playerControllerBeingSetup, playerCharacterBeingSetup);
+    }
+
+    protected virtual void OnPlayerCharacterFinishedSetup(int playerId)
+    {
+        SpawnPlayerController();
+    }
+
+    protected virtual void OnPlayerControllerFinishedSetup(int playerId)
+    {
+        SpawnCameraManager();
+    }
+
+    // protected virtual bool IsValidPlayerSpawnInfo(PlayerSpawnInfo newPlayerSpawnInfo)
+    // {
+    //     if(newPlayerSpawnInfo == null) return false;
+    //     else return true;
+    // }
+
 }

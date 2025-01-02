@@ -35,6 +35,8 @@ public class PlayerCharacter : Character
         else return true;
     }
 
+    protected override void OnEnable(){}
+    
     public override void Setup(int newID = 0)
     {
         base.Setup(newID);

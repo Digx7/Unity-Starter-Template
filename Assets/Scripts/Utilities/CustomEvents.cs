@@ -17,3 +17,4 @@ public class Vector3Event : UnityEvent<Vector3> {}
 public class SFXEvent : UnityEvent<string, Vector3> {}
 
 public class SongEvent : UnityEvent<SongData> {}
+public class PlayerSpawnInfoEvent : UnityEvent<PlayerSpawnInfo> {}

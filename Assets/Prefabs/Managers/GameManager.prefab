@@ -53,7 +53,7 @@ MonoBehaviour:
     name: 
     obj: {fileID: 0}
   onSaveLoadedChannel: {fileID: 11400000, guid: 00d7efb67653dff4fb63edd86a6dd55c, type: 2}
-  onChangeGameModeChannel: {fileID: 11400000, guid: 98c5b39363b3b43418389630f708f5fe, type: 2}
+  requestChangeGameModeChannel: {fileID: 11400000, guid: 98c5b39363b3b43418389630f708f5fe, type: 2}
   onGameModeTeardownFinishedChannel: {fileID: 11400000, guid: dd4abbcae653d2a488202097ded104df, type: 2}
   onGameModeSetupFinishedChannel: {fileID: 11400000, guid: 242e7bddcd5d89b4bbd51151efc4f7b0, type: 2}
-  gameModeTearDownChannel: {fileID: 11400000, guid: f485a4babbc7fbf4e8185870298fcf5f, type: 2}
+  requestGameModeTearDownChannel: {fileID: 11400000, guid: f485a4babbc7fbf4e8185870298fcf5f, type: 2}

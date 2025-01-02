@@ -10,10 +10,10 @@ public class GameManager : Singleton<GameManager>
 
     // [Header: "Channels"]
     [SerializeField] Channel onSaveLoadedChannel;
-    [SerializeField] StringChannel onChangeGameModeChannel;
+    [SerializeField] StringChannel requestChangeGameModeChannel;
     [SerializeField] Channel onGameModeTeardownFinishedChannel;
     [SerializeField] Channel onGameModeSetupFinishedChannel;
-    [SerializeField] Channel gameModeTearDownChannel;
+    [SerializeField] Channel requestGameModeTearDownChannel;
 
     // CHANELS =================================
 
@@ -30,7 +30,7 @@ public class GameManager : Singleton<GameManager>
     private void SetupChannels()
     {
         onSaveLoadedChannel.channelEvent.AddListener(OnSaveLoaded);
-        onChangeGameModeChannel.channelEvent.AddListener(OnChangeGameMode);
+        requestChangeGameModeChannel.channelEvent.AddListener(RequestChangeGameMode);
         onGameModeTeardownFinishedChannel.channelEvent.AddListener(OnGameModeTeardownFinished);
         onGameModeSetupFinishedChannel.channelEvent.AddListener(OnGameModeSetupFinished);
     }
@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager>
     private void TearDownChannels()
     {
         onSaveLoadedChannel.channelEvent.RemoveListener(OnSaveLoaded);
-        onChangeGameModeChannel.channelEvent.RemoveListener(OnChangeGameMode);
+        requestChangeGameModeChannel.channelEvent.RemoveListener(RequestChangeGameMode);
         onGameModeTeardownFinishedChannel.channelEvent.RemoveListener(OnGameModeTeardownFinished);
         onGameModeSetupFinishedChannel.channelEvent.RemoveListener(OnGameModeSetupFinished);
     }
@@ -48,7 +48,7 @@ public class GameManager : Singleton<GameManager>
     private void OnSaveLoaded()
     {}
 
-    private void OnChangeGameMode(string newGameMode)
+    private void RequestChangeGameMode(string newGameMode)
     {
         // Checks that we are not loading the active gamemode
         if(newGameMode == nextGameModeToLoad.name)
@@ -67,7 +67,7 @@ public class GameManager : Singleton<GameManager>
             if(activeGameMode != null)
             {
                 // Tearsdown the currently active GameMode, once that is done it GameManager will setup the new GameMode
-                gameModeTearDownChannel.Raise();
+                requestGameModeTearDownChannel.Raise();
                 return;
             }
             else
@@ -87,7 +87,7 @@ public class GameManager : Singleton<GameManager>
     {
         // Passing in nextGameModeToLoad as a prefab but it becomes a scene object
         LoadGameMode(nextGameModeToLoad.obj);
-        SetupGameMode(ref activeGameMode);
+        SetupGameMode(activeGameMode);
     } 
 
     private void OnGameModeSetupFinished()
@@ -101,7 +101,7 @@ public class GameManager : Singleton<GameManager>
         activeGameMode = nextGameModeToLoad.obj.GetComponent<GameMode>();
     }
 
-    public void SetupGameMode(ref GameMode gameModeToSetup)
+    public void SetupGameMode(GameMode gameModeToSetup)
     {
         gameModeToSetup.Setup();
     }
