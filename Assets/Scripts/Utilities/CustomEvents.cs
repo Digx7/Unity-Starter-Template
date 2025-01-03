@@ -18,3 +18,5 @@ public class SFXEvent : UnityEvent<string, Vector3> {}
 
 public class SongEvent : UnityEvent<SongData> {}
 public class PlayerSpawnInfoEvent : UnityEvent<PlayerSpawnInfo> {}
+public class GameObjectEvent : UnityEvent<GameObject> {}
+public class UIWidgetDataEvent : UnityEvent<UIWidgetData> {}
