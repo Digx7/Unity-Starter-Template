@@ -13,6 +13,7 @@ public class GameMode : MonoBehaviour
     [SerializeField] private PlayerSpawnInfoChannel requestSpawnPlayerChannel;
     [SerializeField] private IntChannel onPlayerCharacterFinishedSetupChannel;
     [SerializeField] private IntChannel onPlayerControllerFinishedSetupChannel;
+    [SerializeField] private Channel onOptionsMenuQuitChannel;
 
     private PlayerSpawnInfo playerSpawnInfo;
     private PlayerCharacter playerCharacterBeingSetup;
@@ -21,22 +22,13 @@ public class GameMode : MonoBehaviour
 
     // CHANNELS =================================
 
-    // protected virtual void OnEnable()
-    // {
-    //     SetupChannels();
-    // }
-
-    // protected virtual void OnDisable()
-    // {
-    //     TearDownChannels();
-    // }
-
     protected virtual void SetupChannels()
     {
         requestGameModeTearDownChannel.channelEvent.AddListener(Teardown);
         requestSpawnPlayerChannel.channelEvent.AddListener(SpawnPlayerCharacter);
         onPlayerCharacterFinishedSetupChannel.channelEvent.AddListener(OnPlayerCharacterFinishedSetup);
         onPlayerControllerFinishedSetupChannel.channelEvent.AddListener(OnPlayerControllerFinishedSetup);
+        onOptionsMenuQuitChannel.channelEvent.AddListener(OnOptionsMenuQuit);
     }
 
     protected virtual void TearDownChannels()
@@ -45,6 +37,7 @@ public class GameMode : MonoBehaviour
         requestSpawnPlayerChannel.channelEvent.RemoveListener(SpawnPlayerCharacter);
         onPlayerCharacterFinishedSetupChannel.channelEvent.RemoveListener(OnPlayerCharacterFinishedSetup);
         onPlayerControllerFinishedSetupChannel.channelEvent.RemoveListener(OnPlayerControllerFinishedSetup);
+        onOptionsMenuQuitChannel.channelEvent.RemoveListener(OnOptionsMenuQuit);
     }
 
     // MAIN FUNCTIONS =================================
@@ -118,10 +111,7 @@ public class GameMode : MonoBehaviour
         SpawnCameraManager();
     }
 
-    // protected virtual bool IsValidPlayerSpawnInfo(PlayerSpawnInfo newPlayerSpawnInfo)
-    // {
-    //     if(newPlayerSpawnInfo == null) return false;
-    //     else return true;
-    // }
+    protected virtual void OnOptionsMenuQuit()
+    {}
 
 }

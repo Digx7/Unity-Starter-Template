@@ -16,15 +16,13 @@ public class UIWidgetData : ScriptableObject
 
     public void SpawnWidget(Transform parent = null)
     {
-        instantiatedWidget = Instantiate(widgetPrefab);
-
         if(parent != null)
         {
-            instantiatedWidget.transform.SetParent(parent);
+            instantiatedWidget = Instantiate(widgetPrefab, parent);
         }
 
         UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
-        uIWidget.Setup();
+        uIWidget.Setup(this);
     }
 
     public void DespawnWidget()

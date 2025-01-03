@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3b75fa8bfb2dd498bd889c4e6ec9bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnPlayerOnSetup: 1
   playerCharacterPreFab: {fileID: 4939326817478878853, guid: 3719f5d02d6275e418816773d4d0e82d, type: 3}
   playerControllerPreFab: {fileID: 2707968005197875816, guid: 8efe1f92813e8f649a967195902fd696, type: 3}
   cameraManagerPreFab: {fileID: 167596003869953699, guid: c5e69b92bfa9c334fbbeb69a29a9cc93, type: 3}
@@ -53,3 +54,6 @@ MonoBehaviour:
   requestSpawnPlayerChannel: {fileID: 11400000, guid: 0552dee96b05be743b569078468665c9, type: 2}
   onPlayerCharacterFinishedSetupChannel: {fileID: 11400000, guid: ec85a42ea4285fd48a9789e68c7f4a7a, type: 2}
   onPlayerControllerFinishedSetupChannel: {fileID: 11400000, guid: 96878672e2f978f468a283d7b6daee5c, type: 2}
+  onOptionsMenuQuitChannel: {fileID: 11400000, guid: 99c78e6d0ecbf2045b522eee27e99138, type: 2}
+  requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
+  pauseMenuWidgetData: {fileID: 11400000, guid: 5dca4f619f5187a4090b83b4e7b856f6, type: 2}

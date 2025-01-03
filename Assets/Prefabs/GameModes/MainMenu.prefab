@@ -54,3 +54,7 @@ MonoBehaviour:
   requestSpawnPlayerChannel: {fileID: 11400000, guid: 0552dee96b05be743b569078468665c9, type: 2}
   onPlayerCharacterFinishedSetupChannel: {fileID: 11400000, guid: ec85a42ea4285fd48a9789e68c7f4a7a, type: 2}
   onPlayerControllerFinishedSetupChannel: {fileID: 11400000, guid: 96878672e2f978f468a283d7b6daee5c, type: 2}
+  onOptionsMenuQuitChannel: {fileID: 11400000, guid: 99c78e6d0ecbf2045b522eee27e99138, type: 2}
+  requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
+  requestClearAllUIWidgetChannel: {fileID: 11400000, guid: 878845f27c6dbd648b1baea5a8a6723f, type: 2}
+  mainMenuWidgetData: {fileID: 11400000, guid: ded42b706e85a2f41835bfbacdce83d1, type: 2}

@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class GamePlay : GameMode
 {
+    [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
+    [SerializeField] private UIWidgetData pauseMenuWidgetData;
+    
     public override void Setup()
     {
         // add code here
@@ -14,5 +17,10 @@ public class GamePlay : GameMode
         // add code here
         
         base.Teardown();
+    }
+
+    protected override void OnOptionsMenuQuit()
+    {
+        requestLoadUIWidgetChannel.Raise(pauseMenuWidgetData);
     }
 }

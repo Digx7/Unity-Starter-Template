@@ -3,9 +3,11 @@ using UnityEngine;
 public class UIWidget : MonoBehaviour
 {
     
-    public virtual void Setup()
+    protected UIWidgetData ownUIWidgetData;
+    
+    public virtual void Setup(UIWidgetData newUIWidgetData)
     {
-
+        ownUIWidgetData = newUIWidgetData;
     }
 
     public virtual void Teardown()

@@ -887,54 +887,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIWidgetManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_MoveAction
-      value: 
-      objectReference: {fileID: -371777680930864430, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_PointAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_ActionsAsset
-      value: 
-      objectReference: {fileID: -944628639613478452, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_CancelAction
-      value: 
-      objectReference: {fileID: -2997048678771146555, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_SubmitAction
-      value: 
-      objectReference: {fileID: 5367247727581148504, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_LeftClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_RightClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_MiddleClickAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_ScrollWheelAction
-      value: 
-      objectReference: {fileID: 8004070369779382550, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_TrackedDevicePositionAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6222417240925228477, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_TrackedDeviceOrientationAction
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 6274066329995094055, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
-      propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 6471225002979764782, guid: f0e514045a476af469c87d50ee5f5241, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
