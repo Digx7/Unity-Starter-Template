@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using System;
 using System.Collections.Generic;
 
@@ -6,6 +7,9 @@ public class GameManager : Singleton<GameManager>
 {
     [SerializeField] List<StringAndGameObject> allGameModes;
     [SerializeField] StringAndGameObject nextGameModeToLoad;
+    
+    [SerializeField] AudioMixer masterMixer;
+
     private GameMode activeGameMode;
 
     // [Header: "Channels"]
@@ -14,6 +18,12 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] Channel onGameModeTeardownFinishedChannel;
     [SerializeField] Channel onGameModeSetupFinishedChannel;
     [SerializeField] Channel requestGameModeTearDownChannel;
+
+    private const string MasterVolumeKey = "MasterVolume";
+    private const string MusicVolumeKey = "MusicVolume";
+    private const string SFXVolumeKey = "SFXVolume";
+    private const string FullScreenKey = "FullScreen";
+    private const string ResolutionKey = "Resolution";
 
     // CHANELS =================================
 
@@ -94,6 +104,28 @@ public class GameManager : Singleton<GameManager>
     {}
 
     // MAIN FUNCTIONS =================================
+
+    public void SetupOptions()
+    {
+        float masterVolume = PlayerPrefs.GetFloat(MasterVolumeKey, 1.0f);
+        float musicVolume = PlayerPrefs.GetFloat(MusicVolumeKey, 1.0f);
+        float sfxVolume = PlayerPrefs.GetFloat(SFXVolumeKey, 1.0f);
+        int fullScreen = PlayerPrefs.GetInt(FullScreenKey, 0);
+        int resolution = PlayerPrefs.GetInt(ResolutionKey, 0);
+
+        bool fullScreenValue;
+
+        if(fullScreen == 1) fullScreenValue = true;
+        else fullScreenValue = false;
+
+        masterMixer.SetFloat(MasterVolumeKey, masterVolume);
+        masterMixer.SetFloat(MusicVolumeKey, musicVolume);
+        masterMixer.SetFloat(SFXVolumeKey, sfxVolume);
+
+        Screen.fullscreen = fullScreenValue;
+
+        // Screen.SetResolution(width, height, fullScreenValue);
+    }
 
     public void LoadGameMode(GameObject newGameMode)
     {
