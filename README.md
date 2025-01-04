@@ -4,7 +4,7 @@ Last Updated: 1/4/2025
 
 
 ## Introduction
-This is the documentation for the Unity Starter Template developed by Digx7 and accessible here: https://github.com/Digx7/Unity-Starter-Template 
+This is the documentation for the Unity Starter Template developed by Digx7 and accessible here: <https://github.com/Digx7/Unity-Starter-Template> 
 This Unity Starter Template is designed to help you get started prototype or developing games by handling much of the common backend systems that large games use.  That’s not to say you won’t need to adjust these systems as your project progresses, but this gives you a starting point.
 
 ### Purpose
@@ -21,12 +21,12 @@ The Publish-subscribe pattern pattern (also called the Observer Patter) is a pat
 	
 
 For further reading on the Publish-subscribe pattern see:
-https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber 
-https://www.geeksforgeeks.org/what-is-pub-sub/ 
-https://refactoring.guru/design-patterns/observer 
+<https://learn.microsoft.com/en-us/azure/architecture/patterns/publisher-subscriber>
+<https://www.geeksforgeeks.org/what-is-pub-sub/>
+<https://refactoring.guru/design-patterns/observer> 
 
 
-The implementation is similar to what is seen here: Game architecture with ScriptableObjects | Open Projects Devlog Relevant section starts at 5:45.
+The implementation is similar to what is seen here: [Game architecture with ScriptableObjects | Open Projects Devlog](https://www.youtube.com/watch?v=WLDgtRNK2VE) Relevant section starts at 5:45.
 
 ### How To Use
 **Subscribing To A Channel**
@@ -116,9 +116,9 @@ In this template its main use is loading or unloading GameMode objets.  Though i
 
 
 Further reading on the Singleton Pattern :
-https://refactoring.guru/design-patterns/singleton 
-https://gameprogrammingpatterns.com/singleton.html 
-https://www.geeksforgeeks.org/singleton-design-pattern/ 
+<https://refactoring.guru/design-patterns/singleton >
+<https://gameprogrammingpatterns.com/singleton.html >
+<https://www.geeksforgeeks.org/singleton-design-pattern/ >
 
 ### How To Extend
 The only way to extend the GameManager is to add more methods to the class which can be found at `Scripts/Manager/GameManager.cs`.  There is no inherently wrong way to extend it but a few things you should think about.  Like:
@@ -166,9 +166,9 @@ SceneManager (Not to be confused with UnityEngine.SceneManager) is a simple Sing
 Similar but unrelated to the SceneManager is the SceneSetupManager (found in `Scripts/SceneHelpers/`).  SceneManager loads and unloads the scenes whereas SceneSetupManager helps setup a given scene once it is loaded.
 
 Further reading on the Singleton Pattern :
-https://refactoring.guru/design-patterns/singleton 
-https://gameprogrammingpatterns.com/singleton.html 
-https://www.geeksforgeeks.org/singleton-design-pattern/ 
+<https://refactoring.guru/design-patterns/singleton >
+<https://gameprogrammingpatterns.com/singleton.html >
+<https://www.geeksforgeeks.org/singleton-design-pattern/> 
 
 ### How To Use
 Simply use the following Channels: RequestChangeScene, RequestAddScene, RequestRemoveScene.
@@ -194,9 +194,9 @@ To load any scene it requires it to be added to the build setting sunder `File/B
 A Singleton class that allows for music to continuously play across scenes, crossfade between tracks, and allow songs with multiple layers that dynamically switch as gameplay progresses.
 
 Further reading on the Singleton Pattern :
-https://refactoring.guru/design-patterns/singleton 
-https://gameprogrammingpatterns.com/singleton.html 
-https://www.geeksforgeeks.org/singleton-design-pattern/ 
+<https://refactoring.guru/design-patterns/singleton >
+<https://gameprogrammingpatterns.com/singleton.html >
+<https://www.geeksforgeeks.org/singleton-design-pattern/ >
 
 ### How To Use
 Make use of the following channels
@@ -266,6 +266,8 @@ RequestClearAllWidgets		Unloads all active UIWidgets
 Well commonly thought of as just the PlayerCharacter it is helpful to break it up into a Character, Controller, and CameraManager.  The Character is the in game avatar that the player sees moving around.  Well the Character handles things like movement, attacking, and abilities.  It importantly does not handle things like player input or the camera.  This allows us to easily change the controller input (keyboard and mouse vs. gamepad vs. touch), have an AI control the same character, or some other system (replay system) control the character.  And for the camera it lets other systems take control of the camera as needed (for cutscenes) or lets us reuse the character for AI enemies without needing the Camera.
 
 ### How It works
+
+![Diagram of how it works](ReadMe_CharacterControllerCamera_HowItWorks.png "Diagram of how it works")
 
 ### How To Extend
 In this template everything is included except for the actions the player does, like moving around.  These need to be implemented on the Character script found in `Scripts/Characters`.
