@@ -58,3 +58,4 @@ MonoBehaviour:
   requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
   requestClearAllUIWidgetChannel: {fileID: 11400000, guid: 878845f27c6dbd648b1baea5a8a6723f, type: 2}
   mainMenuWidgetData: {fileID: 11400000, guid: ded42b706e85a2f41835bfbacdce83d1, type: 2}
+  splashScreenWidgetData: {fileID: 11400000, guid: eb5d981c78bb91640a45f943f700280f, type: 2}

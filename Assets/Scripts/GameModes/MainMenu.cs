@@ -5,11 +5,12 @@ public class MainMenu : GameMode
     [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
     [SerializeField] private Channel requestClearAllUIWidgetChannel;
     [SerializeField] private UIWidgetData mainMenuWidgetData;
+    [SerializeField] private UIWidgetData splashScreenWidgetData;
     public override void Setup()
     {
         // add code here
         requestClearAllUIWidgetChannel.Raise();
-        requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
+        requestLoadUIWidgetChannel.Raise(splashScreenWidgetData);
         base.Setup();
     }
 

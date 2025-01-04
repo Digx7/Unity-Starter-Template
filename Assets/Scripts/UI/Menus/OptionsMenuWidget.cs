@@ -11,6 +11,7 @@ public class OptionsMenuWidget : UIMenu
     [SerializeField] private TMP_Dropdown resolutionDropdown;
     
     [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+    [SerializeField] Channel onOptionsChangedChannel;
     [SerializeField] Channel onOptionsMenuQuitChannel;
 
     private const string MasterVolumeKey = "MasterVolume";
@@ -62,18 +63,21 @@ public class OptionsMenuWidget : UIMenu
     {
         PlayerPrefs.SetFloat(MasterVolumeKey, newValue);
         PlayerPrefs.Save();
+        onOptionsChangedChannel.Raise();
     }
 
     public void OnAdjustMusicVolume(float newValue)
     {
         PlayerPrefs.SetFloat(MusicVolumeKey, newValue);
         PlayerPrefs.Save();
+        onOptionsChangedChannel.Raise();
     }
 
     public void OnAdjustSFXVolume(float newValue)
     {
         PlayerPrefs.SetFloat(SFXVolumeKey, newValue);
         PlayerPrefs.Save();
+        onOptionsChangedChannel.Raise();
     }
 
     public void OnAdjustFullScreen(bool newValue)
@@ -85,11 +89,13 @@ public class OptionsMenuWidget : UIMenu
 
         PlayerPrefs.SetInt(FullScreenKey, value);
         PlayerPrefs.Save();
+        onOptionsChangedChannel.Raise();
     }
 
     public void OnAdjustResolution(int newValue)
     {
         PlayerPrefs.SetInt(ResolutionKey, newValue);
         PlayerPrefs.Save();
+        onOptionsChangedChannel.Raise();
     }
 }

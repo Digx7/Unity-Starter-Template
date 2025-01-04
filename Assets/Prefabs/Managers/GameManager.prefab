@@ -52,7 +52,42 @@ MonoBehaviour:
   nextGameModeToLoad:
     name: 
     obj: {fileID: 0}
+  masterMixer: {fileID: 24100000, guid: a8754a9f6bb814e448e7785346402d9b, type: 2}
+  playerPrefAudioValueToAppliedValue:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: -80
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.12661347
+      value: -15.415185
+      inSlope: 55.586838
+      outSlope: 55.586838
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.14504614
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   onSaveLoadedChannel: {fileID: 11400000, guid: 00d7efb67653dff4fb63edd86a6dd55c, type: 2}
+  onOptionsChangedChannel: {fileID: 11400000, guid: 27a7436a7c745d54187d3ba38fccaaea, type: 2}
   requestChangeGameModeChannel: {fileID: 11400000, guid: 98c5b39363b3b43418389630f708f5fe, type: 2}
   onGameModeTeardownFinishedChannel: {fileID: 11400000, guid: dd4abbcae653d2a488202097ded104df, type: 2}
   onGameModeSetupFinishedChannel: {fileID: 11400000, guid: 242e7bddcd5d89b4bbd51151efc4f7b0, type: 2}
