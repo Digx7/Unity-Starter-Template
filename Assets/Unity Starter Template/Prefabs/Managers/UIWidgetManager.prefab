@@ -227,7 +227,7 @@ MonoBehaviour:
   m_LeftClickAction: {fileID: -8289767615297194438, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
   m_MiddleClickAction: {fileID: -4814301750065371707, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
   m_RightClickAction: {fileID: -7416014859402723293, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
-  m_ScrollWheelAction: {fileID: 8004070369779382550, guid: 5ddfd04f282b00241b070292463ff933, type: 3}
+  m_ScrollWheelAction: {fileID: 0}
   m_TrackedDevicePositionAction: {fileID: 0}
   m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1

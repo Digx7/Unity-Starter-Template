@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PlayerCharacter : Character
 {
-    [SerializeField] private IntChannel OnPlayerCharacterFinishedSetup;
-    [SerializeField] private CameraManager cameraManager;
+    [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
+    [SerializeField] protected CameraManager cameraManager;
 
-    private Vector2 desiredMoveDirection;
+    protected Vector2 desiredMoveDirection;
 
     // CAMERA FUNCTIONS ===========================================
 
@@ -57,22 +57,22 @@ public class PlayerCharacter : Character
 
     // PLAYER ACTIONS ===============================================
 
-    public void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
+    public virtual void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
     {
         desiredMoveDirection = newDesiredDirection;
     }
 
-    public void Jump()
+    public virtual void Jump()
     {
 
     }
 
-    public void Fire1()
+    public virtual void Fire1()
     {
 
     }
 
-    public void Fire2()
+    public virtual void Fire2()
     {
 
     }
