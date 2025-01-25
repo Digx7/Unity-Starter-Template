@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
@@ -14,7 +15,14 @@ public class Conversation : ScriptableObject
 public struct ConversationNode
 {
     public string speaker;
+    
+    [TextAreaAttribute]
     public string line;
+
+    public void Print()
+    {
+        Debug.Log(speaker + ":\n" + line);
+    }
 }
 
 public class ConversationNodeEvent : UnityEvent<ConversationNode> {}

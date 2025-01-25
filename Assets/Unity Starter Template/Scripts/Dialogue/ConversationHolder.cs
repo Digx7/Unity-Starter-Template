@@ -1,11 +1,12 @@
-using Unity
+using UnityEngine;
 
-public class ConversationHolder : MonoBehavior
+public class ConversationHolder : MonoBehaviour
 {
     public Conversation conversation;
-    public Channel onConversationStartChannel;
-    public Channel onConversationEndChannel;
-    public ConversationChannel onConversationUpdateChannel;
+    public UIWidgetData dialogueWidgetData;
+    public UIWidgetDataChannel requestLoadDialogueWidgetChannel;
+    public UIWidgetDataChannel requestUnloadDialogueWidgetChannel;
+    public ConversationNodeChannel onConversationUpdateChannel;
 
     private int currentNodeIndex = 0;
     private ConversationNode currentNode;
@@ -13,6 +14,8 @@ public class ConversationHolder : MonoBehavior
 
     public void Interact()
     {
+        Debug.Log("ConversationHolder: Interact()");
+
         if(!isConversationGoing)
         {
             isConversationGoing = true;
@@ -26,11 +29,14 @@ public class ConversationHolder : MonoBehavior
 
     private void StartConversation()
     {
-        currentNodeIndex = 0
+        Debug.Log("ConversationHolder: StartConversation()");
+
+        currentNodeIndex = 0;
         if(TryGetNode())
         {
-            onConversationStartChannel.Raise();
+            requestLoadDialogueWidgetChannel.Raise(dialogueWidgetData);
             onConversationUpdateChannel.Raise(currentNode);
+            currentNode.Print();
         }
         else
         {
@@ -40,10 +46,13 @@ public class ConversationHolder : MonoBehavior
 
     private void ProgressConversation()
     {
+        Debug.Log("ConversationHolder: ProgressConversation()");
+        
         currentNodeIndex++;
         if(TryGetNode())
         {
             onConversationUpdateChannel.Raise(currentNode);
+            currentNode.Print();
         }
         else
         {
@@ -53,14 +62,16 @@ public class ConversationHolder : MonoBehavior
 
     private void EndConversation()
     {
+        Debug.Log("ConversationHolder: EndConversation()");
+        
         isConversationGoing = false;
-        onConversationEndChannel.Raise();
+        requestUnloadDialogueWidgetChannel.Raise(dialogueWidgetData);
         TryLoadNextConversation();
     }
 
     private bool TryGetNode()
     {
-        if(currentNodeIndex < conversation.nodes.length)
+        if(currentNodeIndex < conversation.nodes.Count)
         {
             currentNode = conversation.nodes[currentNodeIndex];
             return true;

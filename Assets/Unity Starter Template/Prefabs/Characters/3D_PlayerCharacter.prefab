@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 8955836083095628267}
   m_Layer: 0
   m_Name: 3D_PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   ID: 0
   controller: {fileID: 0}
   OnPlayerCharacterFinishedSetup: {fileID: 11400000, guid: ec85a42ea4285fd48a9789e68c7f4a7a, type: 2}
+  onPlayerTryInteractChannel: {fileID: 11400000, guid: 47b2b9ceb4ec91f4994f326f99deb8c3, type: 2}
   cameraManager: {fileID: 0}
 --- !u!114 &8508715895094070023
 MonoBehaviour:

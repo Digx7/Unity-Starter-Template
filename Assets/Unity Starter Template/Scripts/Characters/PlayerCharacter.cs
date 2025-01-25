@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerCharacter : Character
 {
     [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
+    [SerializeField] protected Channel onPlayerTryInteractChannel;
     [SerializeField] protected CameraManager cameraManager;
 
     protected Vector2 desiredMoveDirection;
@@ -69,7 +70,8 @@ public class PlayerCharacter : Character
 
     public virtual void Fire1()
     {
-
+        Debug.Log("PlayerCharacter: Fire1()");
+        onPlayerTryInteractChannel.Raise();
     }
 
     public virtual void Fire2()
