@@ -15,8 +15,6 @@ public class UIWidgetManager : Singleton<UIWidgetManager>
     [SerializeField] private Channel requestClearAllUIWidgetsChannel;
     [SerializeField] private Channel onClearAllUIWidgetsChannel;
 
-    public static Blackboard blackboard;
-
     // SETUP CHANNELS =======================================================
 
     private void OnEnable()

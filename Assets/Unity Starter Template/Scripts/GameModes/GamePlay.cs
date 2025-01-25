@@ -3,6 +3,7 @@ using UnityEngine;
 public class GamePlay : GameMode
 {
     [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
+    [SerializeField] private Channel requestLoadSaveDataChannel;
     [SerializeField] private UIWidgetData pauseMenuWidgetData;
     
     public override void Setup()
@@ -10,6 +11,8 @@ public class GamePlay : GameMode
         // add code here
         
         base.Setup();
+
+        requestLoadSaveDataChannel.Raise();
     }
 
     public override void Teardown()

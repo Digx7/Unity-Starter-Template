@@ -5,13 +5,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-public class Blackboard
+public class BlackboardWithUpdateEvents
 {
-    public Dictionary<string, GenericBlackBoardEntry> entries;
+    public Dictionary<string, GenericBlackBoardEntryWithUpdateEvents> entries;
 
-    public Blackboard()
+    public BlackboardWithUpdateEvents()
     {
-        entries = new Dictionary<string, GenericBlackBoardEntry>();
+        entries = new Dictionary<string, GenericBlackBoardEntryWithUpdateEvents>();
     }
 
     public T GetData<T>(string key)
@@ -39,9 +39,29 @@ public class Blackboard
         entries.Clear();
     }
 
+    public void SubscribeToUpdates(string key, UnityAction<object> call)
+    {
+        if(!entries.ContainsKey(key))
+        {
+            CreateDefaultEntry<object>(key);
+        }
+
+        entries[key].OnEntryChanged.AddListener(call);
+    }
+
+    public void UnSubscribeToUpdates(string key, UnityAction<object> call)
+    {
+        if(!entries.ContainsKey(key))
+        {
+            CreateDefaultEntry<object>(key);
+        }
+
+        entries[key].OnEntryChanged.RemoveListener(call);
+    }
+
     protected void CreateDefaultEntry<T>(string key)
     {
-        entries[key] = new GenericBlackBoardEntry();
+        entries[key] = new GenericBlackBoardEntryWithUpdateEvents();
     }
 
     public void PrintAllEntries()
@@ -49,10 +69,10 @@ public class Blackboard
         Debug.Log("Printing All Entries");
         if(entries.Count == 0) Debug.Log("No Entries found");
         
-        foreach (KeyValuePair<string, GenericBlackBoardEntry> entry in entries)
+        foreach (KeyValuePair<string, GenericBlackBoardEntryWithUpdateEvents> entry in entries)
         {
             string key = entry.Key;
-            GenericBlackBoardEntry value = entry.Value;
+            GenericBlackBoardEntryWithUpdateEvents value = entry.Value;
             Debug.Log("" + key + " : " + value.ToString());
         }
     }

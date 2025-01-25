@@ -15,7 +15,6 @@ public class GameManager : Singleton<GameManager>
     private GameMode activeGameMode;
 
     // [Header: "Channels"]
-    [SerializeField] Channel onSaveLoadedChannel;
     [SerializeField] Channel onOptionsChangedChannel;
     [SerializeField] StringChannel requestChangeGameModeChannel;
     [SerializeField] Channel onGameModeTeardownFinishedChannel;
@@ -49,7 +48,6 @@ public class GameManager : Singleton<GameManager>
 
     private void SetupChannels()
     {
-        onSaveLoadedChannel.channelEvent.AddListener(OnSaveLoaded);
         onOptionsChangedChannel.channelEvent.AddListener(SetupOptions);
         requestChangeGameModeChannel.channelEvent.AddListener(RequestChangeGameMode);
         onGameModeTeardownFinishedChannel.channelEvent.AddListener(OnGameModeTeardownFinished);
@@ -58,7 +56,6 @@ public class GameManager : Singleton<GameManager>
 
     private void TearDownChannels()
     {
-        onSaveLoadedChannel.channelEvent.RemoveListener(OnSaveLoaded);
         onOptionsChangedChannel.channelEvent.RemoveListener(SetupOptions);
         requestChangeGameModeChannel.channelEvent.RemoveListener(RequestChangeGameMode);
         onGameModeTeardownFinishedChannel.channelEvent.RemoveListener(OnGameModeTeardownFinished);
@@ -66,9 +63,6 @@ public class GameManager : Singleton<GameManager>
     }
 
     // CHANNEL RESPONES =================================
-
-    private void OnSaveLoaded()
-    {}
 
     private void RequestChangeGameMode(string newGameMode)
     {

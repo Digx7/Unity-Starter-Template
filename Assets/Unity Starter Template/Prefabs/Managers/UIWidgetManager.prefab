@@ -110,7 +110,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6471225002979764782}
-  - component: {fileID: 4963830085214316053}
   - component: {fileID: 1205417843464254535}
   m_Layer: 0
   m_Name: UIWidgetManager
@@ -136,18 +135,6 @@ Transform:
   - {fileID: 3245114277129355293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4963830085214316053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3943976355662785178}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80eb7b96fd888744889f92deb306e960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1205417843464254535
 MonoBehaviour:
   m_ObjectHideFlags: 0

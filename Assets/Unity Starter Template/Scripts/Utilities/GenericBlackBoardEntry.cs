@@ -2,33 +2,28 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
+[System.Serializable]
 public class GenericBlackBoardEntry 
 {
-    private object value;
-    private Type type;
+    public object value;
 
-    public UnityEvent<object, Type> OnEntryChanged;
-
-    public GenericBlackBoardEntry(Type newType)
+    public GenericBlackBoardEntry()
     {
         value = new object();
-        type = newType;
     }
 
-    public T GetEntryValue<T>()
+    public virtual T GetEntryValue<T>()
     {
         return (T)value;
     }
 
-    public Type GetEntryType()
-    {
-        return type;
-    }
-
-    public void SetEntryValue<T>(T newValue)
+    public virtual void SetEntryValue<T>(T newValue)
     {
         value = newValue;
-        type = typeof(T);
-        OnEntryChanged.Invoke(value, type);
+    }
+
+    public virtual string ToString()
+    {
+        return ("" + value);
     }
 }

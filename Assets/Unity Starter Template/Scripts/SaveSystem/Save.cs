@@ -1,16 +1,26 @@
 using UnityEngine;
+using System.Runtime.Serialization;
 
-public class Save : MonoBehaviour
+[System.Serializable]
+[KnownType(typeof(float[]))]
+[KnownType(typeof(Vector3))]
+[KnownType(typeof(int))]
+[DataContract]
+public class Save : Blackboard
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void CreateDefaultSaveFile()
     {
-        
-    }
+        // Add generic values here
+        // UpdateData<T>(key, value)
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Vector3 playerPos = new Vector3(1, 2, 4);
+
+        float health = 12.2f;
+
+        int level = 6;
+
+        UpdateData<Vector3>("PlayerPos", playerPos);
+        UpdateData<float>("Health", health);
+        UpdateData<int>("Level", level);
     }
 }
