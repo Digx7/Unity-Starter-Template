@@ -29,7 +29,7 @@ public class DialogueBoxWidget : UIWidget
         currentNode = latestNode;
 
         speakerNameTextMeshPro.text = currentNode.speaker;
-        if(isTyping) StopCoroutine(TypeOutLine());
+        if(isTyping) StopAllCoroutines();
         StartCoroutine(TypeOutLine());
     }
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ConversationHolder : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class ConversationHolder : MonoBehaviour
     public UIWidgetDataChannel requestLoadDialogueWidgetChannel;
     public UIWidgetDataChannel requestUnloadDialogueWidgetChannel;
     public ConversationNodeChannel onConversationUpdateChannel;
+
+    public UnityEvent OnConversationEnd;
 
     private int currentNodeIndex = 0;
     private ConversationNode currentNode;
@@ -66,6 +69,7 @@ public class ConversationHolder : MonoBehaviour
         
         isConversationGoing = false;
         requestUnloadDialogueWidgetChannel.Raise(dialogueWidgetData);
+        OnConversationEnd.Invoke();
         TryLoadNextConversation();
     }
 

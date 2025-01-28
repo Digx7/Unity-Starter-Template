@@ -10,13 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cf65f13461a81f24c9d7d581aef9e081, type: 3}
-  m_Name: T.E.S.T.
+  m_Name: Zavag 1
   m_EditorClassIdentifier: 
   nodes:
-  - speaker: T.E.S.T.
-    line: Hello Adventure!
-  - speaker: T.E.S.T.
-    line: This is some dialogue
-  - speaker: T.E.S.T.
-    line: I hope it works!
-  nextConversationToLoadOnFinish: {fileID: 11400000, guid: 8270f6c2f9d15c1459a0c821e38fc388, type: 2}
+  - speaker: Zavag
+    line: You Speak to Hope
+  nextConversationToLoadOnFinish: {fileID: 0}
