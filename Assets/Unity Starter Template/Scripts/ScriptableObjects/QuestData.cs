@@ -7,50 +7,61 @@ using System.Collections.Generic;
 public class QuestData : ScriptableObject
 {
     public string questName;
+    public List<QuestNode> nodes;
 
-    [TextArea]
-    public string questDescription;
-    public string questCompleteResult;
-    [SerializeField] private List<QuestNode> nodes;
-
-    private int activeNodeIndex = 0;
+    private int nodeIndex = 0;
 
     public void ResetQuest()
     {
-        Debug.Log("QuestData: ResetQuest()");
+        Debug.Log("QuestData - " + questName + " : ResetQuest()");
+        
         for (int i = 0; i < nodes.Count; i++)
         {
             nodes[i].Reset();
         }
-
-        activeNodeIndex = 0;
+        
+        nodeIndex = 0;
     }
 
     public bool IsComplete()
     {
-        if(activeNodeIndex >= nodes.Count) return true;
-        else return false;
+        bool value;
+        if(nodeIndex >= nodes.Count) value = true;
+        else value = false;
+
+        Debug.Log("QuestData - " + questName + " : IsComplete() => " + value);
+        return value;
     }
 
     public bool TryProgress(QuestObjectiveProgress progress)
     {
-        if(activeNodeIndex >= nodes.Count) return false;
-
-        if(nodes[activeNodeIndex].TryProgress(progress))
+       bool value;
+       
+       if(IsComplete()) 
         {
-            if(nodes[activeNodeIndex].AllObjectivesMet()) activeNodeIndex++;
-            else
-            {
-                Debug.Log("QuestData: Progressed objective but not all objectives are met");
-            }
-            return true;
+            value = false;
+            Debug.Log("QuestData - " + questName + " : TryProgress() => " + value);
+            return value;
         }
-        return false;
+
+       if(nodes[nodeIndex].TryProgress(progress))
+       {
+            if(nodes[nodeIndex].AllObjectivesMet()) 
+            {
+                nodeIndex++;
+                Debug.Log("QuestData - " + questName + " : Increasing nodeIndex to " + nodeIndex);
+            }
+            value = true;
+       }
+       else value = false;
+
+       Debug.Log("QuestData - " + questName + " : TryProgress() => " + value);
+       return value;
     }
 
     public void Finish()
     {
-        // Todo
+        Debug.Log("QuestData - " + questName + " : Finish()");
     }
 
     public string ToString()
@@ -60,30 +71,33 @@ public class QuestData : ScriptableObject
 }
 
 [System.Serializable]
-public struct QuestNode
+public class QuestNode
 {
     public string nodeName;
     public List<QuestObjective> objectives;
-    public List<QuestNodeOutcome> outcomes;
 
     public bool AllObjectivesMet()
     {
+        bool value;
+
         for (int i = 0; i < objectives.Count; i++)
         {
-            if(objectives[i].passed == false)
+            if(objectives[i].IsMet == false) 
             {
-                Debug.Log("QuestNode: objective " + objectives[i].objectiveName + " : " + objectives[i].passed);
-                return false;
+                value = false;
+                Debug.Log("QuestNode - " + nodeName + " : AllObjectivesMet() => " + value);
+                return value;
             }
         }
 
-        Debug.Log("QuestNode: Met all objectives for the node: " + nodeName);
-
-        return true;
+        value = true;
+        Debug.Log("QuestNode - " + nodeName + " : AllObjectivesMet() => " + value);
+        return value;
     }
 
     public void Reset()
     {
+        Debug.Log("QuestNode - " + nodeName + " : Reset()");
         for (int i = 0; i < objectives.Count; i++)
         {
             objectives[i].Reset();
@@ -92,62 +106,75 @@ public struct QuestNode
 
     public bool TryProgress(QuestObjectiveProgress progress)
     {
+        bool value;
+
         for (int i = 0; i < objectives.Count; i++)
         {
-            if(objectives[i].TryProgress(progress)) return true;
+            if(objectives[i].TryProgress(progress))
+            {
+                value = true;
+                Debug.Log("QuestNode - " + nodeName + " : TryProgress() => " + value);
+                return value;
+            }
         }
-        return false;
+
+        value = false;
+        Debug.Log("QuestNode - " + nodeName + " : TryProgress() => " + value);
+        return value;
     }
 
 }
 
 [System.Serializable]
-public struct QuestObjective
+public class QuestObjective
 {
     public string objectiveName;
-    public QuestObjectiveType objectiveType;
-    public int goalAmount;
     public string data;
+    public int amount;
+    public int CurrentAmount = 0;
+    public bool IsMet = false;
+    
 
-    public bool passed;
-    private int progressAmount;
     public bool TryProgress(QuestObjectiveProgress progress)
     {
-        if(progress.objectiveName != objectiveName) return false;
-
-        Debug.Log("QuestObjective: progressed objective: " + objectiveName);
-
-        progressAmount += progress.addedAmount;
-
-        switch (objectiveType)
+        bool value;
+        
+        if(progress.objectiveName == objectiveName)
         {
-            case QuestObjectiveType.Kill_x:
-                if(HasMetXGoal()) passed = true;
-                break;
-            case QuestObjectiveType.Deliver_x_items:
-                if(HasMetXGoal()) passed = true;
-                break;
-            default:
-                Debug.Log("QuestObjective: default case");
-                passed = true;
-                break;
+            CurrentAmount += progress.addedAmount;
+
+            if(amount > 0)
+            {
+                if(HasMetXGoal()) IsMet = true;
+            }
+            else IsMet = true;
+
+            value = true;
+            Debug.Log("QuestObjective - " + objectiveName + ": TryProgress() => " + value + "\nIsMet: " + IsMet);
+            return value;
         }
-
-        Debug.Log("QuestObjective: " + objectiveName + " : " + passed);
-
-        return true;
+        value = false;
+        Debug.Log("QuestObjective - " + objectiveName + ": TryProgress() => " + value + "\nIsMet: " + IsMet);
+        return value;
     }
 
     private bool HasMetXGoal()
     {
-        if(progressAmount >= goalAmount) return true;
-        else return false;
+        bool value;
+
+        if(CurrentAmount >= amount) value = true;
+        else value = false;
+
+        Debug.Log("QuestObjective - " + objectiveName + ": HasMetXGoal() => " + value);
+        return value;
     }
 
     public void Reset()
     {
-        passed = false;
-        progressAmount = 0;
+        Debug.Log("QuestObjective - " + objectiveName + ": Reset()");
+        
+        IsMet = false;
+        CurrentAmount = 0;
     }
 
 }

@@ -13,15 +13,11 @@ MonoBehaviour:
   m_Name: Quest 1
   m_EditorClassIdentifier: 
   questName: Hunting For Adventure
-  questDescription: Perhaps you can help the tribe of hunters out some how.
   nodes:
   - nodeName: Looking For Adventure
     objectives:
     - objectiveName: Talk to Hope
-      objectiveType: 0
-      goalAmount: 0
       data: 
-    outcomes:
-    - outcomeType: 0
-      data: 
-  questCompleteResult: 
+      amount: 0
+      CurrentAmount: 0
+      IsMet: 1
