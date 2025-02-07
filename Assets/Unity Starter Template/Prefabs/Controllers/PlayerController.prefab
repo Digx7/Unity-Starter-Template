@@ -51,6 +51,8 @@ MonoBehaviour:
   runSetupOnEnable: 1
   characterToPossessOnEnable: {fileID: 0}
   cameraManager: {fileID: 0}
+  RequestLoadUIWidgetData: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
+  activeTimeLoreWidgetData: {fileID: 11400000, guid: 3ed8c7f6340570a4196bbebf2f3e0e76, type: 2}
 --- !u!114 &5268471269457950749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -176,6 +178,62 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0cc8fdba-d539-4f31-a1c2-bcabfdef8a9a
     m_ActionName: 'GamePlay/Fire2[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6651588715944437}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLore
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 21a8d948-a37e-4636-b269-8d144762f2a9
+    m_ActionName: 'GamePlay/Lore[/Keyboard/tab]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9a243ed9-fa50-450f-b227-1f4edb0603da
+    m_ActionName: 'UI/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: eec25a7f-4b00-4e4b-8fdd-840d2aa09a63
+    m_ActionName: 'UI/Submit[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0999fa55-6bc4-412c-a103-d1cdf584951a
+    m_ActionName: 'UI/Cancel[/Keyboard/escape]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc371daf-ae38-4df9-b609-de23a6fb70e1
+    m_ActionName: 'UI/ScrollWheel[/Mouse/scroll/y]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8b8d7eea-c393-4378-9337-cc3ce29c53c1
+    m_ActionName: 'UI/Point[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 966019e0-c566-4ea4-af10-f9f8b659faa1
+    m_ActionName: 'UI/Left Click[/Mouse/leftButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 543bfcb9-4879-4e20-a2ea-b19d66bebfaf
+    m_ActionName: 'UI/Middle Click[/Mouse/middleButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e7d08400-f294-47fd-a6e2-14132f57b75e
+    m_ActionName: 'UI/Right Click[/Mouse/rightButton]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b507231b-9d12-437f-b5b8-3962547696b8
+    m_ActionName: 'UI/Tracked Position[/Mouse/position]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: deef206d-3f15-48d8-971e-27c550d52f84
+    m_ActionName: UI/Tracked Orientation
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: GamePlay

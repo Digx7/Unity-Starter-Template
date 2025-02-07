@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 public class PlayerController : GameController
 {
     [SerializeField] protected CameraManager cameraManager;
+    [SerializeField] private UIWidgetDataChannel RequestLoadUIWidgetData;
+    [SerializeField] private UIWidgetData activeTimeLoreWidgetData;
     private PlayerCharacter possessedPlayer;
 
     // OVERRIDE FUNCTIONS ==============================================
@@ -165,6 +167,34 @@ public class PlayerController : GameController
             case InputActionPhase.Performed:
                 // Add Code here
                 possessedPlayer.Fire2();
+                break;
+            case InputActionPhase.Canceled:
+                // Add Code here
+                break;
+            default:
+                // Add Code here
+                break;
+        }
+    }
+
+    public void OnLore(InputAction.CallbackContext callbackContext)
+    {
+        
+        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+        switch (callbackContext.phase)
+        {
+            case InputActionPhase.Disabled:
+                // Add Code here
+                break;
+            case InputActionPhase.Waiting:
+                // Add Code here
+                break;
+            case InputActionPhase.Started:
+                // Add Code here
+                break;
+            case InputActionPhase.Performed:
+                // Add Code here
+                RequestLoadUIWidgetData.Raise(activeTimeLoreWidgetData);
                 break;
             case InputActionPhase.Canceled:
                 // Add Code here
