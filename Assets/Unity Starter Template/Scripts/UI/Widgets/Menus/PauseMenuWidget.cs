@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class PauseMenuWidget : UIMenu
 {
-    [SerializeField] string mainMenuScene;
+    [SerializeField] private SceneData mainMenuScene;
     [SerializeField] UIWidgetData optionsMenuWidgetData;
-    
-    [SerializeField] StringChannel requestChangeSceneChannel;
+
+    [SerializeField] SceneChannel requestChangeSceneChannel;
     [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
     [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
 

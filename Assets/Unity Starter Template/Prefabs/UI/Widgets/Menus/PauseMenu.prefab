@@ -188,9 +188,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0740ca98c49ba4646890b08e29965ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuScene: MainMenu
+  RequestUnloadWidgetDataChannel: {fileID: 11400000, guid: f451e53f6d34f5e4493c2c5bdbed8351, type: 2}
+  mainMenuScene:
+    sceneName: MainMenu
+    context:
+      SpawnPointID: 0
+      sceneCameraMode: 0
+      cameraLocation: {x: 0, y: 0, z: 0}
   optionsMenuWidgetData: {fileID: 11400000, guid: af002535ef531ba4fbe9388c7faf5892, type: 2}
-  requestChangeSceneChannel: {fileID: 11400000, guid: c2b143e2c53059e41863bec9247a6d46, type: 2}
+  requestChangeSceneChannel: {fileID: 11400000, guid: 26f882a2247e43243bf155e95833e3ac, type: 2}
   requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
   requestUnLoadUIWidgetChannel: {fileID: 11400000, guid: f451e53f6d34f5e4493c2c5bdbed8351, type: 2}
 --- !u!1 &4243290417768565307
@@ -442,7 +448,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 475105688228868513, guid: 879ede82d4abe724cb2c719eee40acbf, type: 3}
       propertyPath: m_fontSize
-      value: 115
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 2005282208601704212, guid: 879ede82d4abe724cb2c719eee40acbf, type: 3}
       propertyPath: m_Name

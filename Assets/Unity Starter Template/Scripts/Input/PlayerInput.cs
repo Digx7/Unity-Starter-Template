@@ -71,6 +71,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""9482c9f4-586c-4494-a984-4d88d5947560"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -225,6 +234,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";GamePad"",
                     ""action"": ""Lore"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""59fc2e8e-88b1-4a43-91de-0ba96b7dc4c2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard and Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19001054-1787-4832-bfa6-f417bbd32114"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";GamePad"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -586,6 +617,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_GamePlay_Fire1 = m_GamePlay.FindAction("Fire1", throwIfNotFound: true);
         m_GamePlay_Fire2 = m_GamePlay.FindAction("Fire2", throwIfNotFound: true);
         m_GamePlay_Lore = m_GamePlay.FindAction("Lore", throwIfNotFound: true);
+        m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
@@ -670,6 +702,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Fire1;
     private readonly InputAction m_GamePlay_Fire2;
     private readonly InputAction m_GamePlay_Lore;
+    private readonly InputAction m_GamePlay_Pause;
     public struct GamePlayActions
     {
         private @PlayerInput m_Wrapper;
@@ -679,6 +712,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Fire1 => m_Wrapper.m_GamePlay_Fire1;
         public InputAction @Fire2 => m_Wrapper.m_GamePlay_Fire2;
         public InputAction @Lore => m_Wrapper.m_GamePlay_Lore;
+        public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -703,6 +737,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Lore.started += instance.OnLore;
             @Lore.performed += instance.OnLore;
             @Lore.canceled += instance.OnLore;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -722,6 +759,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Lore.started -= instance.OnLore;
             @Lore.performed -= instance.OnLore;
             @Lore.canceled -= instance.OnLore;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -882,6 +922,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnFire1(InputAction.CallbackContext context);
         void OnFire2(InputAction.CallbackContext context);
         void OnLore(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
