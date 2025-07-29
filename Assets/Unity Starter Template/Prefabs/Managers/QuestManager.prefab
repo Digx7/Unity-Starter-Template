@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &9175013943766434991
+--- !u!1 &4706329841200283065
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,49 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1306848840679674399}
-  - component: {fileID: 7298548655864534639}
+  - component: {fileID: 4578362284690163380}
+  - component: {fileID: 6944617647525902516}
   m_Layer: 0
-  m_Name: SceneManager
+  m_Name: QuestManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1306848840679674399
+--- !u!4 &4578362284690163380
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9175013943766434991}
+  m_GameObject: {fileID: 4706329841200283065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 7.73, y: 1.54, z: -6.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7298548655864534639
+--- !u!114 &6944617647525902516
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9175013943766434991}
+  m_GameObject: {fileID: 4706329841200283065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b5bfa3741bed9f49b30a6ca2e3e93ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e1b07146fdc2ce4ab529bc3ad849bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeSceneChannel: {fileID: 11400000, guid: 26f882a2247e43243bf155e95833e3ac, type: 2}
-  addSceneChannel: {fileID: 11400000, guid: fc1a3f93aa279744bbaf53ce73200a89, type: 2}
-  removeSceneChannel: {fileID: 11400000, guid: 02ab55d994392294dba8e51558f03647, type: 2}
-  updateSceneContextChannel: {fileID: 11400000, guid: 2871c5a14ad31544f870d30c964b8ba3, type: 2}
-  OnChangeSceneEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  OnChangeSceneFinishedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  activeQuests: []
+  reciveQuestChannel: {fileID: 11400000, guid: 38e4c26a54bacfe4b92acdf56eac6726, type: 2}
+  tryProgressQuestChannel: {fileID: 11400000, guid: 2eacbb58e03a1a44184ae5eaeacb73e4, type: 2}

@@ -50,4 +50,13 @@ MonoBehaviour:
   changeSongOnSceneStart: 1
   requestJumpToSongChannel: {fileID: 11400000, guid: c0ab9c0a3239601448462bd578abfeb8, type: 2}
   songToJumpTo: {fileID: 11400000, guid: 659cc30cb8ee8e44cbd39a264b9ae0ba, type: 2}
+  context:
+    SpawnPointID: 0
+    sceneCameraMode: 0
+    cameraLocation: {x: 0, y: 0, z: 0}
+  updateContextChannel: {fileID: 11400000, guid: 2871c5a14ad31544f870d30c964b8ba3, type: 2}
+  contextOnSceneSetupChannel: {fileID: 11400000, guid: dd73f149655eb91458d830241974f12e, type: 2}
   triggerOnStart: 1
+  onSetup:
+    m_PersistentCalls:
+      m_Calls: []
