@@ -1,29 +1,49 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class GamePlay : GameMode
+namespace Digx7.Zygote
 {
-    [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
-    [SerializeField] private Channel requestLoadSaveDataChannel;
-    [SerializeField] private UIWidgetData pauseMenuWidgetData;
-    
-    public override void Setup()
+    public class GamePlay : GameMode
     {
-        // add code here
+        #region Variables
+
+        [Header("Variables")]
+        [SerializeField] private UIWidgetData _pauseMenuWidgetData;
         
-        base.Setup();
+        [Header("Incoming Channels")]
+        [SerializeField] private UIWidgetDataChannel _request_LoadUIWidget_Channel;
+        [SerializeField] private Channel _request_LoadSaveData_Channel;
 
-        requestLoadSaveDataChannel.Raise();
-    }
+        // [Header("Outgoing Events")]
 
-    public override void Teardown()
-    {
-        // add code here
-        
-        base.Teardown();
-    }
+        #endregion
 
-    protected override void OnOptionsMenuQuit()
-    {
-        requestLoadUIWidgetChannel.Raise(pauseMenuWidgetData);
+        #region Setup
+
+        public override void Setup()
+        {
+            // add code here
+            
+            base.Setup();
+
+            _request_LoadSaveData_Channel.Raise();
+        }
+
+        public override void Teardown()
+        {
+            // add code here
+            
+            base.Teardown();
+        }
+
+        #endregion
+
+        #region Channel Responses
+        protected override void OnRecieve_OnOptionsMenuQuit()
+        {
+            _request_LoadUIWidget_Channel.Raise(pauseMenuWidgetData);
+        }
+
+        #endregion
     }
 }

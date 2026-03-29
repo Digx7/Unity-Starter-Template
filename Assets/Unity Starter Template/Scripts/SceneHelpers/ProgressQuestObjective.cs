@@ -3,13 +3,16 @@ using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
-public class ProgressQuestObjective : MonoBehaviour
+namespace Digx7.Zygote
 {
-    public QuestObjectiveProgress quest;
-    public QuestObjectiveProgressChannel giveQuestChannel;
-
-    public void ProgressQuest()
+    public class ProgressQuestObjective : MonoBehaviour
     {
-        giveQuestChannel.Raise(quest);
+        public QuestObjectiveProgress quest;
+        public QuestObjectiveProgressChannel giveQuestChannel;
+
+        public void ProgressQuest()
+        {
+            giveQuestChannel.Raise(quest);
+        }
     }
 }

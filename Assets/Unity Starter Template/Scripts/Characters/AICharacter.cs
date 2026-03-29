@@ -1,6 +1,9 @@
 using UnityEngine;
 
-public class AICharacter : Character
+namespace Digx7.Zygote
 {
-    
+    public class AICharacter : Character
+    {
+        
+    }
 }

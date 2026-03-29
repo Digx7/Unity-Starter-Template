@@ -6,110 +6,112 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 // Change
-
-public class SceneManager : Singleton<SceneManager>
+namespace Digx7.Zygote
 {
-    [SerializeField] private SceneChannel changeSceneChannel;
-    [SerializeField] private SceneChannel  addSceneChannel;
-    [SerializeField] private SceneChannel  removeSceneChannel;
-    [SerializeField] private SceneContextChannel  updateSceneContextChannel;
-
-    public UnityEvent OnChangeSceneEvent;
-    public UnityEvent OnChangeSceneFinishedEvent;
-
-    private bool onChangeSceneCoroutineIsGoing = false;
-    private bool onChangeSceneFinishedCoroutineIsGoing = false;
-    
-    // CHANELS =================================
-
-    private void OnEnable()
+    public class SceneManager : Singleton<SceneManager>
     {
-        SetupChannels();
-    }
+        [SerializeField] private SceneChannel changeSceneChannel;
+        [SerializeField] private SceneChannel  addSceneChannel;
+        [SerializeField] private SceneChannel  removeSceneChannel;
+        [SerializeField] private SceneContextChannel  updateSceneContextChannel;
 
-    private void OnDisable()
-    {
-        TearDownChannels();
-    }
+        public UnityEvent OnChangeSceneEvent;
+        public UnityEvent OnChangeSceneFinishedEvent;
 
-    private void SetupChannels()
-    {
-        changeSceneChannel.channelEvent.AddListener(OnChangeScene);
-        addSceneChannel.channelEvent.AddListener(OnAddScene);
-        removeSceneChannel.channelEvent.AddListener(UnloadScene);
+        private bool onChangeSceneCoroutineIsGoing = false;
+        private bool onChangeSceneFinishedCoroutineIsGoing = false;
+        
+        // CHANELS =================================
 
-        UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnAcitveSceneChanged;
-    }
+        private void OnEnable()
+        {
+            SetupChannels();
+        }
 
-    private void TearDownChannels()
-    {
-        changeSceneChannel.channelEvent.RemoveListener(OnChangeScene);
-        addSceneChannel.channelEvent.RemoveListener(OnAddScene);
-        removeSceneChannel.channelEvent.RemoveListener(UnloadScene);
+        private void OnDisable()
+        {
+            TearDownChannels();
+        }
 
-        UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnAcitveSceneChanged;
-    }
+        private void SetupChannels()
+        {
+            changeSceneChannel.channelEvent.AddListener(OnChangeScene);
+            addSceneChannel.channelEvent.AddListener(OnAddScene);
+            removeSceneChannel.channelEvent.AddListener(UnloadScene);
 
-    // CHANNEL RESPONES =================================
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnAcitveSceneChanged;
+        }
 
-    private void OnChangeScene(SceneData data)
-    {
-        if(onChangeSceneCoroutineIsGoing) return;
+        private void TearDownChannels()
+        {
+            changeSceneChannel.channelEvent.RemoveListener(OnChangeScene);
+            addSceneChannel.channelEvent.RemoveListener(OnAddScene);
+            removeSceneChannel.channelEvent.RemoveListener(UnloadScene);
 
-        Debug.Log("SceneManager: OnChangeScene");
-        OnChangeSceneEvent.Invoke();
-        StartCoroutine(OnChangeSceneCoroutine(data));
-    }
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnAcitveSceneChanged;
+        }
 
-    private void OnAddScene(SceneData data)
-    {
-        LoadSceneMode mode = LoadSceneMode.Additive;
-        UpdateContext(data.context);
-        LoadScene(data.sceneName, mode);
-    }
+        // CHANNEL RESPONES =================================
 
-    private void UpdateContext(SceneContext newContext)
-    {
-        updateSceneContextChannel.Raise(newContext);
-    }
+        private void OnChangeScene(SceneData data)
+        {
+            if(onChangeSceneCoroutineIsGoing) return;
 
-    private void OnAcitveSceneChanged(Scene current, Scene next)
-    {
-        if(onChangeSceneFinishedCoroutineIsGoing) return;
+            Debug.Log("SceneManager: OnChangeScene");
+            OnChangeSceneEvent.Invoke();
+            StartCoroutine(OnChangeSceneCoroutine(data));
+        }
 
-        StartCoroutine(OnChangeSceneFinishedCoroutine());
-    }
+        private void OnAddScene(SceneData data)
+        {
+            LoadSceneMode mode = LoadSceneMode.Additive;
+            UpdateContext(data.context);
+            LoadScene(data.sceneName, mode);
+        }
 
-    // MAIN FUNCTIONS =================================
+        private void UpdateContext(SceneContext newContext)
+        {
+            updateSceneContextChannel.Raise(newContext);
+        }
 
-    private void LoadScene(string name, LoadSceneMode mode = LoadSceneMode.Single)
-    {
-        Debug.Log("SceneManger: LoadScene()");
-        // UnityEngine.SceneManagement.SceneManager.LoadScene(name, mode);
-        UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name, mode);
-    }
+        private void OnAcitveSceneChanged(Scene current, Scene next)
+        {
+            if(onChangeSceneFinishedCoroutineIsGoing) return;
 
-    private void UnloadScene(SceneData data)
-    {
-        UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(data.sceneName);
-    }
+            StartCoroutine(OnChangeSceneFinishedCoroutine());
+        }
 
-    // COROUTINES ======================================
+        // MAIN FUNCTIONS =================================
 
-    private IEnumerator OnChangeSceneCoroutine(SceneData data)
-    {
-        onChangeSceneCoroutineIsGoing = true;
-        yield return new WaitForSeconds(0.5f);
-        UpdateContext(data.context);
-        LoadScene(data.sceneName);
-        onChangeSceneCoroutineIsGoing = false;
-    }
+        private void LoadScene(string name, LoadSceneMode mode = LoadSceneMode.Single)
+        {
+            Debug.Log("SceneManger: LoadScene()");
+            // UnityEngine.SceneManagement.SceneManager.LoadScene(name, mode);
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(name, mode);
+        }
 
-    private IEnumerator OnChangeSceneFinishedCoroutine()
-    {
-        onChangeSceneFinishedCoroutineIsGoing = true;
-        yield return new WaitForSeconds(0.5f);
-        OnChangeSceneFinishedEvent.Invoke();
-        onChangeSceneFinishedCoroutineIsGoing = false;
+        private void UnloadScene(SceneData data)
+        {
+            UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(data.sceneName);
+        }
+
+        // COROUTINES ======================================
+
+        private IEnumerator OnChangeSceneCoroutine(SceneData data)
+        {
+            onChangeSceneCoroutineIsGoing = true;
+            yield return new WaitForSeconds(0.5f);
+            UpdateContext(data.context);
+            LoadScene(data.sceneName);
+            onChangeSceneCoroutineIsGoing = false;
+        }
+
+        private IEnumerator OnChangeSceneFinishedCoroutine()
+        {
+            onChangeSceneFinishedCoroutineIsGoing = true;
+            yield return new WaitForSeconds(0.5f);
+            OnChangeSceneFinishedEvent.Invoke();
+            onChangeSceneFinishedCoroutineIsGoing = false;
+        }
     }
 }

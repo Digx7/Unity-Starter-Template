@@ -3,13 +3,16 @@ using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
-public class GiveQuest : MonoBehaviour
+namespace Digx7.Zygote
 {
-    public QuestData quest;
-    public QuestDataChannel giveQuestChannel;
-
-    public void GiveNewQuest()
+    public class GiveQuest : MonoBehaviour
     {
-        giveQuestChannel.Raise(quest);
+        public QuestData quest;
+        public QuestDataChannel giveQuestChannel;
+
+        public void GiveNewQuest()
+        {
+            giveQuestChannel.Raise(quest);
+        }
     }
 }

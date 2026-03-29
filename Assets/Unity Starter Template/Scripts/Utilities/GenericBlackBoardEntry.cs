@@ -2,28 +2,31 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-[System.Serializable]
-public class GenericBlackBoardEntry 
+namespace Digx7.Zygote
 {
-    public object value;
-
-    public GenericBlackBoardEntry()
+    [System.Serializable]
+    public class GenericBlackBoardEntry 
     {
-        value = new object();
-    }
+        public object value;
 
-    public virtual T GetEntryValue<T>()
-    {
-        return (T)value;
-    }
+        public GenericBlackBoardEntry()
+        {
+            value = new object();
+        }
 
-    public virtual void SetEntryValue<T>(T newValue)
-    {
-        value = newValue;
-    }
+        public virtual T GetEntryValue<T>()
+        {
+            return (T)value;
+        }
 
-    public virtual string ToString()
-    {
-        return ("" + value);
+        public virtual void SetEntryValue<T>(T newValue)
+        {
+            value = newValue;
+        }
+
+        public virtual string ToString()
+        {
+            return ("" + value);
+        }
     }
 }

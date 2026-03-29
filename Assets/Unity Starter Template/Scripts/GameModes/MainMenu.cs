@@ -1,28 +1,50 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class MainMenu : GameMode
+namespace Digx7.Zygote
 {
-    [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
-    [SerializeField] private Channel requestClearAllUIWidgetChannel;
-    [SerializeField] private UIWidgetData mainMenuWidgetData;
-    [SerializeField] private UIWidgetData splashScreenWidgetData;
-    public override void Setup()
+    public class MainMenu : GameMode
     {
-        // add code here
-        requestClearAllUIWidgetChannel.Raise();
-        requestLoadUIWidgetChannel.Raise(splashScreenWidgetData);
-        base.Setup();
-    }
-
-    public override void Teardown()
-    {
-        // add code here
+        #region Variables
         
-        base.Teardown();
-    }
+        [Header("Variables")]
+        [SerializeField] private UIWidgetData mainMenuWidgetData;
+        [SerializeField] private UIWidgetData splashScreenWidgetData;
 
-    protected override void OnOptionsMenuQuit()
-    {
-        requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
+        [Header("Incoming Channels")]
+        [SerializeField] private UIWidgetDataChannel _request_LoadUIWidget_Channel;
+        [SerializeField] private Channel _request_ClearAllUIWidget_Channel;
+        
+        // [Header("Outgoing Events")]
+
+        #endregion
+
+        #region Setup
+        public override void Setup()
+        {
+            // add code here
+            _request_ClearAllUIWidget_Channel.Raise();
+            _request_LoadUIWidget_Channel.Raise(splashScreenWidgetData);
+            base.Setup();
+        }
+
+        public override void Teardown()
+        {
+            // add code here
+            
+            base.Teardown();
+        }
+
+        #endregion
+
+        #region Channel Responses
+
+        protected override void OnRecieve_OnOptionsMenuQuit()
+        {
+            _request_LoadUIWidget_Channel.Raise(mainMenuWidgetData);
+        }
+        #endregion
+        
+
     }
 }

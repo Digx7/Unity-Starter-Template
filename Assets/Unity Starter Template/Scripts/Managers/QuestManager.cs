@@ -3,69 +3,72 @@ using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
 
-public class QuestManager : Singleton<QuestManager>
+namespace Digx7.Zygote
 {
-    public List<QuestData> activeQuests;
-    public QuestDataChannel reciveQuestChannel;
-    public QuestObjectiveProgressChannel tryProgressQuestChannel;
-
-    public void OnEnable()
+    public class QuestManager : Singleton<QuestManager>
     {
-        reciveQuestChannel.channelEvent.AddListener(GiveQuest);
-        tryProgressQuestChannel.channelEvent.AddListener(TryProgressQuest);
-    }
+        public List<QuestData> activeQuests;
+        public QuestDataChannel reciveQuestChannel;
+        public QuestObjectiveProgressChannel tryProgressQuestChannel;
 
-    public void OnDisable()
-    {
-        reciveQuestChannel.channelEvent.RemoveListener(GiveQuest);
-        tryProgressQuestChannel.channelEvent.RemoveListener(TryProgressQuest);
-    }
-
-    public void GiveQuest(QuestData newQuest)
-    {
-        if(activeQuests.Contains(newQuest))
+        public void OnEnable()
         {
-            Debug.Log("QuestManager: Something tried to give the quest " + newQuest.questName + "\nBut that quest is already active.");
-            return;
+            reciveQuestChannel.channelEvent.AddListener(GiveQuest);
+            tryProgressQuestChannel.channelEvent.AddListener(TryProgressQuest);
         }
 
-        newQuest.ResetQuest();
-        activeQuests.Add(newQuest);
-
-        Debug.Log("QuestManager: Added quest: " + newQuest.ToString());
-    }
-
-    public void TryProgressQuest(QuestObjectiveProgress progress)
-    {
-        int indexOfFinishedQuest = -1;
-        
-        for (int i = 0; i < activeQuests.Count; i++)
+        public void OnDisable()
         {
-            if(activeQuests[i].TryProgress(progress))
+            reciveQuestChannel.channelEvent.RemoveListener(GiveQuest);
+            tryProgressQuestChannel.channelEvent.RemoveListener(TryProgressQuest);
+        }
+
+        public void GiveQuest(QuestData newQuest)
+        {
+            if(activeQuests.Contains(newQuest))
             {
-                if(activeQuests[i].IsComplete())
+                Debug.Log("QuestManager: Something tried to give the quest " + newQuest.questName + "\nBut that quest is already active.");
+                return;
+            }
+
+            newQuest.ResetQuest();
+            activeQuests.Add(newQuest);
+
+            Debug.Log("QuestManager: Added quest: " + newQuest.ToString());
+        }
+
+        public void TryProgressQuest(QuestObjectiveProgress progress)
+        {
+            int indexOfFinishedQuest = -1;
+            
+            for (int i = 0; i < activeQuests.Count; i++)
+            {
+                if(activeQuests[i].TryProgress(progress))
                 {
-                    indexOfFinishedQuest = i;
+                    if(activeQuests[i].IsComplete())
+                    {
+                        indexOfFinishedQuest = i;
+                    }
+                    else
+                    {
+                        Debug.Log("QuestManager: Progressed a quest but did not finish it");
+                    }
                 }
-                else
-                {
-                    Debug.Log("QuestManager: Progressed a quest but did not finish it");
-                }
+            }
+
+            if(indexOfFinishedQuest != -1)
+            {
+                FinishQuestAtIndex(indexOfFinishedQuest);
             }
         }
 
-        if(indexOfFinishedQuest != -1)
+        private void FinishQuestAtIndex(int index)
         {
-            FinishQuestAtIndex(indexOfFinishedQuest);
+            QuestData finishedQuest = activeQuests[index];
+            finishedQuest.Finish();
+
+            Debug.Log("QuestManager: Finished Quest: " + finishedQuest.ToString());
+            activeQuests.RemoveAt(index);
         }
-    }
-
-    private void FinishQuestAtIndex(int index)
-    {
-        QuestData finishedQuest = activeQuests[index];
-        finishedQuest.Finish();
-
-        Debug.Log("QuestManager: Finished Quest: " + finishedQuest.ToString());
-        activeQuests.RemoveAt(index);
     }
 }

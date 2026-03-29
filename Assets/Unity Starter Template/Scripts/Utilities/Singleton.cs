@@ -1,19 +1,22 @@
 using UnityEngine;
 
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+namespace Digx7.Zygote
 {
-    public static T Instance { get; private set; }
-
-    public virtual void Awake()
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
-        if (Instance != null && Instance != this)
-        {
-            Debug.LogWarning("Another Singleton " + Instance + " was found so deleting this one");
-            Destroy(this.gameObject);
-            return;
-        }
-        DontDestroyOnLoad(this);
+        public static T Instance { get; private set; }
 
-        Instance = this as T;
+        public virtual void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Debug.LogWarning("Another Singleton " + Instance + " was found so deleting this one");
+                Destroy(this.gameObject);
+                return;
+            }
+            DontDestroyOnLoad(this);
+
+            Instance = this as T;
+        }
     }
 }

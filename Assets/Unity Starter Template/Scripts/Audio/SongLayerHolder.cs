@@ -3,79 +3,82 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class SongLayerHolder : MonoBehaviour
+namespace Digx7.Zygote
 {
-    [SerializeField] private int layerNumber;
-    [SerializeField] private AudioClip clip;
-    [SerializeField] private AudioSource audioSource;
-
-    private const float FADEINSPEED = 0.5f;
-    private const float FADEOUTSPEED = 0.5f;
-    
-
-    public void Setup(int newLayerNumber, AudioClip newClip, bool shouldLoop = false)
+    public class SongLayerHolder : MonoBehaviour
     {
-        layerNumber = newLayerNumber;
-        clip = newClip;
-        audioSource.clip = clip;
-        audioSource.volume = 0;
-        audioSource.loop = shouldLoop;
-    }
+        [SerializeField] private int layerNumber;
+        [SerializeField] private AudioClip clip;
+        [SerializeField] private AudioSource audioSource;
 
-    public void StartLayer()
-    {
-        audioSource.Play();
-    }
+        private const float FADEINSPEED = 0.5f;
+        private const float FADEOUTSPEED = 0.5f;
+        
 
-    public void StopLayer()
-    {
-        FadeOut();
-    }
-
-    public void PauseOrResume()
-    {
-        if(audioSource.isPlaying)
+        public void Setup(int newLayerNumber, AudioClip newClip, bool shouldLoop = false)
         {
-            audioSource.Pause();
+            layerNumber = newLayerNumber;
+            clip = newClip;
+            audioSource.clip = clip;
+            audioSource.volume = 0;
+            audioSource.loop = shouldLoop;
         }
-        else
+
+        public void StartLayer()
         {
-            audioSource.UnPause();
+            audioSource.Play();
         }
-    }
 
-    public void SetVolume(float volume)
-    {
-        audioSource.volume = volume;
-    }
-
-    public void FadeIn()
-    {
-        StartCoroutine(FadeInEnum());
-    }
-
-    public void FadeOut()
-    {
-        StartCoroutine(FadeOutEnum());
-    }
-
-    IEnumerator FadeInEnum()
-    {
-        while(audioSource.volume < 1.0f)
+        public void StopLayer()
         {
-            SetVolume(audioSource.volume + (FADEINSPEED * Time.deltaTime));
-            yield return null;
+            FadeOut();
         }
-        SetVolume(1.0f);
-    }
 
-    IEnumerator FadeOutEnum()
-    {
-        while(audioSource.volume > 0.0f)
+        public void PauseOrResume()
         {
-            SetVolume(audioSource.volume - (FADEINSPEED * Time.deltaTime));
-            yield return null;
+            if(audioSource.isPlaying)
+            {
+                audioSource.Pause();
+            }
+            else
+            {
+                audioSource.UnPause();
+            }
         }
-        SetVolume(0.0f);
+
+        public void SetVolume(float volume)
+        {
+            audioSource.volume = volume;
+        }
+
+        public void FadeIn()
+        {
+            StartCoroutine(FadeInEnum());
+        }
+
+        public void FadeOut()
+        {
+            StartCoroutine(FadeOutEnum());
+        }
+
+        IEnumerator FadeInEnum()
+        {
+            while(audioSource.volume < 1.0f)
+            {
+                SetVolume(audioSource.volume + (FADEINSPEED * Time.deltaTime));
+                yield return null;
+            }
+            SetVolume(1.0f);
+        }
+
+        IEnumerator FadeOutEnum()
+        {
+            while(audioSource.volume > 0.0f)
+            {
+                SetVolume(audioSource.volume - (FADEINSPEED * Time.deltaTime));
+                yield return null;
+            }
+            SetVolume(0.0f);
+        }
     }
 }

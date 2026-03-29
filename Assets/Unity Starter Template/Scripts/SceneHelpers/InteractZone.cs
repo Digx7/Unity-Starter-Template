@@ -1,54 +1,57 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BoxCollider))]
-public class InteractZone : MonoBehaviour
+namespace Digx7.Zygote
 {
-
-    public string playerTag = "Player";
-    public Channel onPlayerTryInteractChannel;
-    public UnityEvent onPlayerEnter;
-    public UnityEvent onPlayerLeave;
-    public UnityEvent onPlayerInteract;
-
-    private bool isPlayerInZone = false;
-
-    private void OnEnable()
+    [RequireComponent(typeof(BoxCollider))]
+    public class InteractZone : MonoBehaviour
     {
-        onPlayerTryInteractChannel.channelEvent.AddListener(TryInteract);
-    }
 
-    private void OnDisable()
-    {
-        onPlayerTryInteractChannel.channelEvent.RemoveListener(TryInteract);
-    }
+        public string playerTag = "Player";
+        public Channel onPlayerTryInteractChannel;
+        public UnityEvent onPlayerEnter;
+        public UnityEvent onPlayerLeave;
+        public UnityEvent onPlayerInteract;
 
-    public void TryInteract()
-    {
-        if(isPlayerInZone) 
+        private bool isPlayerInZone = false;
+
+        private void OnEnable()
         {
-            onPlayerInteract.Invoke();
-            Debug.Log("InteractZone: Interact");
+            onPlayerTryInteractChannel.channelEvent.AddListener(TryInteract);
         }
-    }
 
-    public void OnTriggerEnter(Collider col)
-    {
-        if(col.tag == playerTag) 
+        private void OnDisable()
         {
-            Debug.Log("InteractZone: Player Entered Zone");
-            onPlayerEnter.Invoke();
-            isPlayerInZone = true;
+            onPlayerTryInteractChannel.channelEvent.RemoveListener(TryInteract);
         }
-    }
 
-    public void OnTriggerExit(Collider col)
-    {
-        if(col.tag == playerTag) 
+        public void TryInteract()
         {
-            Debug.Log("InteractZone: Player Left Zone");
-            onPlayerLeave.Invoke();
-            isPlayerInZone = false;
+            if(isPlayerInZone) 
+            {
+                onPlayerInteract.Invoke();
+                Debug.Log("InteractZone: Interact");
+            }
+        }
+
+        public void OnTriggerEnter(Collider col)
+        {
+            if(col.tag == playerTag) 
+            {
+                Debug.Log("InteractZone: Player Entered Zone");
+                onPlayerEnter.Invoke();
+                isPlayerInZone = true;
+            }
+        }
+
+        public void OnTriggerExit(Collider col)
+        {
+            if(col.tag == playerTag) 
+            {
+                Debug.Log("InteractZone: Player Left Zone");
+                onPlayerLeave.Invoke();
+                isPlayerInZone = false;
+            }
         }
     }
 }

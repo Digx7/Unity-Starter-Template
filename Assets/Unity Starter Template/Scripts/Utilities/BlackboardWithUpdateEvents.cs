@@ -4,76 +4,79 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class BlackboardWithUpdateEvents
+namespace Digx7.Zygote
 {
-    public Dictionary<string, GenericBlackBoardEntryWithUpdateEvents> entries;
-
-    public BlackboardWithUpdateEvents()
+    [System.Serializable]
+    public class BlackboardWithUpdateEvents
     {
-        entries = new Dictionary<string, GenericBlackBoardEntryWithUpdateEvents>();
-    }
+        public Dictionary<string, GenericBlackBoardEntryWithUpdateEvents> entries;
 
-    public T GetData<T>(string key)
-    {
-        if(!entries.ContainsKey(key))
+        public BlackboardWithUpdateEvents()
         {
-            CreateDefaultEntry<T>(key);
+            entries = new Dictionary<string, GenericBlackBoardEntryWithUpdateEvents>();
         }
 
-        return entries[key].GetEntryValue<T>();
-    }
-
-    public void UpdateData<T>(string key, T value)
-    {
-        if(!entries.ContainsKey(key))
+        public T GetData<T>(string key)
         {
-            CreateDefaultEntry<T>(key);
-        }
-        
-        entries[key].SetEntryValue<T>(value);
-    }
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<T>(key);
+            }
 
-    public void ClearAllData()
-    {
-        entries.Clear();
-    }
-
-    public void SubscribeToUpdates(string key, UnityAction<object> call)
-    {
-        if(!entries.ContainsKey(key))
-        {
-            CreateDefaultEntry<object>(key);
+            return entries[key].GetEntryValue<T>();
         }
 
-        entries[key].OnEntryChanged.AddListener(call);
-    }
-
-    public void UnSubscribeToUpdates(string key, UnityAction<object> call)
-    {
-        if(!entries.ContainsKey(key))
+        public void UpdateData<T>(string key, T value)
         {
-            CreateDefaultEntry<object>(key);
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<T>(key);
+            }
+            
+            entries[key].SetEntryValue<T>(value);
         }
 
-        entries[key].OnEntryChanged.RemoveListener(call);
-    }
-
-    protected void CreateDefaultEntry<T>(string key)
-    {
-        entries[key] = new GenericBlackBoardEntryWithUpdateEvents();
-    }
-
-    public void PrintAllEntries()
-    {
-        Debug.Log("Printing All Entries");
-        if(entries.Count == 0) Debug.Log("No Entries found");
-        
-        foreach (KeyValuePair<string, GenericBlackBoardEntryWithUpdateEvents> entry in entries)
+        public void ClearAllData()
         {
-            string key = entry.Key;
-            GenericBlackBoardEntryWithUpdateEvents value = entry.Value;
-            Debug.Log("" + key + " : " + value.ToString());
+            entries.Clear();
+        }
+
+        public void SubscribeToUpdates(string key, UnityAction<object> call)
+        {
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<object>(key);
+            }
+
+            entries[key].OnEntryChanged.AddListener(call);
+        }
+
+        public void UnSubscribeToUpdates(string key, UnityAction<object> call)
+        {
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<object>(key);
+            }
+
+            entries[key].OnEntryChanged.RemoveListener(call);
+        }
+
+        protected void CreateDefaultEntry<T>(string key)
+        {
+            entries[key] = new GenericBlackBoardEntryWithUpdateEvents();
+        }
+
+        public void PrintAllEntries()
+        {
+            Debug.Log("Printing All Entries");
+            if(entries.Count == 0) Debug.Log("No Entries found");
+            
+            foreach (KeyValuePair<string, GenericBlackBoardEntryWithUpdateEvents> entry in entries)
+            {
+                string key = entry.Key;
+                GenericBlackBoardEntryWithUpdateEvents value = entry.Value;
+                Debug.Log("" + key + " : " + value.ToString());
+            }
         }
     }
 }

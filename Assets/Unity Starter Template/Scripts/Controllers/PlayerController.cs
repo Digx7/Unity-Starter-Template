@@ -1,251 +1,254 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerController : GameController
+namespace Digx7.Zygote
 {
-    [SerializeField] protected CameraManager cameraManager;
-    [SerializeField] private UIWidgetDataChannel RequestLoadUIWidgetData;
-    [SerializeField] private UIWidgetData activeTimeLoreWidgetData;
-    [SerializeField] private UIWidgetData pauseMenuWidgetData;
-    private PlayerCharacter possessedPlayer;
-
-    // OVERRIDE FUNCTIONS ==============================================
-
-    public override bool PossessCharacter(Character newCharacter)
+    public class PlayerController : GameController
     {
-        possessedPlayer = newCharacter as PlayerCharacter;
+        [SerializeField] protected CameraManager cameraManager;
+        [SerializeField] private UIWidgetDataChannel RequestLoadUIWidgetData;
+        [SerializeField] private UIWidgetData activeTimeLoreWidgetData;
+        [SerializeField] private UIWidgetData pauseMenuWidgetData;
+        private PlayerCharacter possessedPlayer;
 
-        return base.PossessCharacter(newCharacter);
-    }
+        // OVERRIDE FUNCTIONS ==============================================
 
-    public override void ForcePossessCharacter(Character newCharacter)
-    {
-        possessedPlayer = newCharacter as PlayerCharacter;
-
-        base.ForcePossessCharacter(newCharacter);
-    }
-
-    // CAMERA FUNCTIONS ===================================================
-
-    public bool ConnectCameraManager(CameraManager newCameraManager)
-    {
-        if(!IsCameraManagerValid(newCameraManager)) return false;
-
-        if(newCameraManager == cameraManager) return true;
-        
-        if(cameraManager != null)
+        public override bool PossessCharacter(Character newCharacter)
         {
-            Debug.LogWarning("The CameraManager: " + newCameraManager + " tried to connect to the PlayerController " + this + " but it is already connected to the CameraManager: " + cameraManager + ".  If this was intentional use ForceConnectCameraManager instead");
-            return false;
+            possessedPlayer = newCharacter as PlayerCharacter;
+
+            return base.PossessCharacter(newCharacter);
         }
 
-        cameraManager = newCameraManager;
-        cameraManager.SetID(ID);
-        return true;
-    }
-
-    public void ForceConnectCameraManager(CameraManager newCameraManager)
-    {
-        if(!IsCameraManagerValid(newCameraManager))return;
-        if(newCameraManager == cameraManager)return;
-
-        cameraManager = newCameraManager;
-        cameraManager.SetID(ID);
-    }
-
-    private bool IsCameraManagerValid(CameraManager newCameraManager)
-    {
-        if(newCameraManager == null) return false;
-        else return true;
-    }
-
-    // PLAYER INPUT FUNCTIONS =============================================
-
-    public void OnMove(InputAction.CallbackContext callbackContext)
-    {
-        
-        // The direction the player is inputing on the keyboard or gamepad
-        Vector2 direction = callbackContext.ReadValue<Vector2>();
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+        public override void ForcePossessCharacter(Character newCharacter)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                possessedPlayer.UpdateDesiredMoveDirection(direction);
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                possessedPlayer.UpdateDesiredMoveDirection(direction);
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                possessedPlayer.UpdateDesiredMoveDirection(new Vector2(0,0));
-                break;
-            default:
-                // Add Code here
-                break;
-        }
-    }
+            possessedPlayer = newCharacter as PlayerCharacter;
 
-    public void OnJump(InputAction.CallbackContext callbackContext)
-    {
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+            base.ForcePossessCharacter(newCharacter);
+        }
+
+        // CAMERA FUNCTIONS ===================================================
+
+        public bool ConnectCameraManager(CameraManager newCameraManager)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                possessedPlayer.Jump();
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                break;
-            default:
-                // Add Code here
-                break;
-        }
-    }
+            if(!IsCameraManagerValid(newCameraManager)) return false;
 
-    public void OnFire1(InputAction.CallbackContext callbackContext)
-    {
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+            if(newCameraManager == cameraManager) return true;
+            
+            if(cameraManager != null)
+            {
+                Debug.LogWarning("The CameraManager: " + newCameraManager + " tried to connect to the PlayerController " + this + " but it is already connected to the CameraManager: " + cameraManager + ".  If this was intentional use ForceConnectCameraManager instead");
+                return false;
+            }
+
+            cameraManager = newCameraManager;
+            cameraManager.SetID(ID);
+            return true;
+        }
+
+        public void ForceConnectCameraManager(CameraManager newCameraManager)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                possessedPlayer.Fire1();
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                break;
-            default:
-                // Add Code here
-                break;
-        }
-    }
+            if(!IsCameraManagerValid(newCameraManager))return;
+            if(newCameraManager == cameraManager)return;
 
-    public void OnFire2(InputAction.CallbackContext callbackContext)
-    {
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+            cameraManager = newCameraManager;
+            cameraManager.SetID(ID);
+        }
+
+        private bool IsCameraManagerValid(CameraManager newCameraManager)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                possessedPlayer.Fire2();
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                break;
-            default:
-                // Add Code here
-                break;
+            if(newCameraManager == null) return false;
+            else return true;
         }
-    }
 
-    public void OnLore(InputAction.CallbackContext callbackContext)
-    {
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+        // PLAYER INPUT FUNCTIONS =============================================
+
+        public void OnMove(InputAction.CallbackContext callbackContext)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                RequestLoadUIWidgetData.Raise(activeTimeLoreWidgetData);
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                break;
-            default:
-                // Add Code here
-                break;
+            
+            // The direction the player is inputing on the keyboard or gamepad
+            Vector2 direction = callbackContext.ReadValue<Vector2>();
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    possessedPlayer.UpdateDesiredMoveDirection(direction);
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    possessedPlayer.UpdateDesiredMoveDirection(direction);
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    possessedPlayer.UpdateDesiredMoveDirection(new Vector2(0,0));
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
         }
-    }
 
-    public void OnPause(InputAction.CallbackContext callbackContext)
-    {
-        
-        // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
-        switch (callbackContext.phase)
+        public void OnJump(InputAction.CallbackContext callbackContext)
         {
-            case InputActionPhase.Disabled:
-                // Add Code here
-                break;
-            case InputActionPhase.Waiting:
-                // Add Code here
-                break;
-            case InputActionPhase.Started:
-                // Add Code here
-                break;
-            case InputActionPhase.Performed:
-                // Add Code here
-                RequestLoadUIWidgetData.Raise(pauseMenuWidgetData);
-                break;
-            case InputActionPhase.Canceled:
-                // Add Code here
-                break;
-            default:
-                // Add Code here
-                break;
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    possessedPlayer.Jump();
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
         }
-    }
 
-    public void OnDeviceLost(PlayerInput playerInput)
-    {
+        public void OnFire1(InputAction.CallbackContext callbackContext)
+        {
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    possessedPlayer.Fire1();
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
+        }
 
-    }
+        public void OnFire2(InputAction.CallbackContext callbackContext)
+        {
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    possessedPlayer.Fire2();
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
+        }
 
-    public void OnDeviceRegained(PlayerInput playerInput)
-    {
+        public void OnLore(InputAction.CallbackContext callbackContext)
+        {
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    RequestLoadUIWidgetData.Raise(activeTimeLoreWidgetData);
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
+        }
 
-    }
+        public void OnPause(InputAction.CallbackContext callbackContext)
+        {
+            
+            // For more on the InputActionPhase see: https://docs.unity3d.com/Packages/com.unity.inputsystem@1.0/api/UnityEngine.InputSystem.InputActionPhase.html
+            switch (callbackContext.phase)
+            {
+                case InputActionPhase.Disabled:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Waiting:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Started:
+                    // Add Code here
+                    break;
+                case InputActionPhase.Performed:
+                    // Add Code here
+                    RequestLoadUIWidgetData.Raise(pauseMenuWidgetData);
+                    break;
+                case InputActionPhase.Canceled:
+                    // Add Code here
+                    break;
+                default:
+                    // Add Code here
+                    break;
+            }
+        }
 
-    public void OnControlsChanged(PlayerInput playerInput)
-    {
+        public void OnDeviceLost(PlayerInput playerInput)
+        {
 
+        }
+
+        public void OnDeviceRegained(PlayerInput playerInput)
+        {
+
+        }
+
+        public void OnControlsChanged(PlayerInput playerInput)
+        {
+
+        }
     }
 }

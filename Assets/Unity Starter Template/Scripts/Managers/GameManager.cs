@@ -1,186 +1,207 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.Audio;
 using System;
 using System.Collections.Generic;
 
-public class GameManager : Singleton<GameManager>
+namespace Digx7.Zygote
 {
-    [SerializeField] List<StringAndGameObject> allGameModes;
-    [SerializeField] StringAndGameObject nextGameModeToLoad;
-    
-    [SerializeField] AudioMixer masterMixer;
-
-    [SerializeField] AnimationCurve playerPrefAudioValueToAppliedValue;
-
-    private GameMode activeGameMode;
-
-    // [Header: "Channels"]
-    [SerializeField] Channel onOptionsChangedChannel;
-    [SerializeField] StringChannel requestChangeGameModeChannel;
-    [SerializeField] Channel onGameModeTeardownFinishedChannel;
-    [SerializeField] Channel onGameModeSetupFinishedChannel;
-    [SerializeField] Channel requestGameModeTearDownChannel;
-
-    private const string MasterVolumeKey = "MasterVolume";
-    private const string MusicVolumeKey = "MusicVolume";
-    private const string SFXVolumeKey = "SFXVolume";
-    private const string FullScreenKey = "FullScreen";
-    private const string ResolutionKey = "Resolution";
-
-    // CHANELS =================================
-
-    private void Start()
+    public class GameManager : Singleton<GameManager>
     {
-        // According to Unity Docs making calls to the Audio Mixer in OnEnable will not work
-        // So this function will be run in Start() instead
-        SetupOptions();
-    }
-    
-    private void OnEnable()
-    {
-        SetupChannels();
-    }
+        #region Variables
+        
+        [Header("Variables")]
+        [SerializeField] List<StringAndGameObject> _allGameModes;
+        [SerializeField] StringAndGameObject _nextGameModeToLoad;
+        [SerializeField] AudioMixer _masterMixer;
+        [SerializeField] AnimationCurve _playerPrefAudioValueToAppliedValue;
 
-    private void OnDisable()
-    {
-        TearDownChannels();
-    }
+        private GameMode _activeGameMode;
 
-    private void SetupChannels()
-    {
-        onOptionsChangedChannel.channelEvent.AddListener(SetupOptions);
-        requestChangeGameModeChannel.channelEvent.AddListener(RequestChangeGameMode);
-        onGameModeTeardownFinishedChannel.channelEvent.AddListener(OnGameModeTeardownFinished);
-        onGameModeSetupFinishedChannel.channelEvent.AddListener(OnGameModeSetupFinished);
-    }
+        [Header("Incoming Channels")]
+        [SerializeField] Channel _on_OptionsChanged_Channel;
+        [SerializeField] StringChannel _request_ChangeGameMode_Channel;
+        [SerializeField] Channel _on_GameModeTeardownFinished_Channel;
+        [SerializeField] Channel _on_GameModeSetupFinished_Channel;
+        [SerializeField] Channel  _request_GameModeTearDown_Channel;
 
-    private void TearDownChannels()
-    {
-        onOptionsChangedChannel.channelEvent.RemoveListener(SetupOptions);
-        requestChangeGameModeChannel.channelEvent.RemoveListener(RequestChangeGameMode);
-        onGameModeTeardownFinishedChannel.channelEvent.RemoveListener(OnGameModeTeardownFinished);
-        onGameModeSetupFinishedChannel.channelEvent.RemoveListener(OnGameModeSetupFinished);
-    }
+        // [Header("Outgoing Events")]
 
-    // CHANNEL RESPONES =================================
+        private const string MasterVolumeKey = "MasterVolume";
+        private const string MusicVolumeKey = "MusicVolume";
+        private const string SFXVolumeKey = "SFXVolume";
+        private const string FullScreenKey = "FullScreen";
+        private const string ResolutionKey = "Resolution";
 
-    private void RequestChangeGameMode(string newGameMode)
-    {
-        // Checks that we are not loading the active gamemode
-        if(newGameMode == nextGameModeToLoad.name)
+        #endregion
+
+        // Setup =================================
+
+        #region Setup
+
+        private void Start()
         {
-            Debug.LogWarning("Something just tried to change the gamemode to the currently active gamemode");
-            return;
+            // According to Unity Docs making calls to the Audio Mixer in OnEnable will not work
+            // So this function will be run in Start() instead
+            SetupOptions();
+        }
+        
+        private void OnEnable()
+        {
+            SetupChannels();
         }
 
-        // Checks the requested gamemode is valide
-        if(allGameModes.Exists(x => x.name == newGameMode))
+        private void OnDisable()
         {
-            nextGameModeToLoad = allGameModes.Find(x => x.name == newGameMode);
+            TearDownChannels();
+        }
 
+        private void SetupChannels()
+        {
+            _on_OptionsChanged_Channel.channelEvent.AddListener(OnRecieve_OptionsChanged);
+            _request_ChangeGameMode_Channel.channelEvent.AddListener(RequestChangeGameMode);
+            _on_GameModeTeardownFinished_Channel.channelEvent.AddListener(OnGameModeTeardownFinished);
+            _on_GameModeSetupFinished_Channel.channelEvent.AddListener(OnGameModeSetupFinished);
+        }
 
-            // Checks if there is an active gamemode
-            if(activeGameMode != null)
+        private void TearDownChannels()
+        {
+            _on_OptionsChanged_Channel.channelEvent.RemoveListener(OnRecieve_OptionsChanged);
+            _request_ChangeGameMode_Channel.channelEvent.RemoveListener(RequestChangeGameMode);
+            _on_GameModeTeardownFinished_Channel.channelEvent.RemoveListener(OnGameModeTeardownFinished);
+            _on_GameModeSetupFinished_Channel.channelEvent.RemoveListener(OnGameModeSetupFinished);
+        }
+
+        #endregion
+
+        // CHANNEL RESPONES =================================
+
+        #region Channel Responses
+
+        protected void OnRecieve_OnOptionsChanged()
+        {
+            SetupOptions();
+        }
+
+        protected void OnRecieve_RequestChangeGameMode(string newGameMode)
+        {
+            // Checks that we are not loading the active gamemode
+            if(newGameMode == _nextGameModeToLoad.name)
             {
-                // Tearsdown the currently active GameMode, once that is done it GameManager will setup the new GameMode
-                requestGameModeTearDownChannel.Raise();
+                Debug.LogWarning("Something just tried to change the gamemode to the currently active gamemode");
                 return;
+            }
+
+            // Checks the requested gamemode is valide
+            if(_allGameModes.Exists(x => x.name == newGameMode))
+            {
+                _nextGameModeToLoad = _allGameModes.Find(x => x.name == newGameMode);
+
+
+                // Checks if there is an active gamemode
+                if(m_activeGameMode != null)
+                {
+                    // Tearsdown the currently active GameMode, once that is done it GameManager will setup the new GameMode
+                    requestGameModeTearDownChannel.Raise();
+                    return;
+                }
+                else
+                {
+                    // Jumps straight to loading the new gamemode
+                    OnRecieve_OnGameModeTeardownFinished();
+                }
+                
             }
             else
             {
-                // Jumps straight to loading the new gamemode
-                OnGameModeTeardownFinished();
+                Debug.LogWarning("Something tried to load the gamemode " + newGameMode + " which does not exist on the current GameManager.  Double check your spelling");
             }
+        }
+
+        protected void OnRecieve_OnGameModeTeardownFinished()
+        {
+            // Passing in nextGameModeToLoad as a prefab but it becomes a scene object
+            LoadGameMode(_nextGameModeToLoad.obj);
+            SetupGameMode(m_activeGameMode);
+        } 
+
+        protected void OnRecieve_OnGameModeSetupFinished()
+        {}
+
+        #endregion
+
+        // MAIN FUNCTIONS =================================
+
+        #region Main Functions
+        public void SetupOptions()
+        {
+            Debug.Log("GameManager: SetupOptions()");
             
+            float masterVolumeStoredValue = PlayerPrefs.GetFloat(MasterVolumeKey, 1.0f);
+            float musicVolumeStoredValue = PlayerPrefs.GetFloat(MusicVolumeKey, 1.0f);
+            float sfxVolumeStoredValue = PlayerPrefs.GetFloat(SFXVolumeKey, 1.0f);
+            int fullScreen = PlayerPrefs.GetInt(FullScreenKey, 0);
+            int resolution = PlayerPrefs.GetInt(ResolutionKey, 0);
+
+            bool fullScreenValue;
+
+            if(fullScreen == 1) fullScreenValue = true;
+            else fullScreenValue = false;
+
+            float masterVolumeAppliedValue = _playerPrefAudioValueToAppliedValue.Evaluate(masterVolumeStoredValue);
+            float musicVolumeAppliedValue = _playerPrefAudioValueToAppliedValue.Evaluate(musicVolumeStoredValue);
+            float sfxVolumeAppliedValue = _playerPrefAudioValueToAppliedValue.Evaluate(sfxVolumeStoredValue);
+
+
+            _masterMixer.SetFloat(MasterVolumeKey, masterVolumeAppliedValue);
+            _masterMixer.SetFloat(MusicVolumeKey, musicVolumeAppliedValue);
+            _masterMixer.SetFloat(SFXVolumeKey, sfxVolumeAppliedValue);
+
+            Screen.fullScreen = fullScreenValue;
+
+            int width = 0;
+            int height = 0;
+
+            switch (resolution)
+            {
+                case 0:
+                    width = 1920;
+                    height = 1080;
+                    break;
+                case 1:
+                    width = 1280;
+                    height = 720;
+                    break;
+                case 2:
+                    width = 720;
+                    height = 480;
+                    break;
+                default:
+                    break;
+            }
+
+            Screen.SetResolution(width, height, fullScreenValue);
+
+            Debug.Log("masterVolume StoredValue: " + masterVolumeStoredValue + "\nmasterVolume Applied: " + masterVolumeAppliedValue);
+            Debug.Log("musicVolume StoredValue: " + musicVolumeStoredValue + "\nmusicVolume Applied: " + musicVolumeAppliedValue);
+            Debug.Log("sfxVolume StoredValue: " + sfxVolumeStoredValue + "\nsfxVolume Applied: " + sfxVolumeAppliedValue);
+            Debug.Log("fullscreen value: " + fullScreenValue);
+            Debug.Log("resolution stored: " + resolution + "\nApplied: " + width + " x " + height);
         }
-        else
+
+        public void LoadGameMode(GameObject newGameMode)
         {
-            Debug.LogWarning("Something tried to load the gamemode " + newGameMode + " which does not exist on the current GameManager.  Double check your spelling");
+            _nextGameModeToLoad.obj = Instantiate(newGameMode);
+            _activeGameMode = _nextGameModeToLoad.obj.GetComponent<GameMode>();
         }
-    }
 
-    private void OnGameModeTeardownFinished()
-    {
-        // Passing in nextGameModeToLoad as a prefab but it becomes a scene object
-        LoadGameMode(nextGameModeToLoad.obj);
-        SetupGameMode(activeGameMode);
-    } 
-
-    private void OnGameModeSetupFinished()
-    {}
-
-    // MAIN FUNCTIONS =================================
-
-    public void SetupOptions()
-    {
-        Debug.Log("GameManager: SetupOptions()");
-        
-        float masterVolumeStoredValue = PlayerPrefs.GetFloat(MasterVolumeKey, 1.0f);
-        float musicVolumeStoredValue = PlayerPrefs.GetFloat(MusicVolumeKey, 1.0f);
-        float sfxVolumeStoredValue = PlayerPrefs.GetFloat(SFXVolumeKey, 1.0f);
-        int fullScreen = PlayerPrefs.GetInt(FullScreenKey, 0);
-        int resolution = PlayerPrefs.GetInt(ResolutionKey, 0);
-
-        bool fullScreenValue;
-
-        if(fullScreen == 1) fullScreenValue = true;
-        else fullScreenValue = false;
-
-
-        // float masterVolumeAppliedValue = masterVolumeStoredValue.Remap(0f,1f,-80f,0f);
-        // float musicVolumeAppliedValue = musicVolumeStoredValue.Remap(0f,1f,-80f,0f);
-        // float sfxVolumeAppliedValue = sfxVolumeStoredValue.Remap(0f,1f,-80f,0f);
-
-        float masterVolumeAppliedValue = playerPrefAudioValueToAppliedValue.Evaluate(masterVolumeStoredValue);
-        float musicVolumeAppliedValue = playerPrefAudioValueToAppliedValue.Evaluate(musicVolumeStoredValue);
-        float sfxVolumeAppliedValue = playerPrefAudioValueToAppliedValue.Evaluate(sfxVolumeStoredValue);
-
-
-        masterMixer.SetFloat(MasterVolumeKey, masterVolumeAppliedValue);
-        masterMixer.SetFloat(MusicVolumeKey, musicVolumeAppliedValue);
-        masterMixer.SetFloat(SFXVolumeKey, sfxVolumeAppliedValue);
-
-        Screen.fullScreen = fullScreenValue;
-
-        int width = 0;
-        int height = 0;
-
-        switch (resolution)
+        public void SetupGameMode(GameMode gameModeToSetup)
         {
-            case 0:
-                width = 1920;
-                height = 1080;
-                break;
-            case 1:
-                width = 1280;
-                height = 720;
-                break;
-            case 2:
-                width = 720;
-                height = 480;
-                break;
-            default:
-                break;
+            gameModeToSetup.Setup();
         }
 
-        Screen.SetResolution(width, height, fullScreenValue);
+        #endregion
 
-        Debug.Log("masterVolume StoredValue: " + masterVolumeStoredValue + "\nmasterVolume Applied: " + masterVolumeAppliedValue);
-        Debug.Log("musicVolume StoredValue: " + musicVolumeStoredValue + "\nmusicVolume Applied: " + musicVolumeAppliedValue);
-        Debug.Log("sfxVolume StoredValue: " + sfxVolumeStoredValue + "\nsfxVolume Applied: " + sfxVolumeAppliedValue);
-        Debug.Log("fullscreen value: " + fullScreenValue);
-        Debug.Log("resolution stored: " + resolution + "\nApplied: " + width + " x " + height);
-    }
-
-    public void LoadGameMode(GameObject newGameMode)
-    {
-        nextGameModeToLoad.obj = Instantiate(newGameMode);
-        activeGameMode = nextGameModeToLoad.obj.GetComponent<GameMode>();
-    }
-
-    public void SetupGameMode(GameMode gameModeToSetup)
-    {
-        gameModeToSetup.Setup();
     }
 
 }

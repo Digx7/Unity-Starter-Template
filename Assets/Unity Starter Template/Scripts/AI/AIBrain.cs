@@ -1,66 +1,69 @@
 using UnityEngine;
 
-public class AIBrain : MonoBehaviour
+namespace Digx7.Zygote
 {
-    [SerializeField] protected int ID;
-    [SerializeField] protected AIController aIController;
-
-    [SerializeField] private IntChannel onAIBrainFinishedSetupChannel;
-
-    public void SetID(int newID)
+    public class AIBrain : MonoBehaviour
     {
-        if(newID == ID) return;
+        [SerializeField] protected int ID;
+        [SerializeField] protected AIController aIController;
 
-        ID = newID;
-        if(aIController != null)aIController.SetID(newID);
-    }
+        [SerializeField] private IntChannel onAIBrainFinishedSetupChannel;
 
-    public bool ConnectAIController(AIController newAIController)
-    {
-        if(!IsAIControllerValid(newAIController)) return false;
-
-        if(newAIController == aIController) return true;
-        
-        if(aIController != null)
+        public void SetID(int newID)
         {
-            Debug.LogWarning("The AIBrain: " + newAIController + " tried to connect to the AIController " + this + " but it is already connected to the AIBrain: " + aIController + ".  If this was intentional use ForceConnectAIBrain instead");
-            return false;
+            if(newID == ID) return;
+
+            ID = newID;
+            if(aIController != null)aIController.SetID(newID);
         }
 
-        aIController = newAIController;
-        aIController.SetID(ID);
-        return true;
-    }
+        public bool ConnectAIController(AIController newAIController)
+        {
+            if(!IsAIControllerValid(newAIController)) return false;
 
-    public void ForceConnectAIController(AIController newAIController)
-    {
-        if(!IsAIControllerValid(newAIController))return;
-        if(newAIController == aIController)return;
+            if(newAIController == aIController) return true;
+            
+            if(aIController != null)
+            {
+                Debug.LogWarning("The AIBrain: " + newAIController + " tried to connect to the AIController " + this + " but it is already connected to the AIBrain: " + aIController + ".  If this was intentional use ForceConnectAIBrain instead");
+                return false;
+            }
 
-        aIController = newAIController;
-        aIController.SetID(ID);
-    }
+            aIController = newAIController;
+            aIController.SetID(ID);
+            return true;
+        }
 
-    private bool IsAIControllerValid(AIController newAIController)
-    {
-        if(newAIController == null) return false;
-        else return true;
-    }
+        public void ForceConnectAIController(AIController newAIController)
+        {
+            if(!IsAIControllerValid(newAIController))return;
+            if(newAIController == aIController)return;
 
-    protected virtual void OnDisable()
-    {
-        Teardown();
-    }
+            aIController = newAIController;
+            aIController.SetID(ID);
+        }
 
-    public void Setup(int newID, AIController newAIController = null)
-    {
-        ConnectAIController(newAIController);
-        SetID(newID);
-        onAIBrainFinishedSetupChannel.Raise(ID);
-    }
+        private bool IsAIControllerValid(AIController newAIController)
+        {
+            if(newAIController == null) return false;
+            else return true;
+        }
 
-    protected virtual void Teardown()
-    {
+        protected virtual void OnDisable()
+        {
+            Teardown();
+        }
 
+        public void Setup(int newID, AIController newAIController = null)
+        {
+            ConnectAIController(newAIController);
+            SetID(newID);
+            onAIBrainFinishedSetupChannel.Raise(ID);
+        }
+
+        protected virtual void Teardown()
+        {
+
+        }
     }
 }

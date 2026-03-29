@@ -2,32 +2,35 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "NewUIWidgetData", menuName = "ScriptableObjects/UI/WidgetData", order = 1)]
-public class UIWidgetData : ScriptableObject
+namespace Digx7.Zygote
 {
-    public GameObject widgetPrefab;
-
-    private GameObject instantiatedWidget;
-
-    public GameObject GetInstantiatedWidget()
+    [CreateAssetMenu(fileName = "NewUIWidgetData", menuName = "ScriptableObjects/UI/WidgetData", order = 1)]
+    public class UIWidgetData : ScriptableObject
     {
-        return instantiatedWidget;
-    }
+        public GameObject widgetPrefab;
 
-    public void SpawnWidget(Transform parent = null)
-    {
-        if(parent != null)
+        private GameObject instantiatedWidget;
+
+        public GameObject GetInstantiatedWidget()
         {
-            instantiatedWidget = Instantiate(widgetPrefab, parent);
+            return instantiatedWidget;
         }
 
-        UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
-        uIWidget.Setup(this);
-    }
+        public void SpawnWidget(Transform parent = null)
+        {
+            if(parent != null)
+            {
+                instantiatedWidget = Instantiate(widgetPrefab, parent);
+            }
 
-    public void DespawnWidget()
-    {
-        UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
-        uIWidget.Teardown();
+            UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
+            uIWidget.Setup(this);
+        }
+
+        public void DespawnWidget()
+        {
+            UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
+            uIWidget.Teardown();
+        }
     }
 }

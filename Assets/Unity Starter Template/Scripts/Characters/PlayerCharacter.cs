@@ -1,82 +1,85 @@
 using UnityEngine;
 
-public class PlayerCharacter : Character
+namespace Digx7.Zygote
 {
-    [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
-    [SerializeField] protected Channel onPlayerTryInteractChannel;
-    [SerializeField] protected CameraManager cameraManager;
-
-    protected Vector2 desiredMoveDirection;
-
-    // CAMERA FUNCTIONS ===========================================
-
-    public bool ConnectCameraManager(CameraManager newCameraManager)
+    public class PlayerCharacter : Character
     {
-        if(!IsCameraManagerValid(newCameraManager)) return false;
+        [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
+        [SerializeField] protected Channel onPlayerTryInteractChannel;
+        [SerializeField] protected CameraManager cameraManager;
 
-        if(newCameraManager == cameraManager) return true;
-        
-        if(cameraManager != null)
+        protected Vector2 desiredMoveDirection;
+
+        // CAMERA FUNCTIONS ===========================================
+
+        public bool ConnectCameraManager(CameraManager newCameraManager)
         {
-            Debug.LogWarning("The CameraManager: " + newCameraManager + " tried to connect to the PlayerCharacter " + this + " but it is already connected to the CameraManager: " + cameraManager + ".  If this was intentional use ForceConnectCameraManager instead");
-            return false;
+            if(!IsCameraManagerValid(newCameraManager)) return false;
+
+            if(newCameraManager == cameraManager) return true;
+            
+            if(cameraManager != null)
+            {
+                Debug.LogWarning("The CameraManager: " + newCameraManager + " tried to connect to the PlayerCharacter " + this + " but it is already connected to the CameraManager: " + cameraManager + ".  If this was intentional use ForceConnectCameraManager instead");
+                return false;
+            }
+
+            cameraManager = newCameraManager;
+            return true;
         }
 
-        cameraManager = newCameraManager;
-        return true;
-    }
+        public void ForceConnectCameraManager(CameraManager newCameraManager)
+        {
+            if(!IsCameraManagerValid(newCameraManager)) return;
+            if(newCameraManager == cameraManager) return;
+            
+            cameraManager = newCameraManager;
+        }
 
-    public void ForceConnectCameraManager(CameraManager newCameraManager)
-    {
-        if(!IsCameraManagerValid(newCameraManager)) return;
-        if(newCameraManager == cameraManager) return;
+        private bool IsCameraManagerValid(CameraManager newCameraManager)
+        {
+            if(newCameraManager == null) return false;
+            else return true;
+        }
+
+        // SETUP FUNCTIONS =============================================
+
+        protected override void OnEnable(){}
         
-        cameraManager = newCameraManager;
-    }
+        public override void Setup(int newID = 0)
+        {
+            base.Setup(newID);
 
-    private bool IsCameraManagerValid(CameraManager newCameraManager)
-    {
-        if(newCameraManager == null) return false;
-        else return true;
-    }
+            OnPlayerCharacterFinishedSetup.Raise(ID);
+        }
 
-    // SETUP FUNCTIONS =============================================
+        protected override void Start()
+        {
+            desiredMoveDirection = new Vector2();
+        }
 
-    protected override void OnEnable(){}
-    
-    public override void Setup(int newID = 0)
-    {
-        base.Setup(newID);
+        // PLAYER ACTIONS ===============================================
 
-        OnPlayerCharacterFinishedSetup.Raise(ID);
-    }
+        public virtual void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
+        {
+            desiredMoveDirection = newDesiredDirection;
+        }
 
-    protected override void Start()
-    {
-        desiredMoveDirection = new Vector2();
-    }
+        public virtual void Jump()
+        {
 
-    // PLAYER ACTIONS ===============================================
+        }
 
-    public virtual void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
-    {
-        desiredMoveDirection = newDesiredDirection;
-    }
+        public virtual void Fire1()
+        {
+            Debug.Log("PlayerCharacter: Fire1()");
+            onPlayerTryInteractChannel.Raise();
+        }
 
-    public virtual void Jump()
-    {
+        public virtual void Fire2()
+        {
 
-    }
-
-    public virtual void Fire1()
-    {
-        Debug.Log("PlayerCharacter: Fire1()");
-        onPlayerTryInteractChannel.Raise();
-    }
-
-    public virtual void Fire2()
-    {
+        }
 
     }
-
 }

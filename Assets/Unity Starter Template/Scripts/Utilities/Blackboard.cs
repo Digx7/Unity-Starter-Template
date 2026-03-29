@@ -4,56 +4,59 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-[System.Serializable]
-public class Blackboard
+namespace Digx7.Zygote
 {
-    public Dictionary<string, GenericBlackBoardEntry> entries;
-
-    public Blackboard()
+    [System.Serializable]
+    public class Blackboard
     {
-        entries = new Dictionary<string, GenericBlackBoardEntry>();
-    }
+        public Dictionary<string, GenericBlackBoardEntry> entries;
 
-    public T GetData<T>(string key)
-    {
-        if(!entries.ContainsKey(key))
+        public Blackboard()
         {
-            CreateDefaultEntry<T>(key);
+            entries = new Dictionary<string, GenericBlackBoardEntry>();
         }
 
-        return entries[key].GetEntryValue<T>();
-    }
-
-    public void UpdateData<T>(string key, T value)
-    {
-        if(!entries.ContainsKey(key))
+        public T GetData<T>(string key)
         {
-            CreateDefaultEntry<T>(key);
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<T>(key);
+            }
+
+            return entries[key].GetEntryValue<T>();
         }
-        
-        entries[key].SetEntryValue<T>(value);
-    }
 
-    public void ClearAllData()
-    {
-        entries.Clear();
-    }
-
-    protected void CreateDefaultEntry<T>(string key)
-    {
-        entries[key] = new GenericBlackBoardEntry();
-    }
-
-    public void PrintAllEntries()
-    {
-        Debug.Log("Printing All Entries");
-        if(entries.Count == 0) Debug.Log("No Entries found");
-        
-        foreach (KeyValuePair<string, GenericBlackBoardEntry> entry in entries)
+        public void UpdateData<T>(string key, T value)
         {
-            string key = entry.Key;
-            GenericBlackBoardEntry value = entry.Value;
-            Debug.Log("" + key + " : " + value.ToString());
+            if(!entries.ContainsKey(key))
+            {
+                CreateDefaultEntry<T>(key);
+            }
+            
+            entries[key].SetEntryValue<T>(value);
+        }
+
+        public void ClearAllData()
+        {
+            entries.Clear();
+        }
+
+        protected void CreateDefaultEntry<T>(string key)
+        {
+            entries[key] = new GenericBlackBoardEntry();
+        }
+
+        public void PrintAllEntries()
+        {
+            Debug.Log("Printing All Entries");
+            if(entries.Count == 0) Debug.Log("No Entries found");
+            
+            foreach (KeyValuePair<string, GenericBlackBoardEntry> entry in entries)
+            {
+                string key = entry.Key;
+                GenericBlackBoardEntry value = entry.Value;
+                Debug.Log("" + key + " : " + value.ToString());
+            }
         }
     }
 }
