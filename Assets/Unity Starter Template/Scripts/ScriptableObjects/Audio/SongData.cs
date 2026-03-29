@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Digx7.Zygote
 {
-    [CreateAssetMenu(fileName = "NewSong", menuName = "ScriptableObjects/Audio/Song", order = 1)]
+    [CreateAssetMenu(fileName = "NewSong", menuName = "ScriptableObjects/Data/SongData", order = 1)]
     public class SongData : ScriptableObject
     {
         public string Name;

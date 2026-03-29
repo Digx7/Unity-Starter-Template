@@ -6,6 +6,8 @@ namespace Digx7.Zygote
     {
         public static T Instance { get; private set; }
 
+        protected bool isSafeInstance = false;
+
         public virtual void Awake()
         {
             if (Instance != null && Instance != this)
@@ -14,9 +16,21 @@ namespace Digx7.Zygote
                 Destroy(this.gameObject);
                 return;
             }
-            DontDestroyOnLoad(this);
+            else
+            {
+                isSafeInstance = true;
+                SafeAwake();
+                DontDestroyOnLoad(this);
 
-            Instance = this as T;
+                Instance = this as T;
+            }
+        }
+
+        // Only called if this singleton is the valid Instance
+        // Allows us to use Awake() in its normal call order without dealing with the edge case of multiple Instances existing at once.
+        public virtual void SafeAwake()
+        {
+            
         }
     }
 }

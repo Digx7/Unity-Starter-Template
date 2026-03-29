@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Digx7.Zygote
 {
-    [CreateAssetMenu(fileName = "NewQuestData", menuName = "ScriptableObjects/Quest/Data", order = 1)]
+    [CreateAssetMenu(fileName = "NewQuestData", menuName = "ScriptableObjects/Data/QuestData", order = 1)]
     public class QuestData : ScriptableObject
     {
         public string questName;

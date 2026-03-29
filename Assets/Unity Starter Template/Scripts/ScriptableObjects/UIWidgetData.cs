@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Digx7.Zygote
 {
-    [CreateAssetMenu(fileName = "NewUIWidgetData", menuName = "ScriptableObjects/UI/WidgetData", order = 1)]
+    [CreateAssetMenu(fileName = "NewUIWidgetData", menuName = "ScriptableObjects/Data/UIWidgetData", order = 1)]
     public class UIWidgetData : ScriptableObject
     {
         public GameObject widgetPrefab;
