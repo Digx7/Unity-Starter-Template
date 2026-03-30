@@ -115,10 +115,10 @@ namespace Digx7.Zygote
             _playerSpawnInfo = newPlayerSpawnInfo;
             
             GameObject characterObj = Instantiate(playerCharacterPreFab, _playerSpawnInfo.location, _playerSpawnInfo.rotation);
-            playerCharacterBeingSetup = characterObj.GetComponent<PlayerCharacter>();
-            if(playerCharacterBeingSetup == null) return;
+            _playerCharacterBeingSetup = characterObj.GetComponent<PlayerCharacter>();
+            if(_playerCharacterBeingSetup == null) return;
 
-            playerCharacterBeingSetup.Setup(_playerSpawnInfo.ID);
+            _playerCharacterBeingSetup.Setup(_playerSpawnInfo.ID);
         }
 
         protected virtual void SpawnPlayerController()
@@ -126,10 +126,10 @@ namespace Digx7.Zygote
             Debug.Log("GameMode: SpawnPlayerController()");
             
             GameObject controllerObj = Instantiate(playerControllerPreFab, _playerSpawnInfo.location, _playerSpawnInfo.rotation);
-            playerControllerBeingSetup = controllerObj.GetComponent<PlayerController>();
-            if(playerControllerBeingSetup == null) return;
+            _playerControllerBeingSetup = controllerObj.GetComponent<PlayerController>();
+            if(_playerControllerBeingSetup == null) return;
 
-            playerControllerBeingSetup.Setup(_playerSpawnInfo.ID, playerCharacterBeingSetup);
+            _playerControllerBeingSetup.Setup(_playerSpawnInfo.ID, _playerCharacterBeingSetup);
         }
 
         protected virtual void SpawnCameraManager()
@@ -137,10 +137,10 @@ namespace Digx7.Zygote
             Debug.Log("GameMode: SpawnCameraManager()");
             
             GameObject cameraObj = Instantiate(cameraManagerPreFab, _playerSpawnInfo.location, _playerSpawnInfo.rotation);
-            cameraManagerBeingSetup = cameraObj.GetComponent<CameraManager>();
-            if(cameraManagerBeingSetup == null) return;
+            _cameraManagerBeingSetup = cameraObj.GetComponent<CameraManager>();
+            if(_cameraManagerBeingSetup == null) return;
 
-            cameraManagerBeingSetup.Setup(_playerSpawnInfo.ID, playerControllerBeingSetup, playerCharacterBeingSetup);
+            _cameraManagerBeingSetup.Setup(_playerSpawnInfo.ID, _playerControllerBeingSetup, _playerCharacterBeingSetup);
         }
 
 

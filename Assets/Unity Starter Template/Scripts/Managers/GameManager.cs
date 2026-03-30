@@ -58,18 +58,18 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            _on_OptionsChanged_Channel.channelEvent.AddListener(OnRecieve_OptionsChanged);
-            _request_ChangeGameMode_Channel.channelEvent.AddListener(RequestChangeGameMode);
-            _on_GameModeTeardownFinished_Channel.channelEvent.AddListener(OnGameModeTeardownFinished);
-            _on_GameModeSetupFinished_Channel.channelEvent.AddListener(OnGameModeSetupFinished);
+            _on_OptionsChanged_Channel.channelEvent.AddListener(OnRecieve_OnOptionsChanged);
+            _request_ChangeGameMode_Channel.channelEvent.AddListener(OnRecieve_RequestChangeGameMode);
+            _on_GameModeTeardownFinished_Channel.channelEvent.AddListener(OnRecieve_OnGameModeTeardownFinished);
+            _on_GameModeSetupFinished_Channel.channelEvent.AddListener(OnRecieve_OnGameModeSetupFinished);
         }
 
         private void TearDownChannels()
         {
-            _on_OptionsChanged_Channel.channelEvent.RemoveListener(OnRecieve_OptionsChanged);
-            _request_ChangeGameMode_Channel.channelEvent.RemoveListener(RequestChangeGameMode);
-            _on_GameModeTeardownFinished_Channel.channelEvent.RemoveListener(OnGameModeTeardownFinished);
-            _on_GameModeSetupFinished_Channel.channelEvent.RemoveListener(OnGameModeSetupFinished);
+            _on_OptionsChanged_Channel.channelEvent.RemoveListener(OnRecieve_OnOptionsChanged);
+            _request_ChangeGameMode_Channel.channelEvent.RemoveListener(OnRecieve_RequestChangeGameMode);
+            _on_GameModeTeardownFinished_Channel.channelEvent.RemoveListener(OnRecieve_OnGameModeTeardownFinished);
+            _on_GameModeSetupFinished_Channel.channelEvent.RemoveListener(OnRecieve_OnGameModeSetupFinished);
         }
 
         #endregion
@@ -99,10 +99,10 @@ namespace Digx7.Zygote
 
 
                 // Checks if there is an active gamemode
-                if(m_activeGameMode != null)
+                if(_activeGameMode != null)
                 {
                     // Tearsdown the currently active GameMode, once that is done it GameManager will setup the new GameMode
-                    requestGameModeTearDownChannel.Raise();
+                    _request_GameModeTearDown_Channel.Raise();
                     return;
                 }
                 else
@@ -122,7 +122,7 @@ namespace Digx7.Zygote
         {
             // Passing in nextGameModeToLoad as a prefab but it becomes a scene object
             LoadGameMode(_nextGameModeToLoad.obj);
-            SetupGameMode(m_activeGameMode);
+            SetupGameMode(_activeGameMode);
         } 
 
         protected void OnRecieve_OnGameModeSetupFinished()

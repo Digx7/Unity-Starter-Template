@@ -41,7 +41,7 @@ namespace Digx7.Zygote
         #region Channel Responses
         protected override void OnRecieve_OnOptionsMenuQuit()
         {
-            _request_LoadUIWidget_Channel.Raise(pauseMenuWidgetData);
+            _request_LoadUIWidget_Channel.Raise(_pauseMenuWidgetData);
         }
 
         #endregion
