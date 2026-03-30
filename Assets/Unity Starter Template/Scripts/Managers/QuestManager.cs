@@ -7,9 +7,20 @@ namespace Digx7.Zygote
 {
     public class QuestManager : Singleton<QuestManager>
     {
+        #region Variables ================================
+        
+        [Header("Variables")]
         public List<QuestData> activeQuests;
+
+        [Header("Incoming Channels")]
         public QuestDataChannel reciveQuestChannel;
         public QuestObjectiveProgressChannel tryProgressQuestChannel;
+
+        // [Header("Outgoing Events")]
+
+        #endregion
+
+        #region Setup ================================
 
         public void OnEnable()
         {
@@ -22,6 +33,14 @@ namespace Digx7.Zygote
             reciveQuestChannel.channelEvent.RemoveListener(GiveQuest);
             tryProgressQuestChannel.channelEvent.RemoveListener(TryProgressQuest);
         }
+
+        #endregion
+
+        #region Channel Responses ================================
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void GiveQuest(QuestData newQuest)
         {
@@ -70,5 +89,7 @@ namespace Digx7.Zygote
             Debug.Log("QuestManager: Finished Quest: " + finishedQuest.ToString());
             activeQuests.RemoveAt(index);
         }
+
+        #endregion
     }
 }

@@ -5,7 +5,7 @@ namespace Digx7.Zygote
 {
     public class MainMenu : GameMode
     {
-        #region Variables
+        #region Variables ================================
         
         [Header("Variables")]
         [SerializeField] private UIWidgetData mainMenuWidgetData;
@@ -19,7 +19,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        #region Setup
+        #region Setup ================================
         public override void Setup()
         {
             // add code here
@@ -37,7 +37,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        #region Channel Responses
+        #region Channel Responses ================================
 
         protected override void OnRecieve_OnOptionsMenuQuit()
         {
@@ -45,6 +45,10 @@ namespace Digx7.Zygote
         }
         #endregion
         
+        #region Main Functions ================================
+
+        #endregion
+
 
     }
 }

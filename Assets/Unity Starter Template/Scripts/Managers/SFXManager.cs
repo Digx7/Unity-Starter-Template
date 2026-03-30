@@ -1,19 +1,54 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
     public class SFXManager : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        #region Variables ================================
+        
+        // [Header("Variables")]
+
+        // [Header("Incoming Channels")]
+
+        // [Header("Outgoing Events")]
+
+        #endregion
+
+        #region Setup ================================
+
+        private void OnEnable()
+        {
+            SetupChannels();
+        }
+
+        private void OnDisable()
+        {
+            TearDownChannels();
+        }
+
+        private void SetupChannels()
         {
             
         }
 
-        // Update is called once per frame
-        void Update()
+        private void TearDownChannels()
         {
             
         }
+
+        #endregion
+
+        #region Channel Responses ================================
+
+        
+
+        #endregion
+
+        #region Main Functions ================================
+
+        
+
+        #endregion
     }
 }

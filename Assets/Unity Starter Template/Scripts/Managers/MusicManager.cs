@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,11 +8,13 @@ namespace Digx7.Zygote
 {
     public class MusicManager : Singleton<MusicManager>
     {
+        #region Variables ================================
+        [Header("Variables")]
         [SerializeField] List<SongData> songQueue;
         [SerializeField] GameObject songPrefab;
         [SerializeField] SongHolder activeSong;
 
-
+        [Header("Incoming Channels")]
         [SerializeField] SongDataChannel requestJumpToSongDataChannel;
         [SerializeField] Channel onJumpToSongDataChannel;
         [SerializeField] SongDataChannel requestQueueSongDataChannel;
@@ -25,7 +28,11 @@ namespace Digx7.Zygote
         [SerializeField] IntChannel requestRemoveSongLayerChannel;
         [SerializeField] Channel onRemoveSongLayerChannel;
 
-        // CHANELS =================================
+        // [Header("Outgoing Events")]
+
+        #endregion
+
+        #region Setup ================================
 
         private void OnEnable()
         {
@@ -57,7 +64,13 @@ namespace Digx7.Zygote
             requestRemoveSongLayerChannel.channelEvent.RemoveListener(RemoveSongLayer);
         }
 
-        // CHANNEL RESPONSES =================================
+        #endregion
+
+        #region Channel Responses ================================
+
+        #endregion
+
+        #region Main Functions ================================
 
         private void JumpToSong(SongData song)
         {
@@ -103,8 +116,6 @@ namespace Digx7.Zygote
             }
         }
 
-        // MAIN FUNCTIONS =================================
-
         public void PlayNextSongInQueue()
         {
             if(songQueue.Count == 0)
@@ -146,5 +157,8 @@ namespace Digx7.Zygote
             if(activeSong != null) return true;
             else return false;
         }
+    
+        #endregion
+
     }
 }

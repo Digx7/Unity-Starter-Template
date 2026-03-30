@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,9 +8,13 @@ namespace Digx7.Zygote
 {
     public class UIWidgetManager : Singleton<UIWidgetManager>
     {
+        #region Variables ================================
+
+        [Header("Variables")]
         [SerializeField] private Transform Canvas;
         [SerializeField] private List<UIWidgetData> activeWidgets;
 
+        [Header("Incoming Channels")]
         [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
         [SerializeField] private Channel onLoadUIWidgetChannel;
         [SerializeField] private UIWidgetDataChannel requestUnLoadUIWidgetChannel;
@@ -17,7 +22,11 @@ namespace Digx7.Zygote
         [SerializeField] private Channel requestClearAllUIWidgetsChannel;
         [SerializeField] private Channel onClearAllUIWidgetsChannel;
 
-        // SETUP CHANNELS =======================================================
+        // [Header("Outgoing Events")]
+
+        #endregion
+
+        #region Setup ================================
 
         private void OnEnable()
         {
@@ -43,7 +52,14 @@ namespace Digx7.Zygote
             requestClearAllUIWidgetsChannel.channelEvent.RemoveListener(UnloadAllWidgets);
         }
 
-        // CHANNEL RESPONSES ===========================================================
+        #endregion
+
+        #region Channel Responses ================================
+
+
+        #endregion
+
+        #region Main Functions ================================
 
         private void LoadWidget(UIWidgetData newWidgetData)
         {
@@ -80,5 +96,7 @@ namespace Digx7.Zygote
             
             onClearAllUIWidgetsChannel.Raise();
         }
+
+        #endregion
     }
 }

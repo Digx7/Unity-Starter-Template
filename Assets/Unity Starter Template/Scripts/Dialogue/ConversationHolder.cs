@@ -5,17 +5,27 @@ namespace Digx7.Zygote
 {
     public class ConversationHolder : MonoBehaviour
     {
+        #region Variables ================================
+
+        [Header("Variables")]
         public Conversation conversation;
         public UIWidgetData dialogueWidgetData;
+
+        [Header("Incoming Channels")]
         public UIWidgetDataChannel requestLoadDialogueWidgetChannel;
         public UIWidgetDataChannel requestUnloadDialogueWidgetChannel;
         public ConversationNodeChannel onConversationUpdateChannel;
 
+        [Header("Outgoing Events")]
         public UnityEvent OnConversationEnd;
 
         private int currentNodeIndex = 0;
         private ConversationNode currentNode;
         private bool isConversationGoing = false;
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void Interact()
         {
@@ -94,5 +104,7 @@ namespace Digx7.Zygote
             }
             return false;
         }
+
+        #endregion
     }
 }

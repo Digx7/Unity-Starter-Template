@@ -5,7 +5,8 @@ namespace Digx7.Zygote
 {
     public class GameMode : MonoBehaviour
     {
-        #region Variables
+        #region Variables ================================
+
         [Header("Variables")]
         public bool spawnPlayerOnSetup = true;
         public GameObject playerCharacterPreFab;
@@ -30,9 +31,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        // CHANNELS =================================
-
-        #region Setup
+        #region Setup ================================
 
         public virtual void Setup()
         {
@@ -70,7 +69,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        #region Channel Responses
+        #region Channel Responses ================================
             protected void OnRecieve_RequestGameModeTearDown( )
             {
                 Teardown();
@@ -97,9 +96,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        // SPAWN PLAYER ================================================
-
-        #region Main Functions
+        #region Main Functions ================================
 
         protected virtual void TryToFindPlayerSpawnHelper()
         {

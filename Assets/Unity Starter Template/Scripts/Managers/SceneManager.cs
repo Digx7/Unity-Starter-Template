@@ -10,18 +10,25 @@ namespace Digx7.Zygote
 {
     public class SceneManager : Singleton<SceneManager>
     {
+        #region Variables ================================
+        
+        // [Header("Variables")]
+        [Header("Incoming Channels")]
         [SerializeField] private SceneDataChannel changeSceneDataChannel;
         [SerializeField] private SceneDataChannel  addSceneDataChannel;
         [SerializeField] private SceneDataChannel  removeSceneDataChannel;
         [SerializeField] private SceneContextChannel  updateSceneContextChannel;
 
+        [Header("Outgoing Events")]
         public UnityEvent OnChangeSceneEvent;
         public UnityEvent OnChangeSceneFinishedEvent;
 
         private bool onChangeSceneCoroutineIsGoing = false;
         private bool onChangeSceneFinishedCoroutineIsGoing = false;
         
-        // CHANELS =================================
+        #endregion
+
+        #region Setup ================================
 
         private void OnEnable()
         {
@@ -51,7 +58,9 @@ namespace Digx7.Zygote
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnAcitveSceneChanged;
         }
 
-        // CHANNEL RESPONES =================================
+        #endregion
+
+        #region Channel Responses ================================
 
         private void OnChangeScene(SceneData data)
         {
@@ -81,7 +90,9 @@ namespace Digx7.Zygote
             StartCoroutine(OnChangeSceneFinishedCoroutine());
         }
 
-        // MAIN FUNCTIONS =================================
+        #endregion
+
+        #region Main Functions ================================
 
         private void LoadScene(string name, LoadSceneMode mode = LoadSceneMode.Single)
         {
@@ -113,5 +124,7 @@ namespace Digx7.Zygote
             OnChangeSceneFinishedEvent.Invoke();
             onChangeSceneFinishedCoroutineIsGoing = false;
         }
+
+        #endregion
     }
 }

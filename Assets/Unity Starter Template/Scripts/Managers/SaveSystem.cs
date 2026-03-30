@@ -2,12 +2,18 @@ using UnityEngine;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
-// using System.Text;
 
 namespace Digx7.Zygote
 {
     public class SaveSystem : Singleton<SaveSystem>
     {
+        #region Variables ================================
+        
+        [Header("Variables")]
+        public int activeSaveSlot = 0;
+        public Save save;
+
+        [Header("Incoming Channels")]
         public Channel requestSaveGameChannel;
         public Channel onGameSavedChannel;
         public Channel requestLoadGameChannel;
@@ -18,9 +24,13 @@ namespace Digx7.Zygote
         public Channel onMakeNewSaveChannel;
         public IntChannel requestChangeActiveSaveSlot;
 
-        public int activeSaveSlot = 0;
-        public Save save;
+        // [Header("Outgoing Events")]
 
+        
+
+        #endregion
+
+        #region Setup ================================
         public void OnEnable()
         {
             requestSaveGameChannel.channelEvent.AddListener(SaveData);
@@ -39,6 +49,14 @@ namespace Digx7.Zygote
             requestMakeNewSaveChannel.channelEvent.RemoveListener(MakeNewSaveData);
         }
         
+        #endregion
+
+        #region Channel Responses ================================
+
+        #endregion
+
+        #region Main Functions ================================
+
         public void SaveData()
         {
             string destination = Path();
@@ -113,5 +131,7 @@ namespace Digx7.Zygote
         {
             return Application.persistentDataPath + "/save" + activeSaveSlot + ".data";
         }
+
+        #endregion
     }
 }

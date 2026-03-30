@@ -5,7 +5,7 @@ namespace Digx7.Zygote
 {
     public class GamePlay : GameMode
     {
-        #region Variables
+        #region Variables ================================
 
         [Header("Variables")]
         [SerializeField] private UIWidgetData _pauseMenuWidgetData;
@@ -18,7 +18,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        #region Setup
+        #region Setup ================================
 
         public override void Setup()
         {
@@ -38,11 +38,15 @@ namespace Digx7.Zygote
 
         #endregion
 
-        #region Channel Responses
+        #region Channel Responses ================================
         protected override void OnRecieve_OnOptionsMenuQuit()
         {
             _request_LoadUIWidget_Channel.Raise(_pauseMenuWidgetData);
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         #endregion
     }

@@ -8,7 +8,7 @@ namespace Digx7.Zygote
 {
     public class GameManager : Singleton<GameManager>
     {
-        #region Variables
+        #region Variables ================================
         
         [Header("Variables")]
         [SerializeField] List<StringAndGameObject> _allGameModes;
@@ -35,9 +35,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        // Setup =================================
-
-        #region Setup
+        #region Setup ================================
 
         private void Start()
         {
@@ -74,9 +72,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        // CHANNEL RESPONES =================================
-
-        #region Channel Responses
+        #region Channel Responses ================================
 
         protected void OnRecieve_OnOptionsChanged()
         {
@@ -130,9 +126,7 @@ namespace Digx7.Zygote
 
         #endregion
 
-        // MAIN FUNCTIONS =================================
-
-        #region Main Functions
+        #region Main Functions ================================
         public void SetupOptions()
         {
             Debug.Log("GameManager: SetupOptions()");
