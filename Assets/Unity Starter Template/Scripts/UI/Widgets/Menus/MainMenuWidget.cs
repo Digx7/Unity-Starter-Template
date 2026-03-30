@@ -4,6 +4,8 @@ namespace Digx7.Zygote
 {
     public class MainMenuWidget : UIMenu
     {
+        #region Variables ================================
+
         [SerializeField] SceneData gamePlayScene;
         [SerializeField] UIWidgetData optionsMenuWidgetData;
         [SerializeField] UIWidgetData creditsMenuWidgetData;
@@ -12,6 +14,10 @@ namespace Digx7.Zygote
         [SerializeField] SceneDataChannel requestChangeSceneDataChannel;
         [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
         [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+
+        #endregion
+
+        #region Setup ================================
 
         public override void Setup(UIWidgetData newUIWidgetData)
         {
@@ -22,6 +28,10 @@ namespace Digx7.Zygote
         {
             base.Teardown();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void OnClickPlay()
         {
@@ -66,5 +76,7 @@ namespace Digx7.Zygote
             requestLoadUIWidgetChannel.Raise(quitMenuWidgetData);
             requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
         }
+
+        #endregion
     }
 }

@@ -5,11 +5,17 @@ namespace Digx7.Zygote
 {
     public class PlayerController : GameController
     {
+        #region Variables ================================
+
         [SerializeField] protected CameraManager cameraManager;
         [SerializeField] private UIWidgetDataChannel RequestLoadUIWidgetData;
         [SerializeField] private UIWidgetData activeTimeLoreWidgetData;
         [SerializeField] private UIWidgetData pauseMenuWidgetData;
         private PlayerCharacter possessedPlayer;
+
+        #endregion
+
+        #region Main Functions ================================
 
         // OVERRIDE FUNCTIONS ==============================================
 
@@ -250,5 +256,7 @@ namespace Digx7.Zygote
         {
 
         }
+
+        #endregion
     }
 }

@@ -7,6 +7,8 @@ namespace Digx7.Zygote
 {
     public class SongLayerHolder : MonoBehaviour
     {
+        #region Variables ================================
+
         [SerializeField] private int layerNumber;
         [SerializeField] private AudioClip clip;
         [SerializeField] private AudioSource audioSource;
@@ -14,6 +16,9 @@ namespace Digx7.Zygote
         private const float FADEINSPEED = 0.5f;
         private const float FADEOUTSPEED = 0.5f;
         
+        #endregion
+
+        #region Setup ================================
 
         public void Setup(int newLayerNumber, AudioClip newClip, bool shouldLoop = false)
         {
@@ -23,6 +28,10 @@ namespace Digx7.Zygote
             audioSource.volume = 0;
             audioSource.loop = shouldLoop;
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void StartLayer()
         {
@@ -80,5 +89,7 @@ namespace Digx7.Zygote
             }
             SetVolume(0.0f);
         }
+
+        #endregion
     }
 }

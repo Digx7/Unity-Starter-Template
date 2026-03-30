@@ -6,6 +6,8 @@ namespace Digx7.Zygote
 {
     public class OptionsMenuWidget : UIMenu
     {
+        #region Variables ================================
+        
         [SerializeField] private Slider masterVolumeSlider;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider sfxVolumeSlider;
@@ -22,6 +24,10 @@ namespace Digx7.Zygote
         private const string FullScreenKey = "FullScreen";
         private const string ResolutionKey = "Resolution";
 
+        #endregion
+
+        #region Setup ================================
+
         public override void Setup(UIWidgetData newUIWidgetData)
         {
             base.Setup(newUIWidgetData);
@@ -32,6 +38,10 @@ namespace Digx7.Zygote
         {
             base.Teardown();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void OnClickBack()
         {
@@ -100,5 +110,7 @@ namespace Digx7.Zygote
             PlayerPrefs.Save();
             onOptionsChangedChannel.Raise();
         }
+
+        #endregion
     }
 }

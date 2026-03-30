@@ -4,13 +4,35 @@ namespace Digx7.Zygote
 {
     public class PlayerCharacter : Character
     {
+        #region Variables ================================
+
         [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
         [SerializeField] protected Channel onPlayerTryInteractChannel;
         [SerializeField] protected CameraManager cameraManager;
 
         protected Vector2 desiredMoveDirection;
 
-        // CAMERA FUNCTIONS ===========================================
+        #endregion
+
+        #region Setup ================================
+
+        protected override void OnEnable(){}
+        
+        public override void Setup(int newID = 0)
+        {
+            base.Setup(newID);
+
+            OnPlayerCharacterFinishedSetup.Raise(ID);
+        }
+
+        protected override void Start()
+        {
+            desiredMoveDirection = new Vector2();
+        }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public bool ConnectCameraManager(CameraManager newCameraManager)
         {
@@ -42,24 +64,6 @@ namespace Digx7.Zygote
             else return true;
         }
 
-        // SETUP FUNCTIONS =============================================
-
-        protected override void OnEnable(){}
-        
-        public override void Setup(int newID = 0)
-        {
-            base.Setup(newID);
-
-            OnPlayerCharacterFinishedSetup.Raise(ID);
-        }
-
-        protected override void Start()
-        {
-            desiredMoveDirection = new Vector2();
-        }
-
-        // PLAYER ACTIONS ===============================================
-
         public virtual void UpdateDesiredMoveDirection(Vector2 newDesiredDirection)
         {
             desiredMoveDirection = newDesiredDirection;
@@ -80,6 +84,9 @@ namespace Digx7.Zygote
         {
 
         }
+
+        #endregion
+        
 
     }
 }

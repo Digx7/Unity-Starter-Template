@@ -4,6 +4,8 @@ namespace Digx7.Zygote
 {
     public class CameraManager : MonoBehaviour
     {
+        #region Variables ================================
+        
         [SerializeField] protected int ID = 1;
         [SerializeField] PlayerController connectedPlayerController;
         [SerializeField] PlayerCharacter playerCharacter;
@@ -14,7 +16,36 @@ namespace Digx7.Zygote
         [SerializeField] private PlayerController controllerToConnectToOnEnable;
         [SerializeField] private PlayerCharacter playerCharacterToConnectToOnEnable;
 
-        // CONNECTING TO PLAYER AND CONTROLLERS =========================================
+        #endregion
+
+        #region Setup ================================
+
+        protected virtual void OnEnable()
+        {
+            if(runSetupOnEnable)Setup(ID, controllerToConnectToOnEnable, playerCharacterToConnectToOnEnable);
+        }
+
+        protected virtual void OnDisable()
+        {
+            Teardown();
+        }
+
+        public virtual void Setup(int newID = 1, PlayerController controllerToConnectTo = null, PlayerCharacter newPlayerCharacter = null)
+        {
+            SetID(newID);
+            ConnectToPlayerController(controllerToConnectTo);
+            ConnectToPlayerCharacter(newPlayerCharacter);
+            OnCameraManagerFinishedSetup.Raise(ID);
+        }
+
+        protected virtual void Teardown()
+        {
+
+        }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public bool ConnectToPlayerController(PlayerController newPlayerController)
         {
@@ -89,30 +120,9 @@ namespace Digx7.Zygote
             else return true;
         }
 
-        // SETUP AND TEARDOWN ===================================================================
+        #endregion
 
-        protected virtual void OnEnable()
-        {
-            if(runSetupOnEnable)Setup(ID, controllerToConnectToOnEnable, playerCharacterToConnectToOnEnable);
-        }
-
-        protected virtual void OnDisable()
-        {
-            Teardown();
-        }
-
-        public virtual void Setup(int newID = 1, PlayerController controllerToConnectTo = null, PlayerCharacter newPlayerCharacter = null)
-        {
-            SetID(newID);
-            ConnectToPlayerController(controllerToConnectTo);
-            ConnectToPlayerCharacter(newPlayerCharacter);
-            OnCameraManagerFinishedSetup.Raise(ID);
-        }
-
-        protected virtual void Teardown()
-        {
-
-        }
+        
 
     }
 }

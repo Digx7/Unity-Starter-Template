@@ -4,11 +4,15 @@ namespace Digx7.Zygote
 {
     public class AIBrain : MonoBehaviour
     {
+        #region Variables ================================
         [SerializeField] protected int ID;
         [SerializeField] protected AIController aIController;
 
         [SerializeField] private IntChannel onAIBrainFinishedSetupChannel;
 
+        #endregion
+
+        #region Main Functions ================================
         public void SetID(int newID)
         {
             if(newID == ID) return;
@@ -65,5 +69,7 @@ namespace Digx7.Zygote
         {
 
         }
+
+        #endregion
     }
 }

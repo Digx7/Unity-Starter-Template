@@ -7,6 +7,8 @@ namespace Digx7.Zygote
 {
     public class SongHolder : MonoBehaviour
     {
+        #region Variables ================================
+        
         [SerializeField] private SongData songData;
         public SongData GetSongData(){return songData;}
         [SerializeField] private GameObject layerPrefab;
@@ -20,6 +22,10 @@ namespace Digx7.Zygote
         private float runtime;
         private float songLength;
         private bool isPlaying = false;
+
+        #endregion
+
+        #region Setup ================================
 
         public void Setup(SongData newSongData, MusicManager newMusicManager)
         {
@@ -44,6 +50,10 @@ namespace Digx7.Zygote
         {
             CheckIfSongIsEnding();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void StartSong()
         {
@@ -119,5 +129,7 @@ namespace Digx7.Zygote
                 }
             }
         }
+
+        #endregion
     }
 }

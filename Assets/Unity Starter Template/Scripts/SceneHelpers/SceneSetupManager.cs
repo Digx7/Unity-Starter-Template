@@ -4,6 +4,8 @@ namespace Digx7.Zygote
 {
     public class SceneSetupManager : MonoBehaviour
     {
+        #region Variables ================================
+
         [SerializeField] private bool changeGameModeOnSceneStart = true;
         [SerializeField] private StringChannel onChangeGameModeChannel;
         [SerializeField] private string gameModeToChangeToOnSetup;
@@ -16,6 +18,10 @@ namespace Digx7.Zygote
         
         [SerializeField] bool triggerOnStart = true;
         public SceneContextEvent onSetup;
+
+        #endregion
+
+        #region Setup ================================
 
         public void Start()
         {
@@ -36,5 +42,7 @@ namespace Digx7.Zygote
 
             Debug.Log("SceneSetupManager: Setup()");
         }
+
+        #endregion
     }
 }

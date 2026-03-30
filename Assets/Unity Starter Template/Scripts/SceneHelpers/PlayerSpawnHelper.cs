@@ -4,10 +4,15 @@ namespace Digx7.Zygote
 {
     public class PlayerSpawnHelper : MonoBehaviour
     {
+        #region Variables ================================
+        
         [SerializeField] private int ID = 0;
         [SerializeField] private PlayerSpawnInfoChannel requestSpawnPlayerChannel;
         [SerializeField] private SceneContextChannel contextOnSceneSetupChannel;
 
+        #endregion
+
+        #region Setup ================================
 
         private void OnEnable()
         {
@@ -18,6 +23,10 @@ namespace Digx7.Zygote
         {
             contextOnSceneSetupChannel.channelEvent.RemoveListener(SpawnPlayer);
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void SpawnPlayer(SceneContext context)
         {
@@ -34,5 +43,7 @@ namespace Digx7.Zygote
                 requestSpawnPlayerChannel.Raise(playerSpawnInfo);
             }
         }
+
+        #endregion
     }
 }

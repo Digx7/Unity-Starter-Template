@@ -4,6 +4,8 @@ namespace Digx7.Zygote
 {
     public class GameController : MonoBehaviour
     {
+        #region Variables ================================
+        
         [SerializeField] protected int ID;
         [SerializeField] protected Character possessedCharacter;
         
@@ -13,8 +15,39 @@ namespace Digx7.Zygote
         [SerializeField] private bool runSetupOnEnable = true;
         [SerializeField] private Character characterToPossessOnEnable;
 
+        #endregion
+        
+        #region Setup ================================
 
-        // POSSESSION ===========================================================
+        protected virtual void OnEnable()
+        {
+            if(runSetupOnEnable) Setup(ID, characterToPossessOnEnable);
+        }
+
+        protected virtual void OnDisable()
+        {
+            Teardown();
+        }
+
+        public virtual void Setup(int newID = 1, Character characterToPossess = null)
+        {
+            ID = newID;
+
+            if(PossessCharacter(characterToPossess))
+            {
+                OnControllerFinishedSetup.Raise(ID);
+            }
+        }
+
+        public virtual void Teardown()
+        {
+
+        }
+
+        #endregion
+
+        #region Main Functions ================================
+        
         public virtual bool PossessCharacter(Character newCharacter)
         {
             if(!IsCharacterValid(newCharacter)) return false;
@@ -62,32 +95,7 @@ namespace Digx7.Zygote
             else return false;
         }
 
-        // SETUP AND TEARDOWN ===========================================================
-
-        protected virtual void OnEnable()
-        {
-            if(runSetupOnEnable) Setup(ID, characterToPossessOnEnable);
-        }
-
-        protected virtual void OnDisable()
-        {
-            Teardown();
-        }
-
-        public virtual void Setup(int newID = 1, Character characterToPossess = null)
-        {
-            ID = newID;
-
-            if(PossessCharacter(characterToPossess))
-            {
-                OnControllerFinishedSetup.Raise(ID);
-            }
-        }
-
-        public virtual void Teardown()
-        {
-
-        }
+        #endregion
 
     }
 }

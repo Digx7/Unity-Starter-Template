@@ -4,6 +4,8 @@ namespace Digx7.Zygote
 {
     public class TestingInput : MonoBehaviour
     {
+        #region Variables ================================
+
         [SerializeField] string gameModeToLoadOnStart;
         [SerializeField] StringChannel onChangeGameModeChannel;
         [SerializeField] StringChannel changeSceneChannel;
@@ -12,6 +14,10 @@ namespace Digx7.Zygote
         [SerializeField] SongDataChannel requestQueueSongDataChannel;
         [SerializeField] SongData songToQueue;
         
+        #endregion
+
+        #region Main Functions ================================
+
         public void Update()
         {
             if(Input.GetKeyDown(KeyCode.W))
@@ -54,5 +60,7 @@ namespace Digx7.Zygote
                 requestQueueSongDataChannel.Raise(songToQueue);
             }
         }
+    
+        #endregion
     }
 }

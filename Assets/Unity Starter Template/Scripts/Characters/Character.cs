@@ -4,16 +4,44 @@ namespace Digx7.Zygote
 {
     public class Character : MonoBehaviour
     {
+        #region Variables ================================
+        
         [SerializeField] protected int ID = 0;
         [SerializeField] protected GameController controller;
+
+        #endregion
+
+        #region Setup ================================
 
         protected virtual void Awake() {}
 
         protected virtual void Start() {}
 
         protected virtual void Update() {}
-        
-        // POSSESSION ===========================================================
+
+        protected virtual void OnEnable()
+        {
+            Setup();
+        }
+
+        protected virtual void OnDisable()
+        {
+            Teardown();
+        }
+
+        public virtual void Setup(int newID = 0)
+        {
+            SetID(newID);
+        }
+
+        public virtual void Teardown()
+        {
+
+        }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public bool Possess(GameController newController)
         {
@@ -63,27 +91,9 @@ namespace Digx7.Zygote
             else return true;
         }
 
-        // SETUP AND TEARDOWN ===================================================================
+        #endregion
 
-        protected virtual void OnEnable()
-        {
-            Setup();
-        }
-
-        protected virtual void OnDisable()
-        {
-            Teardown();
-        }
-
-        public virtual void Setup(int newID = 0)
-        {
-            SetID(newID);
-        }
-
-        public virtual void Teardown()
-        {
-
-        }
+        
 
     }
 }

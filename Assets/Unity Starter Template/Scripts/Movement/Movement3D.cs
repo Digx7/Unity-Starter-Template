@@ -5,6 +5,8 @@ namespace Digx7.Zygote
     [RequireComponent(typeof(Rigidbody))]
     public class Movement3D : MonoBehaviour
     {
+        #region Variables ================================
+        
         public float moveSpeed;
         public float jumpForce;
         public float jumpBufferCheckDistance = 2f;
@@ -22,6 +24,10 @@ namespace Digx7.Zygote
             wantsToJump = true;
         }
 
+        #endregion
+
+        #region Setup ================================
+
         public void Awake()
         {
             rb = gameObject.GetComponent<Rigidbody>();
@@ -34,6 +40,10 @@ namespace Digx7.Zygote
             if(wantsToJump) Jump();
             Move();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         private void Move()
         {
@@ -90,6 +100,8 @@ namespace Digx7.Zygote
             }
             return false;
         }
+
+        #endregion
         
     }
 }

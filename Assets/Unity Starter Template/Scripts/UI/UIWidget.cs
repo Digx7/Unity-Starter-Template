@@ -6,9 +6,14 @@ namespace Digx7.Zygote
 {
     public class UIWidget : MonoBehaviour
     {
-
+        #region Variables ================================
+        
         protected UIWidgetData ownUIWidgetData;
         [SerializeField] private UIWidgetDataChannel RequestUnloadWidgetDataChannel;
+
+        #endregion
+
+        #region Setup ================================
 
         public virtual void Setup(UIWidgetData newUIWidgetData)
         {
@@ -19,6 +24,10 @@ namespace Digx7.Zygote
         {
             Destroy(this.gameObject);
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         protected void UnloadSelf()
         {
@@ -36,5 +45,7 @@ namespace Digx7.Zygote
             yield return new WaitForSeconds(time);
             funcToCalAtEnd(value);
         }
+
+        #endregion
     }
 }

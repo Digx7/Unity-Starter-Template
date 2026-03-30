@@ -6,6 +6,8 @@ namespace Digx7.Zygote
 {
     public class DialogueBoxWidget : UIWidget
     {
+        #region Variables ================================
+
         public float typingSpeed;
         public TextMeshProUGUI speakerNameTextMeshPro;
         public TextMeshProUGUI dialogueTextMeshPro;
@@ -13,6 +15,10 @@ namespace Digx7.Zygote
 
         private ConversationNode currentNode;
         private bool isTyping = false;
+
+        #endregion
+
+        #region Setup ================================
         
         public override void Setup(UIWidgetData newUIWidgetData)
         {
@@ -25,6 +31,10 @@ namespace Digx7.Zygote
             onConversationUpdateChannel.channelEvent.RemoveListener(Render);
             base.Teardown();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void Render(ConversationNode latestNode)
         {
@@ -49,5 +59,7 @@ namespace Digx7.Zygote
             }
             isTyping = false;
         }
+
+        #endregion
     }
 }

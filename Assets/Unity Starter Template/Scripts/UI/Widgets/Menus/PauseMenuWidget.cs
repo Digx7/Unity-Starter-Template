@@ -4,12 +4,18 @@ namespace Digx7.Zygote
 {
     public class PauseMenuWidget : UIMenu
     {
+        #region Variables ================================
+        
         [SerializeField] private SceneData mainMenuScene;
         [SerializeField] UIWidgetData optionsMenuWidgetData;
 
         [SerializeField] SceneDataChannel requestChangeSceneDataChannel;
         [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
         [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+
+        #endregion
+
+        #region Setup ================================
 
         public override void Setup(UIWidgetData newUIWidgetData)
         {
@@ -20,6 +26,10 @@ namespace Digx7.Zygote
         {
             base.Teardown();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void OnClickResume()
         {
@@ -37,5 +47,7 @@ namespace Digx7.Zygote
             requestChangeSceneDataChannel.Raise(mainMenuScene);
             requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
         }
+
+        #endregion
     }
 }

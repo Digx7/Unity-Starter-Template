@@ -6,6 +6,7 @@ namespace Digx7.Zygote
     [RequireComponent(typeof(BoxCollider))]
     public class InteractZone : MonoBehaviour
     {
+        #region Variables ================================
 
         public string playerTag = "Player";
         public Channel onPlayerTryInteractChannel;
@@ -14,6 +15,10 @@ namespace Digx7.Zygote
         public UnityEvent onPlayerInteract;
 
         private bool isPlayerInZone = false;
+
+        #endregion
+
+        #region Setup ================================
 
         private void OnEnable()
         {
@@ -24,6 +29,10 @@ namespace Digx7.Zygote
         {
             onPlayerTryInteractChannel.channelEvent.RemoveListener(TryInteract);
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void TryInteract()
         {
@@ -53,5 +62,7 @@ namespace Digx7.Zygote
                 isPlayerInZone = false;
             }
         }
+
+        #endregion
     }
 }

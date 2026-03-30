@@ -4,10 +4,16 @@ namespace Digx7.Zygote
 {
     public class QuitMenuWidget : UIMenu
     {
+        #region Variables ================================
+
         [SerializeField] UIWidgetData mainMenuWidgetData;
         
         [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
         [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+
+        #endregion
+
+        #region Setup ================================
 
         public override void Setup(UIWidgetData newUIWidgetData)
         {
@@ -18,6 +24,10 @@ namespace Digx7.Zygote
         {
             base.Teardown();
         }
+
+        #endregion
+
+        #region Main Functions ================================
 
         public void OnClickNo()
         {
@@ -33,5 +43,7 @@ namespace Digx7.Zygote
             Application.Quit();
             #endif
         }
+
+        #endregion
     }
 }
