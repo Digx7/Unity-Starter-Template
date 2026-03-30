@@ -1,14 +1,17 @@
 using UnityEngine;
 
-public class UIMenu : UIWidget
+namespace Digx7.Zygote
 {
-    public override void Setup(UIWidgetData newUIWidgetData)
+    public class UIMenu : UIWidget
     {
-        base.Setup(newUIWidgetData);
-    }
+        public override void Setup(UIWidgetData newUIWidgetData)
+        {
+            base.Setup(newUIWidgetData);
+        }
 
-    public override void Teardown()
-    {
-        base.Teardown();
+        public override void Teardown()
+        {
+            base.Teardown();
+        }
     }
 }

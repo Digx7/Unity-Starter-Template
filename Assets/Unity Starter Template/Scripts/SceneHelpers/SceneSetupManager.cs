@@ -8,7 +8,7 @@ namespace Digx7.Zygote
         [SerializeField] private StringChannel onChangeGameModeChannel;
         [SerializeField] private string gameModeToChangeToOnSetup;
         [SerializeField] private bool changeSongOnSceneStart = true;
-        [SerializeField] private SongChannel requestJumpToSongChannel;
+        [SerializeField] private SongDataChannel requestJumpToSongDataChannel;
         [SerializeField] private SongData songToJumpTo;
         [SerializeField] private SceneContext context;
         [SerializeField] private SceneContextChannel updateContextChannel;
@@ -27,7 +27,7 @@ namespace Digx7.Zygote
             if(updateContextChannel.lastValue.SpawnPointID != 0) context.SpawnPointID = updateContextChannel.lastValue.SpawnPointID;
             
             if(changeGameModeOnSceneStart) onChangeGameModeChannel.Raise(gameModeToChangeToOnSetup);
-            if(changeSongOnSceneStart) requestJumpToSongChannel.Raise(songToJumpTo);
+            if(changeSongOnSceneStart) requestJumpToSongDataChannel.Raise(songToJumpTo);
 
             onSetup.Invoke(context);
             contextOnSceneSetupChannel.Raise(context);

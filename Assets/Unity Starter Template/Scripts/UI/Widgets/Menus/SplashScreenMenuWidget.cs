@@ -1,25 +1,28 @@
 using UnityEngine;
 
-public class SplashScreenMenuWidget : UIMenu
+namespace Digx7.Zygote
 {
-    [SerializeField] UIWidgetData mainMenuWidgetData;
-    
-    [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-    [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
-
-    public override void Setup(UIWidgetData newUIWidgetData)
+    public class SplashScreenMenuWidget : UIMenu
     {
-        base.Setup(newUIWidgetData);
-    }
+        [SerializeField] UIWidgetData mainMenuWidgetData;
+        
+        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
+        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
 
-    public override void Teardown()
-    {
-        base.Teardown();
-    }
+        public override void Setup(UIWidgetData newUIWidgetData)
+        {
+            base.Setup(newUIWidgetData);
+        }
 
-    public void OnClickStart()
-    {
-        requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
-        requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        public override void Teardown()
+        {
+            base.Teardown();
+        }
+
+        public void OnClickStart()
+        {
+            requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
+            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        }
     }
 }

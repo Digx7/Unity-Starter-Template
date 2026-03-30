@@ -12,14 +12,14 @@ namespace Digx7.Zygote
         [SerializeField] SongHolder activeSong;
 
 
-        [SerializeField] SongChannel requestJumpToSongChannel;
-        [SerializeField] Channel onJumpToSongChannel;
-        [SerializeField] SongChannel requestQueueSongChannel;
-        [SerializeField] Channel onQueueSongChannel;
-        [SerializeField] Channel requestSkipSongChannel;
-        [SerializeField] Channel onSkipSongChannel;
-        [SerializeField] Channel requestPauseOrResumeSongChannel;
-        [SerializeField] Channel onPauseOrResumeSongChannel;
+        [SerializeField] SongDataChannel requestJumpToSongDataChannel;
+        [SerializeField] Channel onJumpToSongDataChannel;
+        [SerializeField] SongDataChannel requestQueueSongDataChannel;
+        [SerializeField] Channel onQueueSongDataChannel;
+        [SerializeField] Channel requestSkipSongDataChannel;
+        [SerializeField] Channel onSkipSongDataChannel;
+        [SerializeField] Channel requestPauseOrResumeSongDataChannel;
+        [SerializeField] Channel onPauseOrResumeSongDataChannel;
         [SerializeField] IntChannel requestAddSongLayerChannel;
         [SerializeField] Channel onAddSongLayerChannel;
         [SerializeField] IntChannel requestRemoveSongLayerChannel;
@@ -39,20 +39,20 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            requestJumpToSongChannel.channelEvent.AddListener(JumpToSong);
-            requestQueueSongChannel.channelEvent.AddListener(QueueSong);
-            requestSkipSongChannel.channelEvent.AddListener(SkipSong);
-            requestPauseOrResumeSongChannel.channelEvent.AddListener(PauseOrResume);
+            requestJumpToSongDataChannel.channelEvent.AddListener(JumpToSong);
+            requestQueueSongDataChannel.channelEvent.AddListener(QueueSong);
+            requestSkipSongDataChannel.channelEvent.AddListener(SkipSong);
+            requestPauseOrResumeSongDataChannel.channelEvent.AddListener(PauseOrResume);
             requestAddSongLayerChannel.channelEvent.AddListener(AddSongLayer);
             requestRemoveSongLayerChannel.channelEvent.AddListener(RemoveSongLayer);
         }
 
         private void TearDownChannels()
         {
-            requestJumpToSongChannel.channelEvent.RemoveListener(JumpToSong);
-            requestQueueSongChannel.channelEvent.RemoveListener(QueueSong);
-            requestSkipSongChannel.channelEvent.RemoveListener(SkipSong);
-            requestPauseOrResumeSongChannel.channelEvent.RemoveListener(PauseOrResume);
+            requestJumpToSongDataChannel.channelEvent.RemoveListener(JumpToSong);
+            requestQueueSongDataChannel.channelEvent.RemoveListener(QueueSong);
+            requestSkipSongDataChannel.channelEvent.RemoveListener(SkipSong);
+            requestPauseOrResumeSongDataChannel.channelEvent.RemoveListener(PauseOrResume);
             requestAddSongLayerChannel.channelEvent.RemoveListener(AddSongLayer);
             requestRemoveSongLayerChannel.channelEvent.RemoveListener(RemoveSongLayer);
         }
@@ -62,13 +62,13 @@ namespace Digx7.Zygote
         private void JumpToSong(SongData song)
         {
             PlayNewSong(song);
-            onJumpToSongChannel.Raise();
+            onJumpToSongDataChannel.Raise();
         }
 
         private void QueueSong(SongData song)
         {
             songQueue.Add(song);
-            onQueueSongChannel.Raise();
+            onQueueSongDataChannel.Raise();
 
             if(!IsThereAnActiveSong()) PlayNextSongInQueue();
         } 
@@ -76,13 +76,13 @@ namespace Digx7.Zygote
         private void SkipSong()
         {
             PlayNextSongInQueue();
-            onSkipSongChannel.Raise();
+            onSkipSongDataChannel.Raise();
         }
 
         private void PauseOrResume()
         {
             if(activeSong != null) activeSong.PauseOrResume();
-            onPauseOrResumeSongChannel.Raise();
+            onPauseOrResumeSongDataChannel.Raise();
         }
 
         private void AddSongLayer(int layerNumber)

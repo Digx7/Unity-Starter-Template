@@ -10,9 +10,9 @@ namespace Digx7.Zygote
 {
     public class SceneManager : Singleton<SceneManager>
     {
-        [SerializeField] private SceneChannel changeSceneChannel;
-        [SerializeField] private SceneChannel  addSceneChannel;
-        [SerializeField] private SceneChannel  removeSceneChannel;
+        [SerializeField] private SceneDataChannel changeSceneDataChannel;
+        [SerializeField] private SceneDataChannel  addSceneDataChannel;
+        [SerializeField] private SceneDataChannel  removeSceneDataChannel;
         [SerializeField] private SceneContextChannel  updateSceneContextChannel;
 
         public UnityEvent OnChangeSceneEvent;
@@ -35,18 +35,18 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            changeSceneChannel.channelEvent.AddListener(OnChangeScene);
-            addSceneChannel.channelEvent.AddListener(OnAddScene);
-            removeSceneChannel.channelEvent.AddListener(UnloadScene);
+            changeSceneDataChannel.channelEvent.AddListener(OnChangeScene);
+            addSceneDataChannel.channelEvent.AddListener(OnAddScene);
+            removeSceneDataChannel.channelEvent.AddListener(UnloadScene);
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnAcitveSceneChanged;
         }
 
         private void TearDownChannels()
         {
-            changeSceneChannel.channelEvent.RemoveListener(OnChangeScene);
-            addSceneChannel.channelEvent.RemoveListener(OnAddScene);
-            removeSceneChannel.channelEvent.RemoveListener(UnloadScene);
+            changeSceneDataChannel.channelEvent.RemoveListener(OnChangeScene);
+            addSceneDataChannel.channelEvent.RemoveListener(OnAddScene);
+            removeSceneDataChannel.channelEvent.RemoveListener(UnloadScene);
 
             UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnAcitveSceneChanged;
         }

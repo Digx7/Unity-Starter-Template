@@ -7,9 +7,9 @@ namespace Digx7.Zygote
         [SerializeField] string gameModeToLoadOnStart;
         [SerializeField] StringChannel onChangeGameModeChannel;
         [SerializeField] StringChannel changeSceneChannel;
-        [SerializeField] Channel requestPauseOrResumeSongChannel;
-        [SerializeField] Channel requestSkipSongChannel;
-        [SerializeField] SongChannel requestQueueSongChannel;
+        [SerializeField] Channel requestPauseOrResumeSongDataChannel;
+        [SerializeField] Channel requestSkipSongDataChannel;
+        [SerializeField] SongDataChannel requestQueueSongDataChannel;
         [SerializeField] SongData songToQueue;
         
         public void Update()
@@ -41,17 +41,17 @@ namespace Digx7.Zygote
 
             if(Input.GetKeyDown(KeyCode.P))
             {
-                requestPauseOrResumeSongChannel.Raise();
+                requestPauseOrResumeSongDataChannel.Raise();
             }
 
             if(Input.GetKeyDown(KeyCode.O))
             {
-                requestSkipSongChannel.Raise();
+                requestSkipSongDataChannel.Raise();
             }
 
             if(Input.GetKeyDown(KeyCode.I))
             {
-                requestQueueSongChannel.Raise(songToQueue);
+                requestQueueSongDataChannel.Raise(songToQueue);
             }
         }
     }

@@ -1,12 +1,15 @@
 using UnityEngine;
 using TMPro;
 
-public class BuildNumberHelper : MonoBehaviour
+namespace Digx7.Zygote
 {
-    [SerializeField] private TextMeshProUGUI textMeshProUGUI;
-
-    private void Start()
+    public class BuildNumberHelper : MonoBehaviour
     {
-        textMeshProUGUI.text = Application.version;
+        [SerializeField] private TextMeshProUGUI textMeshProUGUI;
+
+        private void Start()
+        {
+            textMeshProUGUI.text = Application.version;
+        }
     }
 }

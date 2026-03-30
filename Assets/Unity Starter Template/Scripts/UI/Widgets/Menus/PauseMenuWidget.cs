@@ -1,38 +1,41 @@
 using UnityEngine;
 
-public class PauseMenuWidget : UIMenu
+namespace Digx7.Zygote
 {
-    [SerializeField] private SceneData mainMenuScene;
-    [SerializeField] UIWidgetData optionsMenuWidgetData;
-
-    [SerializeField] SceneChannel requestChangeSceneChannel;
-    [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-    [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
-
-    public override void Setup(UIWidgetData newUIWidgetData)
+    public class PauseMenuWidget : UIMenu
     {
-        base.Setup(newUIWidgetData);
-    }
+        [SerializeField] private SceneData mainMenuScene;
+        [SerializeField] UIWidgetData optionsMenuWidgetData;
 
-    public override void Teardown()
-    {
-        base.Teardown();
-    }
+        [SerializeField] SceneDataChannel requestChangeSceneDataChannel;
+        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
+        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
 
-    public void OnClickResume()
-    {
-        requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
-    }
+        public override void Setup(UIWidgetData newUIWidgetData)
+        {
+            base.Setup(newUIWidgetData);
+        }
 
-    public void OnClickOptions()
-    {
-        requestLoadUIWidgetChannel.Raise(optionsMenuWidgetData);
-        requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
-    }
+        public override void Teardown()
+        {
+            base.Teardown();
+        }
 
-    public void OnClickQuit()
-    {
-        requestChangeSceneChannel.Raise(mainMenuScene);
-        requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        public void OnClickResume()
+        {
+            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        }
+
+        public void OnClickOptions()
+        {
+            requestLoadUIWidgetChannel.Raise(optionsMenuWidgetData);
+            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        }
+
+        public void OnClickQuit()
+        {
+            requestChangeSceneDataChannel.Raise(mainMenuScene);
+            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+        }
     }
 }

@@ -12,20 +12,4 @@ namespace Digx7.Zygote
 
         public Conversation nextConversationToLoadOnFinish;
     }
-
-    [System.Serializable]
-    public struct ConversationNode
-    {
-        public string speaker;
-        
-        [TextAreaAttribute]
-        public string line;
-
-        public void Print()
-        {
-            Debug.Log(speaker + ":\n" + line);
-        }
-    }
-
-    public class ConversationNodeEvent : UnityEvent<ConversationNode> {}
 }

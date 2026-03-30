@@ -180,26 +180,4 @@ namespace Digx7.Zygote
         }
 
     }
-
-    public enum QuestObjectiveType {Talk_To_x, Interact_With_x,Kill_x, Deliver_x_items, Go_to_x}
-
-    [System.Serializable]
-    public struct QuestNodeOutcome
-    {
-        public QuestNodeOutcomeType outcomeType;
-        public string data;
-    }
-
-    public enum QuestNodeOutcomeType {Give_item, Apply_Status}
-
-    [System.Serializable]
-    public struct QuestObjectiveProgress
-    {
-        public string objectiveName;
-        public int addedAmount;
-    }
-
-    public class QuestObjectiveProgressEvent : UnityEvent<QuestObjectiveProgress> {}
-
-    public class QuestDataEvent : UnityEvent<QuestData> {}
 }
