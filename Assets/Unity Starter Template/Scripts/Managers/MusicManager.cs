@@ -10,25 +10,26 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         [Header("Variables")]
-        [SerializeField] List<SongData> songQueue;
-        [SerializeField] GameObject songPrefab;
-        [SerializeField] SongHolder activeSong;
+        [SerializeField] List<SongData> _songQueue;
+        [SerializeField] GameObject _songPrefab;
+        [SerializeField] SongHolder _activeSong;
 
         [Header("Incoming Channels")]
-        [SerializeField] SongDataChannel requestJumpToSongDataChannel;
-        [SerializeField] Channel onJumpToSongDataChannel;
-        [SerializeField] SongDataChannel requestQueueSongDataChannel;
-        [SerializeField] Channel onQueueSongDataChannel;
-        [SerializeField] Channel requestSkipSongDataChannel;
-        [SerializeField] Channel onSkipSongDataChannel;
-        [SerializeField] Channel requestPauseOrResumeSongDataChannel;
-        [SerializeField] Channel onPauseOrResumeSongDataChannel;
-        [SerializeField] IntChannel requestAddSongLayerChannel;
-        [SerializeField] Channel onAddSongLayerChannel;
-        [SerializeField] IntChannel requestRemoveSongLayerChannel;
-        [SerializeField] Channel onRemoveSongLayerChannel;
+        [SerializeField] SongDataChannel _request_JumpToSongData_Channel;
+        [SerializeField] SongDataChannel _request_QueueSongData_Channel;
+        [SerializeField] Channel _request_SkipSongData_Channel;
+        [SerializeField] Channel _request_PauseOrResumeSongData_Channel;
+        [SerializeField] IntChannel _request_AddSongLayer_Channel;
+        [SerializeField] IntChannel _request_RemoveSongLayer_Channel;
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UnityEvent OnJumpToSongDataEvent;
+        public UnityEvent OnQueueSongDataEvent;
+        public UnityEvent OnSkipSongDataEvent;
+        public UnityEvent OnPauseOrResumeSongDataEvent;
+        public UnityEvent OnAddSongLayerEvent;
+        public UnityEvent OnRemoveSongLayerEvent;
+
 
         #endregion
 
@@ -46,27 +47,57 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            requestJumpToSongDataChannel.channelEvent.AddListener(JumpToSong);
-            requestQueueSongDataChannel.channelEvent.AddListener(QueueSong);
-            requestSkipSongDataChannel.channelEvent.AddListener(SkipSong);
-            requestPauseOrResumeSongDataChannel.channelEvent.AddListener(PauseOrResume);
-            requestAddSongLayerChannel.channelEvent.AddListener(AddSongLayer);
-            requestRemoveSongLayerChannel.channelEvent.AddListener(RemoveSongLayer);
+            _request_JumpToSongData_Channel.channelEvent.AddListener(OnRecieve_JumpToSongData);
+            _request_QueueSongData_Channel.channelEvent.AddListener(OnRecieve_QueueSongData);
+            _request_SkipSongData_Channel.channelEvent.AddListener(OnRecieve_SkipSongData);
+            _request_PauseOrResumeSongData_Channel.channelEvent.AddListener(OnRecieve_PauseOrResumeSongData);
+            _request_AddSongLayer_Channel.channelEvent.AddListener(OnRecieve_AddSongLayer);
+            _request_RemoveSongLayer_Channel.channelEvent.AddListener(OnRecieve_RemoveSongLayer);
         }
 
         private void TearDownChannels()
         {
-            requestJumpToSongDataChannel.channelEvent.RemoveListener(JumpToSong);
-            requestQueueSongDataChannel.channelEvent.RemoveListener(QueueSong);
-            requestSkipSongDataChannel.channelEvent.RemoveListener(SkipSong);
-            requestPauseOrResumeSongDataChannel.channelEvent.RemoveListener(PauseOrResume);
-            requestAddSongLayerChannel.channelEvent.RemoveListener(AddSongLayer);
-            requestRemoveSongLayerChannel.channelEvent.RemoveListener(RemoveSongLayer);
+            _request_JumpToSongData_Channel.channelEvent.RemoveListener(OnRecieve_JumpToSongData);
+            _request_QueueSongData_Channel.channelEvent.RemoveListener(OnRecieve_QueueSongData);
+            _request_SkipSongData_Channel.channelEvent.RemoveListener(OnRecieve_SkipSongData);
+            _request_PauseOrResumeSongData_Channel.channelEvent.RemoveListener(OnRecieve_PauseOrResumeSongData);
+            _request_AddSongLayer_Channel.channelEvent.RemoveListener(OnRecieve_AddSongLayer);
+            _request_RemoveSongLayer_Channel.channelEvent.RemoveListener(OnRecieve_RemoveSongLayer);
         }
 
         #endregion
 
         #region Channel Responses ================================
+
+        protected void OnRecieve_JumpToSongData(SongData song)
+        {
+            JumpToSong(song);
+        }
+
+        protected void OnRecieve_QueueSongData(SongData song)
+        {
+            QueueSong(song);
+        }
+
+        protected void OnRecieve_SkipSongData()
+        {
+            SkipSong();
+        }
+
+        protected void OnRecieve_PauseOrResumeSongData()
+        {
+            PauseOrResume();
+        }
+
+        protected void OnRecieve_AddSongLayer(int layerNumber)
+        {
+            AddSongLayer(layerNumber);
+        }
+
+        protected void OnRecieve_RemoveSongLayer(int layerNumber)
+        {
+            RemoveSongLayer(layerNumber);
+        }
 
         #endregion
 
@@ -75,13 +106,13 @@ namespace Digx7.Zygote
         private void JumpToSong(SongData song)
         {
             PlayNewSong(song);
-            onJumpToSongDataChannel.Raise();
+            OnJumpToSongDataEvent.Invoke();
         }
 
         private void QueueSong(SongData song)
         {
-            songQueue.Add(song);
-            onQueueSongDataChannel.Raise();
+            _songQueue.Add(song);
+            OnQueueSongDataEvent.Invoke();
 
             if(!IsThereAnActiveSong()) PlayNextSongInQueue();
         } 
@@ -89,45 +120,45 @@ namespace Digx7.Zygote
         private void SkipSong()
         {
             PlayNextSongInQueue();
-            onSkipSongDataChannel.Raise();
+            OnSkipSongDataEvent.Invoke();
         }
 
         private void PauseOrResume()
         {
-            if(activeSong != null) activeSong.PauseOrResume();
-            onPauseOrResumeSongDataChannel.Raise();
+            if(_activeSong != null) _activeSong.PauseOrResume();
+            OnPauseOrResumeSongDataEvent.Invoke();
         }
 
         private void AddSongLayer(int layerNumber)
         {
-            if(activeSong != null) 
+            if(_activeSong != null) 
             {
-                activeSong.AddLayer(layerNumber);
-                onAddSongLayerChannel.Raise();
+                _activeSong.AddLayer(layerNumber);
+                OnAddSongLayerEvent.Invoke();
             }
         }
 
         private void RemoveSongLayer(int layerNumber)
         {
-            if(activeSong != null) 
+            if(_activeSong != null) 
             {
-                activeSong.RemoveLayer(layerNumber);
-                onRemoveSongLayerChannel.Raise();
+                _activeSong.RemoveLayer(layerNumber);
+                OnRemoveSongLayerEvent.Invoke();
             }
         }
 
         public void PlayNextSongInQueue()
         {
-            if(songQueue.Count == 0)
+            if(_songQueue.Count == 0)
             {
                 Debug.Log("The Music Manager tried playing the next song in its queue, but the queue is empty");
-                activeSong.StopSong();
-                activeSong = null;
+                _activeSong.StopSong();
+                _activeSong = null;
                 return;
             }
 
-            PlayNewSong(songQueue[0]);
-            songQueue.RemoveAt(0);
+            PlayNewSong(_songQueue[0]);
+            _songQueue.RemoveAt(0);
         }
 
         private void PlayNewSong(SongData song)
@@ -135,26 +166,26 @@ namespace Digx7.Zygote
             if(IsThereAnActiveSong())
             {
                 // check is this song is already playing
-                if(activeSong.GetSongData() == song)
+                if(_activeSong.GetSongData() == song)
                 {
                     Debug.LogWarning("We just tried to play the same song that already is playing");
                     return;
                 }
                 // If a song is active stop it
-                activeSong.StopSong();
+                _activeSong.StopSong();
             }
             
             // load this song
-            GameObject loaded = Instantiate(songPrefab, this.transform);
-            activeSong = loaded.GetComponent<SongHolder>();
-            activeSong.Setup(song, this);
+            GameObject loaded = Instantiate(_songPrefab, this.transform);
+            _activeSong = loaded.GetComponent<SongHolder>();
+            _activeSong.Setup(song, this);
             // Start this song
-            activeSong.StartSong();
+            _activeSong.StartSong();
         }
 
         private bool IsThereAnActiveSong()
         {
-            if(activeSong != null) return true;
+            if(_activeSong != null) return true;
             else return false;
         }
     

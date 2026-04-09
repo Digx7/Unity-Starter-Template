@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,12 +7,15 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        [Header("Variables")]
         [SerializeField] private SceneData mainMenuScene;
         [SerializeField] UIWidgetData optionsMenuWidgetData;
 
-        [SerializeField] SceneDataChannel requestChangeSceneDataChannel;
-        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public SceneDataEvent requestChangeSceneDataEvent;
+        public UIWidgetDataEvent requestLoadUIWidgetEvent;
+        public UIWidgetDataEvent requestUnLoadUIWidgetEvent;
 
         #endregion
 
@@ -33,19 +37,19 @@ namespace Digx7.Zygote
 
         public void OnClickResume()
         {
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickOptions()
         {
-            requestLoadUIWidgetChannel.Raise(optionsMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(optionsMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickQuit()
         {
-            requestChangeSceneDataChannel.Raise(mainMenuScene);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestChangeSceneDataEvent?.Invoke(mainMenuScene);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,9 +7,14 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        [Header("Variables")]
         [SerializeField] private int ID = 0;
-        [SerializeField] private PlayerSpawnInfoChannel requestSpawnPlayerChannel;
+
+        [Header("Incoming Channels")]
         [SerializeField] private SceneContextChannel contextOnSceneSetupChannel;
+
+        [Header("Outgoing Events")]
+        public PlayerSpawnInfoEvent OnRequestSpawnPlayerEvent;
 
         #endregion
 
@@ -40,7 +46,8 @@ namespace Digx7.Zygote
                 playerSpawnInfo.location = this.transform.position;
                 playerSpawnInfo.rotation = this.transform.rotation;
 
-                requestSpawnPlayerChannel.Raise(playerSpawnInfo);
+                OnRequestSpawnPlayerEvent?.Invoke(playerSpawnInfo);
+
             }
         }
 

@@ -7,6 +7,7 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         [SerializeField] private TextMeshProUGUI textMeshProUGUI;
 
         #endregion

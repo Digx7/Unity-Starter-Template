@@ -6,10 +6,12 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         [SerializeField] UIWidgetData mainMenuWidgetData;
         
-        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent requestLoadUIWidgetEvent;
+        public UIWidgetDataEvent requestUnLoadUIWidgetEvent;
 
         #endregion
 
@@ -31,8 +33,8 @@ namespace Digx7.Zygote
 
         public void OnClickNo()
         {
-            requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(mainMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickYes()

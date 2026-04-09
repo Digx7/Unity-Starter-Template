@@ -10,11 +10,11 @@ namespace Digx7.Zygote
         #region Variables ================================
         
         [Header("Variables")]
-        public List<QuestData> activeQuests;
+        [SerializeField] List<QuestData> _activeQuests;
 
         [Header("Incoming Channels")]
-        public QuestDataChannel reciveQuestChannel;
-        public QuestObjectiveProgressChannel tryProgressQuestChannel;
+        [SerializeField] QuestDataChannel _request_receiveQuest_Channel;
+        [SerializeField] QuestObjectiveProgressChannel _request_tryProgressQuest_Channel;
 
         // [Header("Outgoing Events")]
 
@@ -24,19 +24,29 @@ namespace Digx7.Zygote
 
         public override void SafeOnEnable()
         {
-            reciveQuestChannel.channelEvent.AddListener(GiveQuest);
-            tryProgressQuestChannel.channelEvent.AddListener(TryProgressQuest);
+            _request_receiveQuest_Channel.channelEvent.AddListener(OnRecieve_GiveQuest);
+            _request_tryProgressQuest_Channel.channelEvent.AddListener(OnRecieve_TryProgressQuest);
         }
 
         public override void SafeOnDisable()
         {
-            reciveQuestChannel.channelEvent.RemoveListener(GiveQuest);
-            tryProgressQuestChannel.channelEvent.RemoveListener(TryProgressQuest);
+            _request_receiveQuest_Channel.channelEvent.RemoveListener(OnRecieve_GiveQuest);
+            _request_tryProgressQuest_Channel.channelEvent.RemoveListener(OnRecieve_TryProgressQuest);
         }
 
         #endregion
 
         #region Channel Responses ================================
+
+        protected void OnRecieve_GiveQuest(QuestData newQuest)
+        {
+            GiveQuest(newQuest);
+        }
+
+        protected void OnRecieve_TryProgressQuest(QuestObjectiveProgress progress)
+        {
+            TryProgressQuest(progress);
+        }
 
         #endregion
 
@@ -44,14 +54,14 @@ namespace Digx7.Zygote
 
         public void GiveQuest(QuestData newQuest)
         {
-            if(activeQuests.Contains(newQuest))
+            if(_activeQuests.Contains(newQuest))
             {
                 Debug.Log("QuestManager: Something tried to give the quest " + newQuest.questName + "\nBut that quest is already active.");
                 return;
             }
 
             newQuest.ResetQuest();
-            activeQuests.Add(newQuest);
+            _activeQuests.Add(newQuest);
 
             Debug.Log("QuestManager: Added quest: " + newQuest.ToString());
         }
@@ -60,11 +70,11 @@ namespace Digx7.Zygote
         {
             int indexOfFinishedQuest = -1;
             
-            for (int i = 0; i < activeQuests.Count; i++)
+            for (int i = 0; i < _activeQuests.Count; i++)
             {
-                if(activeQuests[i].TryProgress(progress))
+                if(_activeQuests[i].TryProgress(progress))
                 {
-                    if(activeQuests[i].IsComplete())
+                    if(_activeQuests[i].IsComplete())
                     {
                         indexOfFinishedQuest = i;
                     }
@@ -83,11 +93,11 @@ namespace Digx7.Zygote
 
         private void FinishQuestAtIndex(int index)
         {
-            QuestData finishedQuest = activeQuests[index];
+            QuestData finishedQuest = _activeQuests[index];
             finishedQuest.Finish();
 
             Debug.Log("QuestManager: Finished Quest: " + finishedQuest.ToString());
-            activeQuests.RemoveAt(index);
+            _activeQuests.RemoveAt(index);
         }
 
         #endregion

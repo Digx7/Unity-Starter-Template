@@ -1,14 +1,18 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
     public class CreditsMenuWidget : UIMenu
     {
         #region Variables ================================
+        [Header("Variables")]
         [SerializeField] UIWidgetData mainMenuWidgetData;
         
-        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent requestLoadUIWidgetEvent;
+        public UIWidgetDataEvent requestUnLoadUIWidgetEvent;
 
         #endregion
 
@@ -30,8 +34,8 @@ namespace Digx7.Zygote
 
         public void OnClickBack()
         {
-            requestLoadUIWidgetChannel.Raise(mainMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(mainMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         #endregion

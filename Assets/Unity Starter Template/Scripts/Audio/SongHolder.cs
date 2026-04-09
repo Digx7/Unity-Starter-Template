@@ -9,19 +9,20 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
-        [SerializeField] private SongData songData;
-        public SongData GetSongData(){return songData;}
-        [SerializeField] private GameObject layerPrefab;
+        [Header("Variables")]
+        [SerializeField] private SongData _songData;
+        public SongData GetSongData(){return _songData;}
+        [SerializeField] private GameObject _layerPrefab;
 
 
         private const float MAXFADEOUTDURATION = 3f;
 
-        private MusicManager musicManager;
-        private List<SongLayerHolder> layers;
+        private MusicManager _musicManager;
+        private List<SongLayerHolder> _layers;
 
-        private float runtime;
-        private float songLength;
-        private bool isPlaying = false;
+        private float _runtime;
+        private float _songLength;
+        private bool _isPlaying = false;
 
         #endregion
 
@@ -29,21 +30,21 @@ namespace Digx7.Zygote
 
         public void Setup(SongData newSongData, MusicManager newMusicManager)
         {
-            songData = newSongData;
-            musicManager = newMusicManager;
+            _songData = newSongData;
+            _musicManager = newMusicManager;
 
-            layers = new List<SongLayerHolder>();
+            _layers = new List<SongLayerHolder>();
 
-            for (int i = 0; i < songData.layers.Count; i++)
+            for (int i = 0; i < _songData.layers.Count; i++)
             {
-                GameObject obj = Instantiate(layerPrefab, this.transform);
+                GameObject obj = Instantiate(_layerPrefab, this.transform);
                 SongLayerHolder layer = obj.GetComponent<SongLayerHolder>();
 
-                layer.Setup(i, songData.layers[i], songData.shouldLoop);
-                layers.Add(layer);
+                layer.Setup(i, _songData.layers[i], _songData.shouldLoop);
+                _layers.Add(layer);
             }
 
-            songLength = songData.layers[0].length;
+            _songLength = _songData.layers[0].length;
         }
 
         public void Update()
@@ -57,18 +58,18 @@ namespace Digx7.Zygote
 
         public void StartSong()
         {
-            isPlaying = true;
-            foreach (SongLayerHolder layer in layers)
+            _isPlaying = true;
+            foreach (SongLayerHolder layer in _layers)
             {
                 layer.StartLayer();
             }
-            layers[0].FadeIn();
+            _layers[0].FadeIn();
         }
 
         public void StopSong()
         {
-            isPlaying = false;
-            foreach (SongLayerHolder layer in layers)
+            _isPlaying = false;
+            foreach (SongLayerHolder layer in _layers)
             {
                 layer.StopLayer();
             }
@@ -77,8 +78,8 @@ namespace Digx7.Zygote
 
         public void PauseOrResume()
         {
-            isPlaying = !isPlaying;
-            foreach (SongLayerHolder layer in layers)
+            _isPlaying = !_isPlaying;
+            foreach (SongLayerHolder layer in _layers)
             {
                 layer.PauseOrResume();
             }
@@ -86,24 +87,24 @@ namespace Digx7.Zygote
 
         public void AddLayer(int layerNumber)
         {
-            if(layerNumber >= layers.Count)
+            if(layerNumber >= _layers.Count)
             {
                 Debug.LogWarning("A song just tried to add a layer that does not exist");
                 return;
             }
 
-            layers[layerNumber].FadeIn();
+            _layers[layerNumber].FadeIn();
         }
 
         public void RemoveLayer(int layerNumber)
         {
-            if(layerNumber >= layers.Count)
+            if(layerNumber >= _layers.Count)
             {
                 Debug.LogWarning("A song just tried to remove a layer that does not exist");
                 return;
             }
 
-            layers[layerNumber].FadeOut();
+            _layers[layerNumber].FadeOut();
         }
 
         private void FadeOut()
@@ -120,12 +121,12 @@ namespace Digx7.Zygote
         private void CheckIfSongIsEnding()
         {
             // If we are looping there is no point in checking if the song is ending
-            if(isPlaying && !songData.shouldLoop)
+            if(_isPlaying && !_songData.shouldLoop)
             {
-                runtime += Time.deltaTime;
-                if(runtime >= songLength)
+                _runtime += Time.deltaTime;
+                if(_runtime >= _songLength)
                 {
-                    musicManager.PlayNextSongInQueue();
+                    _musicManager.PlayNextSongInQueue();
                 }
             }
         }

@@ -11,18 +11,21 @@ namespace Digx7.Zygote
         #region Variables ================================
 
         [Header("Variables")]
-        [SerializeField] private Transform Canvas;
-        [SerializeField] private List<UIWidgetData> activeWidgets;
+        [SerializeField] private Transform _canvas;
+        [SerializeField] private List<UIWidgetData> _activeWidgets;
 
         [Header("Incoming Channels")]
-        [SerializeField] private UIWidgetDataChannel requestLoadUIWidgetChannel;
-        [SerializeField] private Channel onLoadUIWidgetChannel;
-        [SerializeField] private UIWidgetDataChannel requestUnLoadUIWidgetChannel;
-        [SerializeField] private Channel onUnLoadUIWidgetChannel;
-        [SerializeField] private Channel requestClearAllUIWidgetsChannel;
-        [SerializeField] private Channel onClearAllUIWidgetsChannel;
+        [SerializeField] private UIWidgetDataChannel _request_LoadUIWidget_Channel;
+        [SerializeField] private Channel _onLoadUIWidget_Channel;
+        [SerializeField] private UIWidgetDataChannel _request_UnloadUIWidget_Channel;
+        [SerializeField] private Channel _onUnloadUIWidget_Channel;
+        [SerializeField] private Channel _request_ClearAllUIWidgets_Channel;
+        [SerializeField] private Channel _onClearAllUIWidgets_Channel;
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UnityEvent OnLoadUIWidgetEvent;
+        public UnityEvent OnUnloadUIWidgetEvent;
+        public UnityEvent OnClearAllUIWidgetsEvent;
 
         #endregion
 
@@ -40,22 +43,36 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            requestLoadUIWidgetChannel.channelEvent.AddListener(LoadWidget);
-            requestUnLoadUIWidgetChannel.channelEvent.AddListener(UnloadWidget);
-            requestClearAllUIWidgetsChannel.channelEvent.AddListener(UnloadAllWidgets);
+            _request_LoadUIWidget_Channel.channelEvent.AddListener(OnRecieve_LoadUIWidget);
+            _request_UnloadUIWidget_Channel.channelEvent.AddListener(OnRecieve_UnloadUIWidget);
+            _request_ClearAllUIWidgets_Channel.channelEvent.AddListener(OnRecieve_UnloadAllUIWidgets);
         }
 
         private void TeardownChannels()
         {
-            requestLoadUIWidgetChannel.channelEvent.RemoveListener(LoadWidget);
-            requestUnLoadUIWidgetChannel.channelEvent.RemoveListener(UnloadWidget);
-            requestClearAllUIWidgetsChannel.channelEvent.RemoveListener(UnloadAllWidgets);
+            _request_LoadUIWidget_Channel.channelEvent.RemoveListener(OnRecieve_LoadUIWidget);
+            _request_UnloadUIWidget_Channel.channelEvent.RemoveListener(OnRecieve_UnloadUIWidget);
+            _request_ClearAllUIWidgets_Channel.channelEvent.RemoveListener(OnRecieve_UnloadAllUIWidgets);
         }
 
         #endregion
 
         #region Channel Responses ================================
 
+        protected void OnRecieve_LoadUIWidget(UIWidgetData newWidgetData)
+        {
+            LoadWidget(newWidgetData);
+        }
+
+        protected void OnRecieve_UnloadUIWidget(UIWidgetData widgetDataToUnload)
+        {
+            UnloadWidget(widgetDataToUnload);
+        }
+
+        protected void OnRecieve_UnloadAllUIWidgets()
+        {
+            UnloadAllWidgets();
+        }
 
         #endregion
 
@@ -63,38 +80,38 @@ namespace Digx7.Zygote
 
         private void LoadWidget(UIWidgetData newWidgetData)
         {
-            if(activeWidgets.Contains(newWidgetData))
+            if(_activeWidgets.Contains(newWidgetData))
             {
                 Debug.LogWarning("Something tried to load the UIWidget: " + newWidgetData + " which is already loaded");
                 return;
             }
             
-            newWidgetData.SpawnWidget(Canvas);
-            activeWidgets.Add(newWidgetData);
+            newWidgetData.SpawnWidget(_canvas);
+            _activeWidgets.Add(newWidgetData);
 
-            onLoadUIWidgetChannel.Raise();
+            OnLoadUIWidgetEvent.Invoke();
         }
 
         private void UnloadWidget(UIWidgetData widgetDataToUnload)
         {
-            if(!activeWidgets.Contains(widgetDataToUnload)) return;
+            if(!_activeWidgets.Contains(widgetDataToUnload)) return;
 
             widgetDataToUnload.DespawnWidget();
-            activeWidgets.Remove(widgetDataToUnload);
+            _activeWidgets.Remove(widgetDataToUnload);
 
-            onUnLoadUIWidgetChannel.Raise();
+            OnUnloadUIWidgetEvent.Invoke();
         }
 
         private void UnloadAllWidgets()
         {
-            foreach (UIWidgetData uIWidgetData in activeWidgets)
+            foreach (UIWidgetData uIWidgetData in _activeWidgets)
             {
                 uIWidgetData.DespawnWidget();
             }
 
-            activeWidgets.Clear();
-            
-            onClearAllUIWidgetsChannel.Raise();
+            _activeWidgets.Clear();
+            OnClearAllUIWidgetsEvent.Invoke();
+
         }
 
         #endregion

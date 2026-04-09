@@ -14,14 +14,14 @@ namespace Digx7.Zygote
         
         // [Header("Variables")]
         [Header("Incoming Channels")]
-        [SerializeField] private SceneDataChannel changeSceneDataChannel;
-        [SerializeField] private SceneDataChannel  addSceneDataChannel;
-        [SerializeField] private SceneDataChannel  removeSceneDataChannel;
-        [SerializeField] private SceneContextChannel  updateSceneContextChannel;
+        [SerializeField] private SceneDataChannel _request_changeSceneData_Channel;
+        [SerializeField] private SceneDataChannel _request_addSceneData_Channel;
+        [SerializeField] private SceneDataChannel _request_removeSceneData_Channel;
 
         [Header("Outgoing Events")]
         public UnityEvent OnChangeSceneEvent;
         public UnityEvent OnChangeSceneFinishedEvent;
+        public SceneContextEvent OnUpdateSceneContextEvent;
 
         private bool onChangeSceneCoroutineIsGoing = false;
         private bool onChangeSceneFinishedCoroutineIsGoing = false;
@@ -42,27 +42,27 @@ namespace Digx7.Zygote
 
         private void SetupChannels()
         {
-            changeSceneDataChannel.channelEvent.AddListener(OnChangeScene);
-            addSceneDataChannel.channelEvent.AddListener(OnAddScene);
-            removeSceneDataChannel.channelEvent.AddListener(UnloadScene);
+            _request_changeSceneData_Channel.channelEvent.AddListener(OnRecieve_OnChangeScene);
+            _request_addSceneData_Channel.channelEvent.AddListener(OnRecieve_OnAddScene);
+            _request_removeSceneData_Channel.channelEvent.AddListener(OnRecieve_OnUnloadScene);
 
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnAcitveSceneChanged;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnRecieve_OnAcitveSceneChanged;
         }
 
         private void TearDownChannels()
         {
-            changeSceneDataChannel.channelEvent.RemoveListener(OnChangeScene);
-            addSceneDataChannel.channelEvent.RemoveListener(OnAddScene);
-            removeSceneDataChannel.channelEvent.RemoveListener(UnloadScene);
+            _request_changeSceneData_Channel.channelEvent.RemoveListener(OnRecieve_OnChangeScene);
+            _request_addSceneData_Channel.channelEvent.RemoveListener(OnRecieve_OnAddScene);
+            _request_removeSceneData_Channel.channelEvent.RemoveListener(OnRecieve_OnUnloadScene);
 
-            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnAcitveSceneChanged;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged -= OnRecieve_OnAcitveSceneChanged;
         }
 
         #endregion
 
         #region Channel Responses ================================
 
-        private void OnChangeScene(SceneData data)
+        protected void OnRecieve_OnChangeScene(SceneData data)
         {
             if(onChangeSceneCoroutineIsGoing) return;
 
@@ -71,19 +71,19 @@ namespace Digx7.Zygote
             StartCoroutine(OnChangeSceneCoroutine(data));
         }
 
-        private void OnAddScene(SceneData data)
+        protected void OnRecieve_OnAddScene(SceneData data)
         {
             LoadSceneMode mode = LoadSceneMode.Additive;
             UpdateContext(data.context);
             LoadScene(data.sceneName, mode);
         }
 
-        private void UpdateContext(SceneContext newContext)
+        protected void OnRecieve_OnUnloadScene(SceneData data)
         {
-            updateSceneContextChannel.Raise(newContext);
+            UnloadScene(data);
         }
 
-        private void OnAcitveSceneChanged(Scene current, Scene next)
+        protected void OnRecieve_OnAcitveSceneChanged(Scene current, Scene next)
         {
             if(onChangeSceneFinishedCoroutineIsGoing) return;
 
@@ -104,6 +104,11 @@ namespace Digx7.Zygote
         private void UnloadScene(SceneData data)
         {
             UnityEngine.SceneManagement.SceneManager.UnloadSceneAsync(data.sceneName);
+        }
+
+        private void UpdateContext(SceneContext newContext)
+        {
+            OnUpdateSceneContextEvent.Invoke(newContext);
         }
 
         // COROUTINES ======================================

@@ -8,9 +8,12 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         public float typingSpeed;
         public TextMeshProUGUI speakerNameTextMeshPro;
         public TextMeshProUGUI dialogueTextMeshPro;
+
+        [Header("Incoming Channels")]
         public ConversationNodeChannel onConversationUpdateChannel;
 
         private ConversationNode currentNode;

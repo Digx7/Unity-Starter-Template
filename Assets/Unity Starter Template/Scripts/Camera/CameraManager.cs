@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,23 +7,27 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
-        [SerializeField] protected int ID = 1;
-        [SerializeField] PlayerController connectedPlayerController;
-        [SerializeField] PlayerCharacter playerCharacter;
+        [Header("Variables")]
+        [SerializeField] protected int _ID = 1;
+        [SerializeField] PlayerController _connectedPlayerController;
+        [SerializeField] PlayerCharacter _playerCharacter;
 
-        [SerializeField] protected IntChannel OnCameraManagerFinishedSetup;
 
-        [SerializeField] private bool runSetupOnEnable = true;
-        [SerializeField] private PlayerController controllerToConnectToOnEnable;
-        [SerializeField] private PlayerCharacter playerCharacterToConnectToOnEnable;
+        [SerializeField] private bool _runSetupOnEnable = true;
+        [SerializeField] private PlayerController _controllerToConnectToOnEnable;
+        [SerializeField] private PlayerCharacter _playerCharacterToConnectToOnEnable;
 
+        // [Header("Incoming Channels")]
+
+        [Header("Outgoing Events")]
+        public IntEvent OnCameraManagerFinishedSetupEvent;
         #endregion
 
         #region Setup ================================
 
         protected virtual void OnEnable()
         {
-            if(runSetupOnEnable)Setup(ID, controllerToConnectToOnEnable, playerCharacterToConnectToOnEnable);
+            if(_runSetupOnEnable)Setup(_ID, _controllerToConnectToOnEnable, _playerCharacterToConnectToOnEnable);
         }
 
         protected virtual void OnDisable()
@@ -35,7 +40,7 @@ namespace Digx7.Zygote
             SetID(newID);
             ConnectToPlayerController(controllerToConnectTo);
             ConnectToPlayerCharacter(newPlayerCharacter);
-            OnCameraManagerFinishedSetup.Raise(ID);
+            OnCameraManagerFinishedSetupEvent?.Invoke(_ID);
         }
 
         protected virtual void Teardown()
@@ -51,11 +56,11 @@ namespace Digx7.Zygote
         {
             if(!IsPlayerControllerValid(newPlayerController)) return false;
 
-            if(newPlayerController == connectedPlayerController) return true;
+            if(newPlayerController == _connectedPlayerController) return true;
 
             if(newPlayerController.ConnectCameraManager(this))
             {
-                connectedPlayerController = newPlayerController;
+                _connectedPlayerController = newPlayerController;
                 return true;
             }
 
@@ -67,21 +72,21 @@ namespace Digx7.Zygote
         public void ForceConnectToPlayerController(PlayerController newPlayerController)
         {
             if(!IsPlayerControllerValid(newPlayerController)) return;
-            if(newPlayerController == connectedPlayerController) return;
+            if(newPlayerController == _connectedPlayerController) return;
 
             newPlayerController.ForceConnectCameraManager(this);
-            connectedPlayerController = newPlayerController;
+            _connectedPlayerController = newPlayerController;
         }
 
         public bool ConnectToPlayerCharacter(PlayerCharacter newPlayerCharacter)
         {
             if(!IsPlayerCharacterValid(newPlayerCharacter)) return false;
 
-            if(newPlayerCharacter == playerCharacter) return true;
+            if(newPlayerCharacter == _playerCharacter) return true;
 
             if(newPlayerCharacter.ConnectCameraManager(this))
             {
-                playerCharacter = newPlayerCharacter;
+                _playerCharacter = newPlayerCharacter;
                 return true;
             }
 
@@ -93,19 +98,19 @@ namespace Digx7.Zygote
         public void ForceConnectToPlayerCharacter(PlayerCharacter newPlayerCharacter)
         {
             if(!IsPlayerCharacterValid(newPlayerCharacter)) return;
-            if(newPlayerCharacter == playerCharacter) return;
+            if(newPlayerCharacter == _playerCharacter) return;
             
             newPlayerCharacter.ForceConnectCameraManager(this);
-            playerCharacter = newPlayerCharacter;
+            _playerCharacter = newPlayerCharacter;
         }
 
         public void SetID(int newID)
         {
-            if(ID == newID) return;
+            if(_ID == newID) return;
             
-            ID = newID;
-            if(IsPlayerControllerValid(connectedPlayerController)) connectedPlayerController.SetID(ID);
-            if(IsPlayerCharacterValid(playerCharacter)) playerCharacter.SetID(ID);
+            _ID = newID;
+            if(IsPlayerControllerValid(_connectedPlayerController)) _connectedPlayerController.SetID(_ID);
+            if(IsPlayerCharacterValid(_playerCharacter)) _playerCharacter.SetID(_ID);
         }
 
         private bool IsPlayerControllerValid(PlayerController playerController)

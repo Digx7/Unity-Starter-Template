@@ -15,14 +15,14 @@ namespace Digx7.Zygote
         
         [Header("Incoming Channels")]
         [SerializeField] private Channel _request_GameModeTearDown_Channel;
-        [SerializeField] private Channel _on_GameModeTearDownFinsished_Channel;
-        [SerializeField] private Channel _on_GameModeSetupFinished_Channel;
         [SerializeField] private PlayerSpawnInfoChannel _request_SpawnPlayer_Channel;
         [SerializeField] private IntChannel _on_PlayerCharacterFinishedSetup_Channel;
         [SerializeField] private IntChannel _on_PlayerControllerFinishedSetup_Channel;
         [SerializeField] private Channel _on_OptionsMenuQuit_Channel;
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UnityEvent OnGameModeTearDownFinishedEvent;
+        public UnityEvent OnGameModeSetupFinishedEvent;
 
         private PlayerSpawnInfo _playerSpawnInfo;
         private PlayerCharacter _playerCharacterBeingSetup;
@@ -39,13 +39,13 @@ namespace Digx7.Zygote
             if(spawnPlayerOnSetup) TryToFindPlayerSpawnHelper();
             
             DontDestroyOnLoad(this);
-            _on_GameModeSetupFinished_Channel.Raise();
+            OnGameModeSetupFinishedEvent?.Invoke();
         }
 
         public virtual void Teardown()
         {
             TearDownChannels();
-            _on_GameModeTearDownFinsished_Channel.Raise();
+            OnGameModeTearDownFinishedEvent?.Invoke();
             Destroy(this.gameObject);
         }
 

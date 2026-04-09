@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections;
 
@@ -8,8 +9,12 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        [Header("Variables")]
         protected UIWidgetData ownUIWidgetData;
-        [SerializeField] private UIWidgetDataChannel RequestUnloadWidgetDataChannel;
+
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent OnRequestLoadUIWidgetEvent;
 
         #endregion
 
@@ -31,7 +36,7 @@ namespace Digx7.Zygote
 
         protected void UnloadSelf()
         {
-            RequestUnloadWidgetDataChannel.Raise(ownUIWidgetData);
+            OnRequestLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
         
         protected IEnumerator Delay(VoidDelegate funcToCalAtEnd, float time)

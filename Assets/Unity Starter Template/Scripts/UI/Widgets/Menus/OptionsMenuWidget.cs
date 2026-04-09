@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
@@ -8,15 +9,18 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        [Header("Variables")]
         [SerializeField] private Slider masterVolumeSlider;
         [SerializeField] private Slider musicVolumeSlider;
         [SerializeField] private Slider sfxVolumeSlider;
         [SerializeField] private Toggle fullScreenToggle;
         [SerializeField] private TMP_Dropdown resolutionDropdown;
         
-        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
-        [SerializeField] Channel onOptionsChangedChannel;
-        [SerializeField] Channel onOptionsMenuQuitChannel;
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent requestUnLoadUIWidgetEvent;
+        public UnityEvent onOptionsChangedEvent;
+        public UnityEvent onOptionsMenuQuitEvent;
 
         private const string MasterVolumeKey = "MasterVolume";
         private const string MusicVolumeKey = "MusicVolume";
@@ -45,8 +49,8 @@ namespace Digx7.Zygote
 
         public void OnClickBack()
         {
-            onOptionsMenuQuitChannel.Raise();
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            onOptionsMenuQuitEvent?.Invoke();
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         private void LoadValuesFromPlayerPrefs()
@@ -75,21 +79,21 @@ namespace Digx7.Zygote
         {
             PlayerPrefs.SetFloat(MasterVolumeKey, newValue);
             PlayerPrefs.Save();
-            onOptionsChangedChannel.Raise();
+            onOptionsChangedEvent?.Invoke();
         }
 
         public void OnAdjustMusicVolume(float newValue)
         {
             PlayerPrefs.SetFloat(MusicVolumeKey, newValue);
             PlayerPrefs.Save();
-            onOptionsChangedChannel.Raise();
+            onOptionsChangedEvent?.Invoke();
         }
 
         public void OnAdjustSFXVolume(float newValue)
         {
             PlayerPrefs.SetFloat(SFXVolumeKey, newValue);
             PlayerPrefs.Save();
-            onOptionsChangedChannel.Raise();
+            onOptionsChangedEvent?.Invoke();
         }
 
         public void OnAdjustFullScreen(bool newValue)
@@ -101,14 +105,14 @@ namespace Digx7.Zygote
 
             PlayerPrefs.SetInt(FullScreenKey, value);
             PlayerPrefs.Save();
-            onOptionsChangedChannel.Raise();
+            onOptionsChangedEvent?.Invoke();
         }
 
         public void OnAdjustResolution(int newValue)
         {
             PlayerPrefs.SetInt(ResolutionKey, newValue);
             PlayerPrefs.Save();
-            onOptionsChangedChannel.Raise();
+            onOptionsChangedEvent?.Invoke();
         }
 
         #endregion

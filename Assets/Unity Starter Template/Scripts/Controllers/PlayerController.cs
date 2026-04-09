@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Digx7.Zygote
@@ -7,10 +8,15 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         [SerializeField] protected CameraManager cameraManager;
-        [SerializeField] private UIWidgetDataChannel RequestLoadUIWidgetData;
         [SerializeField] private UIWidgetData activeTimeLoreWidgetData;
         [SerializeField] private UIWidgetData pauseMenuWidgetData;
+
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent OnRequestLoadUIWidgetDataEvent;
+
         private PlayerCharacter possessedPlayer;
 
         #endregion
@@ -203,7 +209,7 @@ namespace Digx7.Zygote
                     break;
                 case InputActionPhase.Performed:
                     // Add Code here
-                    RequestLoadUIWidgetData.Raise(activeTimeLoreWidgetData);
+                    OnRequestLoadUIWidgetDataEvent?.Invoke(activeTimeLoreWidgetData);
                     break;
                 case InputActionPhase.Canceled:
                     // Add Code here
@@ -231,7 +237,7 @@ namespace Digx7.Zygote
                     break;
                 case InputActionPhase.Performed:
                     // Add Code here
-                    RequestLoadUIWidgetData.Raise(pauseMenuWidgetData);
+                    OnRequestLoadUIWidgetDataEvent?.Invoke(pauseMenuWidgetData);
                     break;
                 case InputActionPhase.Canceled:
                     // Add Code here

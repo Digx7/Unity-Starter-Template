@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,9 +7,14 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
-        [SerializeField] protected IntChannel OnPlayerCharacterFinishedSetup;
-        [SerializeField] protected Channel onPlayerTryInteractChannel;
+        [Header("Variables")]
         [SerializeField] protected CameraManager cameraManager;
+
+        // [Heder("Incoming Channels")]
+
+        [Header("Outgoing Events")]
+        public IntEvent OnPlayerCharacterFinishedSetupEvent;
+        public UnityEvent OnPlayerTryInteractEvent;
 
         protected Vector2 desiredMoveDirection;
 
@@ -22,7 +28,7 @@ namespace Digx7.Zygote
         {
             base.Setup(newID);
 
-            OnPlayerCharacterFinishedSetup.Raise(ID);
+            OnPlayerCharacterFinishedSetupEvent?.Invoke(ID);
         }
 
         protected override void Start()
@@ -77,7 +83,8 @@ namespace Digx7.Zygote
         public virtual void Fire1()
         {
             Debug.Log("PlayerCharacter: Fire1()");
-            onPlayerTryInteractChannel.Raise();
+            OnPlayerTryInteractEvent.Invoke();
+
         }
 
         public virtual void Fire2()

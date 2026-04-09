@@ -6,17 +6,23 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         [SerializeField] private bool changeGameModeOnSceneStart = true;
-        [SerializeField] private StringChannel onChangeGameModeChannel;
         [SerializeField] private string gameModeToChangeToOnSetup;
         [SerializeField] private bool changeSongOnSceneStart = true;
-        [SerializeField] private SongDataChannel requestJumpToSongDataChannel;
         [SerializeField] private SongData songToJumpTo;
         [SerializeField] private SceneContext context;
-        [SerializeField] private SceneContextChannel updateContextChannel;
-        [SerializeField] private SceneContextChannel contextOnSceneSetupChannel;
-        
         [SerializeField] bool triggerOnStart = true;
+
+        [Header("Incoming Channels")]
+        [SerializeField] private SceneContextChannel updateContextChannel;
+
+        [Header("Outgoing Events")]
+        public StringEvent OnChangeGameModeEvent;
+        public SongDataEvent OnRequestJumpToSongDataEvent;
+        public SceneContextEvent OnSceneSetupEvent;
+
+
         public SceneContextEvent onSetup;
 
         #endregion
@@ -32,11 +38,11 @@ namespace Digx7.Zygote
         {
             if(updateContextChannel.lastValue.SpawnPointID != 0) context.SpawnPointID = updateContextChannel.lastValue.SpawnPointID;
             
-            if(changeGameModeOnSceneStart) onChangeGameModeChannel.Raise(gameModeToChangeToOnSetup);
-            if(changeSongOnSceneStart) requestJumpToSongDataChannel.Raise(songToJumpTo);
+            if(changeGameModeOnSceneStart) OnChangeGameModeEvent?.Invoke(gameModeToChangeToOnSetup);
+            if(changeSongOnSceneStart) OnRequestJumpToSongDataEvent?.Invoke(songToJumpTo);
 
             onSetup.Invoke(context);
-            contextOnSceneSetupChannel.Raise(context);
+            OnSceneSetupEvent?.Invoke(context);
 
             // Add code here
 

@@ -10,11 +10,11 @@ namespace Digx7.Zygote
         [Header("Variables")]
         [SerializeField] private UIWidgetData _pauseMenuWidgetData;
         
-        [Header("Incoming Channels")]
-        [SerializeField] private UIWidgetDataChannel _request_LoadUIWidget_Channel;
-        [SerializeField] private Channel _request_LoadSaveData_Channel;
+        // [Header("Incoming Channels")]
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UIWidgetDataEvent OnRequestLoadUIWidgetDataEvent;
+        public UnityEvent OnRequestLoadSaveDataEvent;
 
         #endregion
 
@@ -26,7 +26,7 @@ namespace Digx7.Zygote
             
             base.Setup();
 
-            _request_LoadSaveData_Channel.Raise();
+            OnRequestLoadSaveDataEvent?.Invoke();
         }
 
         public override void Teardown()
@@ -41,7 +41,7 @@ namespace Digx7.Zygote
         #region Channel Responses ================================
         protected override void OnRecieve_OnOptionsMenuQuit()
         {
-            _request_LoadUIWidget_Channel.Raise(_pauseMenuWidgetData);
+            OnRequestLoadUIWidgetDataEvent?.Invoke(_pauseMenuWidgetData);
         }
 
         #endregion

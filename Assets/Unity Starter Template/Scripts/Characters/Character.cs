@@ -6,6 +6,7 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        [Header("Variables")]
         [SerializeField] protected int ID = 0;
         [SerializeField] protected GameController controller;
 

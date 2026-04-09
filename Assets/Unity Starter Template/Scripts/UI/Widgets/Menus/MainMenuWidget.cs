@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,14 +7,17 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         [SerializeField] SceneData gamePlayScene;
         [SerializeField] UIWidgetData optionsMenuWidgetData;
         [SerializeField] UIWidgetData creditsMenuWidgetData;
         [SerializeField] UIWidgetData quitMenuWidgetData;
         
-        [SerializeField] SceneDataChannel requestChangeSceneDataChannel;
-        [SerializeField] UIWidgetDataChannel requestLoadUIWidgetChannel;
-        [SerializeField] UIWidgetDataChannel requestUnLoadUIWidgetChannel;
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public SceneDataEvent requestChangeSceneDataEvent;
+        public UIWidgetDataEvent requestLoadUIWidgetEvent;
+        public UIWidgetDataEvent requestUnLoadUIWidgetEvent;
 
         #endregion
 
@@ -40,8 +44,8 @@ namespace Digx7.Zygote
         
         private void PlayButton()
         {
-            requestChangeSceneDataChannel.Raise(gamePlayScene);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestChangeSceneDataEvent?.Invoke(gamePlayScene);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickOptions()
@@ -51,8 +55,8 @@ namespace Digx7.Zygote
 
         private void OptionsButton()
         {
-            requestLoadUIWidgetChannel.Raise(optionsMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(optionsMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickCredits()
@@ -62,8 +66,8 @@ namespace Digx7.Zygote
 
         private void CreditsButton()
         {
-            requestLoadUIWidgetChannel.Raise(creditsMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(creditsMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         public void OnClickQuit()
@@ -73,8 +77,8 @@ namespace Digx7.Zygote
 
         private void QuitButton()
         {
-            requestLoadUIWidgetChannel.Raise(quitMenuWidgetData);
-            requestUnLoadUIWidgetChannel.Raise(ownUIWidgetData);
+            requestLoadUIWidgetEvent?.Invoke(quitMenuWidgetData);
+            requestUnLoadUIWidgetEvent?.Invoke(ownUIWidgetData);
         }
 
         #endregion

@@ -23,9 +23,9 @@ namespace Digx7.Zygote
         [SerializeField] StringChannel _request_ChangeGameMode_Channel;
         [SerializeField] Channel _on_GameModeTeardownFinished_Channel;
         [SerializeField] Channel _on_GameModeSetupFinished_Channel;
-        [SerializeField] Channel  _request_GameModeTearDown_Channel;
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UnityEvent RequestGameModeTearDownEvent;
 
         private const string MasterVolumeKey = "MasterVolume";
         private const string MusicVolumeKey = "MusicVolume";
@@ -98,7 +98,7 @@ namespace Digx7.Zygote
                 if(_activeGameMode != null)
                 {
                     // Tearsdown the currently active GameMode, once that is done it GameManager will setup the new GameMode
-                    _request_GameModeTearDown_Channel.Raise();
+                    RequestGameModeTearDownEvent.Invoke();
                     return;
                 }
                 else

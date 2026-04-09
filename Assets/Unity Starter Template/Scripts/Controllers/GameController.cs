@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
@@ -6,14 +7,17 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
         
+        
+        [Header("Variables")]
         [SerializeField] protected int ID;
         [SerializeField] protected Character possessedCharacter;
-        
-
-        [SerializeField] protected IntChannel OnControllerFinishedSetup;
-
         [SerializeField] private bool runSetupOnEnable = true;
         [SerializeField] private Character characterToPossessOnEnable;
+        
+        // [Header("Incoming Channels")]
+        [Header("Outgoing Events")]
+        public IntEvent OnControllerFinishedSetupEvent;
+
 
         #endregion
         
@@ -35,7 +39,7 @@ namespace Digx7.Zygote
 
             if(PossessCharacter(characterToPossess))
             {
-                OnControllerFinishedSetup.Raise(ID);
+                OnControllerFinishedSetupEvent?.Invoke(ID);
             }
         }
 

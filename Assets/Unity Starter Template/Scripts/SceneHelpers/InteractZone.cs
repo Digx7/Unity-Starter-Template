@@ -8,8 +8,13 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
+        [Header("Variables")]
         public string playerTag = "Player";
+
+        [Header("Incoming Channels")]
         public Channel onPlayerTryInteractChannel;
+
+        [Header("Outgoing Events")]
         public UnityEvent onPlayerEnter;
         public UnityEvent onPlayerLeave;
         public UnityEvent onPlayerInteract;

@@ -9,9 +9,10 @@ namespace Digx7.Zygote
     {
         #region Variables ================================
 
-        [SerializeField] private int layerNumber;
-        [SerializeField] private AudioClip clip;
-        [SerializeField] private AudioSource audioSource;
+        [Header("Variables")]
+        [SerializeField] private int _layerNumber;
+        [SerializeField] private AudioClip _clip;
+        [SerializeField] private AudioSource _audioSource;
 
         private const float FADEINSPEED = 0.5f;
         private const float FADEOUTSPEED = 0.5f;
@@ -22,11 +23,11 @@ namespace Digx7.Zygote
 
         public void Setup(int newLayerNumber, AudioClip newClip, bool shouldLoop = false)
         {
-            layerNumber = newLayerNumber;
-            clip = newClip;
-            audioSource.clip = clip;
-            audioSource.volume = 0;
-            audioSource.loop = shouldLoop;
+            _layerNumber = newLayerNumber;
+            _clip = newClip;
+            _audioSource.clip = _clip;
+            _audioSource.volume = 0;
+            _audioSource.loop = shouldLoop;
         }
 
         #endregion
@@ -35,7 +36,7 @@ namespace Digx7.Zygote
 
         public void StartLayer()
         {
-            audioSource.Play();
+            _audioSource.Play();
         }
 
         public void StopLayer()
@@ -45,19 +46,19 @@ namespace Digx7.Zygote
 
         public void PauseOrResume()
         {
-            if(audioSource.isPlaying)
+            if(_audioSource.isPlaying)
             {
-                audioSource.Pause();
+                _audioSource.Pause();
             }
             else
             {
-                audioSource.UnPause();
+                _audioSource.UnPause();
             }
         }
 
         public void SetVolume(float volume)
         {
-            audioSource.volume = volume;
+            _audioSource.volume = volume;
         }
 
         public void FadeIn()
@@ -72,9 +73,9 @@ namespace Digx7.Zygote
 
         IEnumerator FadeInEnum()
         {
-            while(audioSource.volume < 1.0f)
+            while(_audioSource.volume < 1.0f)
             {
-                SetVolume(audioSource.volume + (FADEINSPEED * Time.deltaTime));
+                SetVolume(_audioSource.volume + (FADEINSPEED * Time.deltaTime));
                 yield return null;
             }
             SetVolume(1.0f);
@@ -82,9 +83,9 @@ namespace Digx7.Zygote
 
         IEnumerator FadeOutEnum()
         {
-            while(audioSource.volume > 0.0f)
+            while(_audioSource.volume > 0.0f)
             {
-                SetVolume(audioSource.volume - (FADEINSPEED * Time.deltaTime));
+                SetVolume(_audioSource.volume - (FADEINSPEED * Time.deltaTime));
                 yield return null;
             }
             SetVolume(0.0f);

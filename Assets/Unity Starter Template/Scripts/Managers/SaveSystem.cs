@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization;
@@ -14,17 +15,17 @@ namespace Digx7.Zygote
         public Save save;
 
         [Header("Incoming Channels")]
-        public Channel requestSaveGameChannel;
-        public Channel onGameSavedChannel;
-        public Channel requestLoadGameChannel;
-        public Channel onGameLoadedChannel;
-        public Channel requestDeleteSaveChannel;
-        public Channel onDeleteSaveChannel;
-        public Channel requestMakeNewSaveChannel;
-        public Channel onMakeNewSaveChannel;
-        public IntChannel requestChangeActiveSaveSlot;
+        [SerializeField] Channel _request_SaveGame_Channel;
+        [SerializeField] Channel _request_LoadGame_Channel;
+        [SerializeField] Channel _request_DeleteSave_Channel;
+        [SerializeField] Channel _request_MakeNewSave_Channel;
+        [SerializeField] IntChannel _request_ChangeActiveSaveSlot_Channel;
 
-        // [Header("Outgoing Events")]
+        [Header("Outgoing Events")]
+        public UnityEvent OnGameSavedEvent;
+        public UnityEvent OnGameLoadedEvent;
+        public UnityEvent OnDeleteSaveEvent;
+        public UnityEvent OnMakeNewSaveEvent;
 
         
 
@@ -33,25 +34,45 @@ namespace Digx7.Zygote
         #region Setup ================================
         public override void SafeOnEnable()
         {
-            requestSaveGameChannel.channelEvent.AddListener(SaveData);
-            requestLoadGameChannel.channelEvent.AddListener(LoadData);
-            requestDeleteSaveChannel.channelEvent.AddListener(DeleteData);
-            requestMakeNewSaveChannel.channelEvent.AddListener(MakeNewSaveData);
+            _request_SaveGame_Channel.channelEvent.AddListener(OnRecieve_RequestSaveGame);
+            _request_LoadGame_Channel.channelEvent.AddListener(OnRecieve_RequestLoadGame);
+            _request_DeleteSave_Channel.channelEvent.AddListener(OnRecieve_RequestDeleteSave);
+            _request_MakeNewSave_Channel.channelEvent.AddListener(OnRecieve_RequestMakeNewSave);
 
             save = new Save();
         }
 
         public override void SafeOnDisable()
         {
-            requestSaveGameChannel.channelEvent.RemoveListener(SaveData);
-            requestLoadGameChannel.channelEvent.RemoveListener(LoadData);
-            requestDeleteSaveChannel.channelEvent.RemoveListener(DeleteData);
-            requestMakeNewSaveChannel.channelEvent.RemoveListener(MakeNewSaveData);
+            _request_SaveGame_Channel.channelEvent.RemoveListener(OnRecieve_RequestSaveGame);
+            _request_LoadGame_Channel.channelEvent.RemoveListener(OnRecieve_RequestLoadGame);
+            _request_DeleteSave_Channel.channelEvent.RemoveListener(OnRecieve_RequestDeleteSave);
+            _request_MakeNewSave_Channel.channelEvent.RemoveListener(OnRecieve_RequestMakeNewSave);
         }
         
         #endregion
 
         #region Channel Responses ================================
+
+        protected void OnRecieve_RequestSaveGame()
+        {
+            SaveData();
+        }
+
+        protected void OnRecieve_RequestLoadGame()
+        {
+            LoadData();
+        }
+
+        protected void OnRecieve_RequestDeleteSave()
+        {
+            DeleteData();
+        }
+
+        protected void OnRecieve_RequestMakeNewSave()
+        {
+            MakeNewSaveData();
+        }
 
         #endregion
 
@@ -70,9 +91,8 @@ namespace Digx7.Zygote
             file.Close();
 
             Debug.Log("SaveSystem: Saving game to slot " + activeSaveSlot);
-            // save.PrintAllEntries();
 
-            onGameSavedChannel.Raise();
+            OnGameSavedEvent.Invoke();
         }
 
         public void LoadData()
@@ -96,9 +116,7 @@ namespace Digx7.Zygote
 
             Debug.Log("SaveSystem: Loaded save from slot " + activeSaveSlot);
 
-            // save.PrintAllEntries();
-
-            onGameLoadedChannel.Raise();
+            OnGameLoadedEvent.Invoke();
         }
 
         [ContextMenu("DeleteData")]
@@ -115,7 +133,7 @@ namespace Digx7.Zygote
 
             Debug.Log("SaveSystem: deleted save at slot " + activeSaveSlot);
 
-            onDeleteSaveChannel.Raise();
+            OnDeleteSaveEvent.Invoke();
         }
 
         public void MakeNewSaveData()
@@ -124,7 +142,7 @@ namespace Digx7.Zygote
             save.ClearAllData();
             save.CreateDefaultSaveFile();
             SaveData();
-            onMakeNewSaveChannel.Raise();
+            OnMakeNewSaveEvent.Invoke();
         }
 
         private string Path()
