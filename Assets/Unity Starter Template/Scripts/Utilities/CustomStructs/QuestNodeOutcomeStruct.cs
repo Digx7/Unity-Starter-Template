@@ -8,8 +8,12 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct QuestNodeOutcome : IEquatable<QuestNodeOutcome>
     {
+        #region Variables ============================
         public QuestNodeOutcomeType outcomeType;
         public string data;
+        #endregion
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(QuestNodeOutcome other)
@@ -39,5 +43,6 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+        #endregion
     }
 }

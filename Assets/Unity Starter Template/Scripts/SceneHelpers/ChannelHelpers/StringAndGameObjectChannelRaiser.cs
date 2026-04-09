@@ -5,8 +5,20 @@ namespace Digx7.Zygote
 {
     public class StringAndGameObjectChannelRaiser : MonoBehaviour
     {
+        #region Variables ==============================================
         [SerializeField] private StringAndGameObjectChannel channelToRaise;
         [SerializeField] private StringAndGameObject _data;
+        #endregion
+
+        #region Setup ==============================================
+
+        #endregion
+
+        #region Channel Response Functions ==============================================
+
+        #endregion
+
+        #region Main Functions ==============================================
 
         public void Raise(StringAndGameObject data)
         {
@@ -17,5 +29,9 @@ namespace Digx7.Zygote
         {
             channelToRaise.Raise(_data);
         }
+
+        #endregion
     }
 }
+
+

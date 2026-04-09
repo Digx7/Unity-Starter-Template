@@ -22,13 +22,13 @@ namespace Digx7.Zygote
 
         #region Setup ================================
 
-        public void OnEnable()
+        public override void SafeOnEnable()
         {
             reciveQuestChannel.channelEvent.AddListener(GiveQuest);
             tryProgressQuestChannel.channelEvent.AddListener(TryProgressQuest);
         }
 
-        public void OnDisable()
+        public override void SafeOnDisable()
         {
             reciveQuestChannel.channelEvent.RemoveListener(GiveQuest);
             tryProgressQuestChannel.channelEvent.RemoveListener(TryProgressQuest);

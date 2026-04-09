@@ -4,10 +4,14 @@ namespace Digx7.Zygote
 {
     public class AIController : GameController
     {
+        #region Variables ==============================================
+        
         [SerializeField] protected AIBrain aiBrain;
         private AICharacter possessedAI;
 
-        // OVERRIDE FUNCTIONS ==============================================
+        #endregion
+
+        #region Main Functions ==============================================
 
         public override bool PossessCharacter(Character newCharacter)
         {
@@ -22,8 +26,6 @@ namespace Digx7.Zygote
 
             base.ForcePossessCharacter(newCharacter);
         }
-
-        // AI BRAIN FUNCTIONS ===================================================
 
         public bool ConnectAIBrain(AIBrain newAIBrain)
         {
@@ -56,6 +58,8 @@ namespace Digx7.Zygote
             if(newAIBrain == null) return false;
             else return true;
         }
+
+        #endregion
 
     }
 }

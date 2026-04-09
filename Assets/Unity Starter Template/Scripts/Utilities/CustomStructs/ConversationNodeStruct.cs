@@ -8,15 +8,20 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct ConversationNode : IEquatable<ConversationNode>
     {
+        #region Variables ============================
         public string speaker;
         
         [TextAreaAttribute]
         public string line;
 
+        #endregion
+
         public void Print()
         {
             Debug.Log(speaker + ":\n" + line);
         }
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(ConversationNode other)
@@ -46,5 +51,7 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+
+        #endregion
     }
 }

@@ -5,8 +5,20 @@ namespace Digx7.Zygote
 {
     public class PlayerSpawnInfoChannelRaiser : MonoBehaviour
     {
+        #region Variables ==============================================
         [SerializeField] private PlayerSpawnInfoChannel channelToRaise;
         [SerializeField] private PlayerSpawnInfo _data;
+        #endregion
+
+        #region Setup ==============================================
+
+        #endregion
+
+        #region Channel Response Functions ==============================================
+
+        #endregion
+
+        #region Main Functions ==============================================
 
         public void Raise(PlayerSpawnInfo data)
         {
@@ -17,5 +29,9 @@ namespace Digx7.Zygote
         {
             channelToRaise.Raise(_data);
         }
+
+        #endregion
     }
 }
+
+

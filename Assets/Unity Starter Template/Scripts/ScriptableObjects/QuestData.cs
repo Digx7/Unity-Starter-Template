@@ -8,10 +8,15 @@ namespace Digx7.Zygote
     [CreateAssetMenu(fileName = "NewQuestData", menuName = "ScriptableObjects/Data/QuestData", order = 1)]
     public class QuestData : ScriptableObject
     {
+        #region Variables ==============================================
         public string questName;
         public List<QuestNode> nodes;
 
         private int nodeIndex = 0;
+        #endregion
+
+        #region Main Functions ==============================================
+
 
         public void ResetQuest()
         {
@@ -66,17 +71,22 @@ namespace Digx7.Zygote
             Debug.Log("QuestData - " + questName + " : Finish()");
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return questName;
         }
+        #endregion
     }
 
     [System.Serializable]
     public class QuestNode
     {
+        #region Variables ==============================================
         public string nodeName;
         public List<QuestObjective> objectives;
+        #endregion
+
+        #region Main Functions ==============================================
 
         public bool AllObjectivesMet()
         {
@@ -125,17 +135,22 @@ namespace Digx7.Zygote
             return value;
         }
 
+        #endregion
+
     }
 
     [System.Serializable]
     public class QuestObjective
     {
+        #region Variables ==============================================
         public string objectiveName;
         public string data;
         public int amount;
         public int CurrentAmount = 0;
         public bool IsMet = false;
+        #endregion
         
+        #region Main Functions ==============================================
 
         public bool TryProgress(QuestObjectiveProgress progress)
         {
@@ -179,5 +194,6 @@ namespace Digx7.Zygote
             CurrentAmount = 0;
         }
 
+        #endregion
     }
 }

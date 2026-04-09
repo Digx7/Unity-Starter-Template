@@ -8,10 +8,14 @@ namespace Digx7.Zygote
     public class BooleanChannel : ScriptableObject
     {
 
+        #region Variables ==============================================
         public bool debug = true;
         public BooleanEvent channelEvent = new BooleanEvent();
     
         public bool lastValue { get; private set; }
+        #endregion
+
+        #region Setup ==============================================
     
         private void OnEnable()
         {
@@ -23,6 +27,10 @@ namespace Digx7.Zygote
             lastValue = false;
         }
 
+        #endregion
+
+        #region Main Functions ==============================================
+
         public void Raise(bool value)
         {
             if (debug) Debug.Log("Raised Channel: " + this.name + " with value " + value);
@@ -30,5 +38,7 @@ namespace Digx7.Zygote
             lastValue = value;
             channelEvent.Invoke(value);
         }    
+
+        #endregion
     }
 }

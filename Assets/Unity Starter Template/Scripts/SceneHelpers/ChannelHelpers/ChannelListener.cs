@@ -5,9 +5,13 @@ namespace Digx7.Zygote
 {
     public class ChannelListener : MonoBehaviour 
     {
+        #region Variables ==============================================
         [SerializeField] private Channel channelToListenTo;
 
         public UnityEvent onChannelRaised;
+        #endregion
+
+        #region Setup ==============================================
 
         private void OnEnable()
         {
@@ -19,14 +23,25 @@ namespace Digx7.Zygote
             channelToListenTo.channelEvent.RemoveListener(OnHearChannel);
         }
 
+        #endregion
+
+        #region Channel Response Functions ==============================================
+
         public void OnHearChannel()
         {
             SendOutResponse();
         }
 
+        #endregion
+
+        #region Main Functions ==============================================
+
         public void SendOutResponse()
         {
             onChannelRaised.Invoke();
         }
+
+        #endregion
     }
 }
+

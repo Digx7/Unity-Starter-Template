@@ -37,19 +37,19 @@ namespace Digx7.Zygote
 
         #region Setup ================================
 
-        private void Start()
+        public override void SafeStart()
         {
             // According to Unity Docs making calls to the Audio Mixer in OnEnable will not work
             // So this function will be run in Start() instead
             SetupOptions();
         }
         
-        private void OnEnable()
+        public override void SafeOnEnable()
         {
             SetupChannels();
         }
 
-        private void OnDisable()
+        public override void SafeOnDisable()
         {
             TearDownChannels();
         }

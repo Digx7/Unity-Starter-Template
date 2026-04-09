@@ -7,8 +7,11 @@ namespace Digx7.Zygote
     [System.Serializable]
     public class GenericBlackBoardEntry 
     {
+        #region Variables ==============================================
         public object value;
+        #endregion
 
+        #region Main Functions ==============================================
         public GenericBlackBoardEntry()
         {
             value = new object();
@@ -24,9 +27,11 @@ namespace Digx7.Zygote
             value = newValue;
         }
 
-        public virtual string ToString()
+        public override string ToString()
         {
             return ("" + value);
         }
+
+        #endregion
     }
 }

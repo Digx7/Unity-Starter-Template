@@ -31,7 +31,7 @@ namespace Digx7.Zygote
         #endregion
 
         #region Setup ================================
-        public void OnEnable()
+        public override void SafeOnEnable()
         {
             requestSaveGameChannel.channelEvent.AddListener(SaveData);
             requestLoadGameChannel.channelEvent.AddListener(LoadData);
@@ -41,7 +41,7 @@ namespace Digx7.Zygote
             save = new Save();
         }
 
-        public void OnDisable()
+        public override void SafeOnDisable()
         {
             requestSaveGameChannel.channelEvent.RemoveListener(SaveData);
             requestLoadGameChannel.channelEvent.RemoveListener(LoadData);

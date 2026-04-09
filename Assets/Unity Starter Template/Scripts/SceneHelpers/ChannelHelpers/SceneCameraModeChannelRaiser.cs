@@ -5,8 +5,20 @@ namespace Digx7.Zygote
 {
     public class SceneCameraModeChannelRaiser : MonoBehaviour
     {
+        #region Variables ==============================================
         [SerializeField] private SceneCameraModeChannel channelToRaise;
         [SerializeField] private SceneCameraMode _data;
+        #endregion
+
+        #region Setup ==============================================
+
+        #endregion
+
+        #region Channel Response Functions ==============================================
+
+        #endregion
+
+        #region Main Functions ==============================================
 
         public void Raise(SceneCameraMode data)
         {
@@ -17,5 +29,9 @@ namespace Digx7.Zygote
         {
             channelToRaise.Raise(_data);
         }
+
+        #endregion
     }
 }
+
+

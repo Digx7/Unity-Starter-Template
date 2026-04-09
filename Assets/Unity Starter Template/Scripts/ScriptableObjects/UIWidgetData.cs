@@ -7,6 +7,8 @@ namespace Digx7.Zygote
     [CreateAssetMenu(fileName = "NewUIWidgetData", menuName = "ScriptableObjects/Data/UIWidgetData", order = 1)]
     public class UIWidgetData : ScriptableObject
     {
+        #region Variables ==============================================
+        
         public GameObject widgetPrefab;
 
         private GameObject instantiatedWidget;
@@ -15,6 +17,10 @@ namespace Digx7.Zygote
         {
             return instantiatedWidget;
         }
+
+        #endregion
+
+        #region Main Functions ==============================================
 
         public void SpawnWidget(Transform parent = null)
         {
@@ -32,5 +38,7 @@ namespace Digx7.Zygote
             UIWidget uIWidget = instantiatedWidget.GetComponent<UIWidget>();
             uIWidget.Teardown();
         }
+
+        #endregion
     }
 }

@@ -8,8 +8,12 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct StringAndGameObject : IEquatable<StringAndGameObject>
     {
+        #region Variables ============================
         public string name;
         public GameObject obj;
+        #endregion
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(StringAndGameObject other)
@@ -39,5 +43,7 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+
+        #endregion
     }
 }

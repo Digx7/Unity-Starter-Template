@@ -8,15 +8,19 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct SceneContext : IEquatable<SceneContext>
     {
+        #region Variables ============================
         public int SpawnPointID;
         public SceneCameraMode sceneCameraMode;
         public Vector3 cameraLocation;
+        #endregion
 
         public void Clear()
         {
             SpawnPointID = 0;
             sceneCameraMode = SceneCameraMode.FollowPlayer;
         }
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(SceneContext other)
@@ -46,5 +50,6 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+        #endregion
     }
 }

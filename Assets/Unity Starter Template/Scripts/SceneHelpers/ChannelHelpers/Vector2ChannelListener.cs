@@ -5,6 +5,7 @@ namespace Digx7.Zygote
 {
     public class Vector2ChannelListener : MonoBehaviour 
     {
+        #region Variables ==============================================
         [SerializeField] private Vector2Channel channelToListenTo;
 
         public Vector2Event onChannelRaised;
@@ -15,6 +16,9 @@ namespace Digx7.Zygote
 
         public Vector2 filter;
         public Vector2 outgoingDataIfNotPassHeardDataThrough;
+        #endregion
+
+        #region Setup ==============================================
 
         private void Start()
         {
@@ -31,6 +35,10 @@ namespace Digx7.Zygote
             channelToListenTo.channelEvent.RemoveListener(OnHearChannel);
         }
 
+        #endregion
+
+        #region Channel Response Functions ==============================================
+
         public void OnHearChannel(Vector2 data)
         {
             if(shouldFilterValue)
@@ -46,6 +54,10 @@ namespace Digx7.Zygote
             }
         }
 
+        #endregion
+
+        #region Main Functions ==============================================
+
         public void SendOutResponse(Vector2 incomingData)
         {
             if(shouldPassHeardDataThrough) 
@@ -57,5 +69,8 @@ namespace Digx7.Zygote
                 onChannelRaised.Invoke(outgoingDataIfNotPassHeardDataThrough);
             }
         }
+
+        #endregion
     }
 }
+

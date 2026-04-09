@@ -8,14 +8,18 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct SceneData : IEquatable<SceneData>
     {
+        #region Variables ============================
         public string sceneName;
         public SceneContext context;
+        #endregion
 
         public void Clear()
         {
             sceneName = "";
             context.Clear();
         }
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(SceneData other)
@@ -45,5 +49,6 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+        #endregion
     }
 }

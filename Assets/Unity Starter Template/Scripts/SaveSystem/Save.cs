@@ -10,6 +10,9 @@ namespace Digx7.Zygote
     [DataContract]
     public class Save : Blackboard
     {
+        
+        #region Main Functions ==============================================
+        
         public void CreateDefaultSaveFile()
         {
             // Add generic values here
@@ -25,5 +28,8 @@ namespace Digx7.Zygote
             UpdateData<float>("Health", health);
             UpdateData<int>("Level", level);
         }
+
+        #endregion
+
     }
 }

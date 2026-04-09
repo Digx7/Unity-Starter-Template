@@ -8,8 +8,12 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct QuestObjectiveProgress : IEquatable<QuestObjectiveProgress>
     {
+        #region Variables ============================
         public string objectiveName;
         public int addedAmount;
+        #endregion
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(QuestObjectiveProgress other)
@@ -39,5 +43,6 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+        #endregion
     }
 }

@@ -9,8 +9,11 @@ namespace Digx7.Zygote
     [System.Serializable]
     public class BlackboardWithUpdateEvents
     {
+        #region Variables ==============================================
         public Dictionary<string, GenericBlackBoardEntryWithUpdateEvents> entries;
+        #endregion
 
+        #region Main Functions ==============================================
         public BlackboardWithUpdateEvents()
         {
             entries = new Dictionary<string, GenericBlackBoardEntryWithUpdateEvents>();
@@ -78,5 +81,6 @@ namespace Digx7.Zygote
                 Debug.Log("" + key + " : " + value.ToString());
             }
         }
+        #endregion
     }
 }

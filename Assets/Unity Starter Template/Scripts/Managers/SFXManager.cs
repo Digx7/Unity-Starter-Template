@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace Digx7.Zygote
 {
-    public class SFXManager : MonoBehaviour
+    public class SFXManager : Singleton<SFXManager>
     {
         #region Variables ================================
         
@@ -17,12 +17,12 @@ namespace Digx7.Zygote
 
         #region Setup ================================
 
-        private void OnEnable()
+        public override void SafeOnEnable()
         {
             SetupChannels();
         }
 
-        private void OnDisable()
+        public override void SafeOnDisable()
         {
             TearDownChannels();
         }

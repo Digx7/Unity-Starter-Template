@@ -8,9 +8,13 @@ namespace Digx7.Zygote
     [System.Serializable]
     public struct PlayerSpawnInfo : IEquatable<PlayerSpawnInfo>
     {
+        #region Variables ============================
         public int ID;
         public Vector3 location;
         public Quaternion rotation;
+        #endregion
+
+        #region Equality Methods ============================
 
         // Implement IEquatable<T>.Equals(T other) for type-safe, efficient comparison
         public bool Equals(PlayerSpawnInfo other)
@@ -40,5 +44,8 @@ namespace Digx7.Zygote
         {
             return !(left == right);
         }
+
+        #endregion
+
     }
 }
