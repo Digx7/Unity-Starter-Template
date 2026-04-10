@@ -147,14 +147,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50e718376b8987b44acfd5f059538347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 4182779589983769706}
-  activeWidgets: []
-  requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
-  onLoadUIWidgetChannel: {fileID: 11400000, guid: 7da46f71bb460224cb5fcb1603e8228d, type: 2}
-  requestUnLoadUIWidgetChannel: {fileID: 11400000, guid: f451e53f6d34f5e4493c2c5bdbed8351, type: 2}
-  onUnLoadUIWidgetChannel: {fileID: 11400000, guid: 891e4fa84258c064496437bbddf6d64e, type: 2}
-  requestClearAllUIWidgetsChannel: {fileID: 11400000, guid: 878845f27c6dbd648b1baea5a8a6723f, type: 2}
-  onClearAllUIWidgetsChannel: {fileID: 11400000, guid: fee32813d8951074f9418cbcc623a9e8, type: 2}
+  _canvas: {fileID: 4182779589983769706}
+  _activeWidgets: []
+  _request_LoadUIWidget_Channel: {fileID: 11400000, guid: f3f8d18c03147c642b8bc411fd2f12ae, type: 2}
+  _request_UnloadUIWidget_Channel: {fileID: 11400000, guid: 292c0aaffbdafba418055e6a3626d74c, type: 2}
+  _request_ClearAllUIWidgets_Channel: {fileID: 11400000, guid: 448644bb0670e8d48b398ff79eef0ad6, type: 2}
+  OnLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 09f6e8279e022e54e823a3b7df4712d8, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUnloadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: b0b28554920b70546b5f27e1241e3d70, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnClearAllUIWidgetsEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 22202310bf26c444798e07f572129c45, type: 2}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4206659042645062935
 GameObject:
   m_ObjectHideFlags: 0

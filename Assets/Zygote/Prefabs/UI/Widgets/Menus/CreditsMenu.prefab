@@ -103,6 +103,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -188,9 +189,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c60ee84c07293544852854695a3cbd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnRequestLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f3f8d18c03147c642b8bc411fd2f12ae, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   mainMenuWidgetData: {fileID: 11400000, guid: ded42b706e85a2f41835bfbacdce83d1, type: 2}
-  requestLoadUIWidgetChannel: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
-  requestUnLoadUIWidgetChannel: {fileID: 11400000, guid: f451e53f6d34f5e4493c2c5bdbed8351, type: 2}
+  requestLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f3f8d18c03147c642b8bc411fd2f12ae, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  requestUnLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 292c0aaffbdafba418055e6a3626d74c, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6590559280686287866
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +392,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7605889644540895712, guid: 7c863cc170c44a742b078f2f50a1a662, type: 3}
       propertyPath: m_fontSize
-      value: 85.65
+      value: 179.95
       objectReference: {fileID: 0}
     - target: {fileID: 8416761257626244949, guid: 7c863cc170c44a742b078f2f50a1a662, type: 3}
       propertyPath: m_Name

@@ -62,6 +62,8 @@ MeshRenderer:
   m_RayTracingAccelStructBuildFlagsOverride: 0
   m_RayTracingAccelStructBuildFlags: 1
   m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,9 +85,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!136 &6898201468808572928
 CapsuleCollider:
@@ -157,6 +161,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   controller: {fileID: 0}
-  OnPlayerCharacterFinishedSetup: {fileID: 11400000, guid: ec85a42ea4285fd48a9789e68c7f4a7a, type: 2}
-  onPlayerTryInteractChannel: {fileID: 11400000, guid: 47b2b9ceb4ec91f4994f326f99deb8c3, type: 2}
   cameraManager: {fileID: 0}
+  OnPlayerCharacterFinishedSetupEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 58acc76d458b83b4f87495e353e13a34, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.IntChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnPlayerTryInteractEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 42c8b83c03efd764390a5f00f4db8e6e, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.Channel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

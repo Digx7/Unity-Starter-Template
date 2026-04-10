@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2c7848c19eb6dd4e8afaa3423c85b96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerNumber: 0
-  clip: {fileID: 0}
-  audioSource: {fileID: 3227144369536141596}
+  _layerNumber: 0
+  _clip: {fileID: 0}
+  _audioSource: {fileID: 3227144369536141596}
 --- !u!82 &3227144369536141596
 AudioSource:
   m_ObjectHideFlags: 0

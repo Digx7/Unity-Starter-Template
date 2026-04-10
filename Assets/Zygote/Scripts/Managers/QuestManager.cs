@@ -13,9 +13,9 @@ namespace Digx7.Zygote
         [SerializeField] List<QuestData> _activeQuests;
 
         [Header("Incoming Channels")]
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/Quests")]
+        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/Quest")]
         [SerializeField] QuestDataChannel _request_receiveQuest_Channel;
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/Quests")]
+        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/Quest")]
         [SerializeField] QuestObjectiveProgressChannel _request_tryProgressQuest_Channel;
 
         // [Header("Outgoing Events")]

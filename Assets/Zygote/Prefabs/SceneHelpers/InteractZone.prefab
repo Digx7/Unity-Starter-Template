@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
-  onPlayerTryInteractChannel: {fileID: 11400000, guid: 47b2b9ceb4ec91f4994f326f99deb8c3, type: 2}
+  onPlayerTryInteractChannel: {fileID: 11400000, guid: 42c8b83c03efd764390a5f00f4db8e6e, type: 2}
   onPlayerEnter:
     m_PersistentCalls:
       m_Calls: []

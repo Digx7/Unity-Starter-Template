@@ -44,6 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e1b07146fdc2ce4ab529bc3ad849bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activeQuests: []
-  reciveQuestChannel: {fileID: 11400000, guid: 38e4c26a54bacfe4b92acdf56eac6726, type: 2}
-  tryProgressQuestChannel: {fileID: 11400000, guid: 2eacbb58e03a1a44184ae5eaeacb73e4, type: 2}
+  _activeQuests: []
+  _request_receiveQuest_Channel: {fileID: 11400000, guid: 88183cb4d5700e940b61ac1231a6cef5, type: 2}
+  _request_tryProgressQuest_Channel: {fileID: 11400000, guid: 8bc2fac818b9c5145bfe096128e0814b, type: 2}

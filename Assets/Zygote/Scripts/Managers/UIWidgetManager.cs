@@ -18,15 +18,9 @@ namespace Digx7.Zygote
         [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
         [SerializeField] private UIWidgetDataChannel _request_LoadUIWidget_Channel;
         [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
-        [SerializeField] private Channel _onLoadUIWidget_Channel;
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
         [SerializeField] private UIWidgetDataChannel _request_UnloadUIWidget_Channel;
         [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
-        [SerializeField] private Channel _onUnloadUIWidget_Channel;
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
         [SerializeField] private Channel _request_ClearAllUIWidgets_Channel;
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
-        [SerializeField] private Channel _onClearAllUIWidgets_Channel;
 
         [Header("Outgoing Events")]
         public UnityEvent OnLoadUIWidgetEvent;

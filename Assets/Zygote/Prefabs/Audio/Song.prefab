@@ -44,5 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb30808ea32bf094aab23a1fa299cbf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  songData: {fileID: 0}
-  layerPrefab: {fileID: 302888690766114057, guid: 5ffff7283ff4c844c92a2076bf645057, type: 3}
+  _songData: {fileID: 0}
+  _layerPrefab: {fileID: 302888690766114057, guid: 5ffff7283ff4c844c92a2076bf645057, type: 3}

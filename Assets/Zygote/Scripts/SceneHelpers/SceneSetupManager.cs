@@ -15,7 +15,7 @@ namespace Digx7.Zygote
         [SerializeField] bool triggerOnStart = true;
 
         [Header("Incoming Channels")]
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/Scenes")]
+        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/SceneManager")]
         [SerializeField] private SceneContextChannel updateContextChannel;
 
         [Header("Outgoing Events")]

@@ -124,10 +124,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c19845201cf1db4895d061099701092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnRequestLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls: []
   typingSpeed: 100
   speakerNameTextMeshPro: {fileID: 5463440040697904216}
   dialogueTextMeshPro: {fileID: 623903111324690541}
-  onConversationUpdateChannel: {fileID: 11400000, guid: 005a850435c6d834f80ea6c63c57aed3, type: 2}
+  onConversationUpdateChannel: {fileID: 11400000, guid: 060ecb0a7bfb2e045a346f262a16f7bf, type: 2}
 --- !u!1 &8715612168409097510
 GameObject:
   m_ObjectHideFlags: 0

@@ -44,13 +44,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b5bfa3741bed9f49b30a6ca2e3e93ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  changeSceneChannel: {fileID: 11400000, guid: 26f882a2247e43243bf155e95833e3ac, type: 2}
-  addSceneChannel: {fileID: 11400000, guid: fc1a3f93aa279744bbaf53ce73200a89, type: 2}
-  removeSceneChannel: {fileID: 11400000, guid: 02ab55d994392294dba8e51558f03647, type: 2}
-  updateSceneContextChannel: {fileID: 11400000, guid: 2871c5a14ad31544f870d30c964b8ba3, type: 2}
+  _request_changeSceneData_Channel: {fileID: 11400000, guid: 9069b127b21c7c048b3faf50ab12d7d4, type: 2}
+  _request_addSceneData_Channel: {fileID: 11400000, guid: e339885cf2ff6054bb65a3a4f0af4246, type: 2}
+  _request_removeSceneData_Channel: {fileID: 11400000, guid: 25867674a2214554ba7979e21848f9c2, type: 2}
   OnChangeSceneEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a04ad6b2999433f4a9ae5a86f3f365fa, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.Channel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnChangeSceneFinishedEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 2c31a7492c38b854d9fe5b98550e8184, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.Channel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnUpdateSceneContextEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 472ea7808d8681b46aab4796afd57382, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.SceneContextChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

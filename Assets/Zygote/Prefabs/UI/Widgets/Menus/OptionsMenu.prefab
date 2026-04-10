@@ -119,14 +119,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0119a91c041a3b544b3a40eb4f502fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnRequestLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f3f8d18c03147c642b8bc411fd2f12ae, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   masterVolumeSlider: {fileID: 8630765579620464175}
   musicVolumeSlider: {fileID: 8737624390397452038}
   sfxVolumeSlider: {fileID: 3506038236982886638}
   fullScreenToggle: {fileID: 4593312950866863515}
   resolutionDropdown: {fileID: 3368571158103705903}
-  requestUnLoadUIWidgetChannel: {fileID: 11400000, guid: f451e53f6d34f5e4493c2c5bdbed8351, type: 2}
-  onOptionsChangedChannel: {fileID: 11400000, guid: 27a7436a7c745d54187d3ba38fccaaea, type: 2}
-  onOptionsMenuQuitChannel: {fileID: 11400000, guid: 99c78e6d0ecbf2045b522eee27e99138, type: 2}
+  requestUnLoadUIWidgetEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 292c0aaffbdafba418055e6a3626d74c, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOptionsChangedEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f0eada8da1767b545bc8f7b18674cb58, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.Channel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onOptionsMenuQuitEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: a89482449064eb84caed006eac2db915, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.Channel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &937611110018130597
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -677,7 +734,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7605889644540895712, guid: 7c863cc170c44a742b078f2f50a1a662, type: 3}
       propertyPath: m_fontSize
-      value: 83.95
+      value: 179.95
       objectReference: {fileID: 0}
     - target: {fileID: 8416761257626244949, guid: 7c863cc170c44a742b078f2f50a1a662, type: 3}
       propertyPath: m_Name

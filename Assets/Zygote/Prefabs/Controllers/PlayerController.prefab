@@ -47,13 +47,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1
   possessedCharacter: {fileID: 0}
-  OnControllerFinishedSetup: {fileID: 11400000, guid: 96878672e2f978f468a283d7b6daee5c, type: 2}
   runSetupOnEnable: 1
   characterToPossessOnEnable: {fileID: 0}
+  OnControllerFinishedSetupEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 055e5cdfb0edfd7468eae2640142d7a5, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.IntChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   cameraManager: {fileID: 0}
-  RequestLoadUIWidgetData: {fileID: 11400000, guid: f9e8b7ff78e0ae943a4926492de10937, type: 2}
   activeTimeLoreWidgetData: {fileID: 11400000, guid: 3ed8c7f6340570a4196bbebf2f3e0e76, type: 2}
   pauseMenuWidgetData: {fileID: 11400000, guid: 5dca4f619f5187a4090b83b4e7b856f6, type: 2}
+  OnRequestLoadUIWidgetDataEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: f3f8d18c03147c642b8bc411fd2f12ae, type: 2}
+        m_TargetAssemblyTypeName: Digx7.Zygote.UIWidgetDataChannel, Assembly-CSharp
+        m_MethodName: Raise
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5268471269457950749
 MonoBehaviour:
   m_ObjectHideFlags: 0

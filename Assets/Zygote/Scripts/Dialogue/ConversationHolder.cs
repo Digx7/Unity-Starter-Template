@@ -16,11 +16,10 @@ namespace Digx7.Zygote
         public UIWidgetDataChannel requestLoadDialogueWidgetChannel;
         [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
         public UIWidgetDataChannel requestUnloadDialogueWidgetChannel;
-        [CreateScriptableObjectButton("Assets/Zygote/ScriptableObjects/Channels/UI")]
-        public ConversationNodeChannel onConversationUpdateChannel;
 
         [Header("Outgoing Events")]
-        public UnityEvent OnConversationEnd;
+        public ConversationNodeEvent OnConversationUpdateEvent;
+        public UnityEvent OnConversationEndEvent;
 
         private int currentNodeIndex = 0;
         private ConversationNode currentNode;
@@ -53,7 +52,8 @@ namespace Digx7.Zygote
             if(TryGetNode())
             {
                 requestLoadDialogueWidgetChannel.Raise(dialogueWidgetData);
-                onConversationUpdateChannel.Raise(currentNode);
+                OnConversationUpdateEvent.Invoke(currentNode);
+
                 currentNode.Print();
             }
             else
@@ -69,7 +69,8 @@ namespace Digx7.Zygote
             currentNodeIndex++;
             if(TryGetNode())
             {
-                onConversationUpdateChannel.Raise(currentNode);
+                OnConversationUpdateEvent.Invoke(currentNode);
+
                 currentNode.Print();
             }
             else
@@ -84,7 +85,7 @@ namespace Digx7.Zygote
             
             isConversationGoing = false;
             requestUnloadDialogueWidgetChannel.Raise(dialogueWidgetData);
-            OnConversationEnd.Invoke();
+            OnConversationEndEvent.Invoke();
             TryLoadNextConversation();
         }
 
