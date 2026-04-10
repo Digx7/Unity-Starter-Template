@@ -1,4 +1,5 @@
-# Unity Starter Template Documentation
+# Zygote
+## A Unity Starter Template
 By: Digx7
 Last Updated: 1/4/2025
 
